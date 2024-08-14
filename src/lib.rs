@@ -1,3 +1,4 @@
 #![doc = include_str!("../README.md")]
 
-// TODO: the rest!
+#[allow(nonstandard_style)]
+pub mod ffi;

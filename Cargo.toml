@@ -1,12 +1,19 @@
 [package]
-name = "rust-template"
+name = "igcl"
 version = "0.0.0"
 authors = ["Traverse Research <support@traverseresearch.nl>"]
 edition = "2021"
 license = "MIT"
 homepage = "https://traverseresearch.nl"
-repository = "https://github.com/Traverse-Research/rust-template"
-description = "A useful description"
+repository = "https://github.com/Traverse-Research/igcl-rs"
+description = "Bindings to Intel GPU Control Library"
 include = ["src", "LICENSE"]
-categories = [] # https://crates.io/category_slugs
-keywords = []
+categories = ["external-ffi-bindings", "api-bindings", "graphics"] # https://crates.io/category_slugs
+keywords = ["intel", "igcl", "gpu"]
+
+[dependencies]
+
+[workspace]
+members = [
+    "api_gen"
+]

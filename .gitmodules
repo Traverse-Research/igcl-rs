@@ -1,0 +1,5 @@
+[submodule "vendor/drivers.gpu.control-library"]
+	path = vendor/drivers.gpu.control-library
+	url = https://github.com/intel/drivers.gpu.control-library.git
+	depth = 1
+	update = none
