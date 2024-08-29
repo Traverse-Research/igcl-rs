@@ -289,7 +289,8 @@ impl Display for Error {
             }
             ffi::_ctl_result_t_CTL_RESULT_ERROR_DISPLAY_END => {
                 "Display error code end value, not to be used."
-            }
+            },
+            _ => "Error unknown."
         })
     }
 }
