@@ -12,6 +12,31 @@ pub const CTL_MAX_WIREFORMAT_COLOR_MODELS_SUPPORTED: u32 = 4;
 pub const CTL_FAN_TEMP_SPEED_PAIR_COUNT: u32 = 32;
 pub const CTL_PSU_COUNT: u32 = 5;
 pub const CTL_FAN_COUNT: u32 = 5;
+pub const CTLCOLOR_MSGBOX: u32 = 0;
+pub const CTLCOLOR_EDIT: u32 = 1;
+pub const CTLCOLOR_LISTBOX: u32 = 2;
+pub const CTLCOLOR_BTN: u32 = 3;
+pub const CTLCOLOR_DLG: u32 = 4;
+pub const CTLCOLOR_SCROLLBAR: u32 = 5;
+pub const CTLCOLOR_STATIC: u32 = 6;
+pub const CTLCOLOR_MAX: u32 = 7;
+pub const ctlFirst: u32 = 1024;
+pub const ctlLast: u32 = 1279;
+pub const ctl1: u32 = 1184;
+pub const CTL_V1: u32 = 0;
+pub const CTL_ENTRY_FROM_PROP_CHAIN_FLAG: u32 = 1;
+pub const CTL_ANY_SUBJECT_TYPE: u32 = 1;
+pub const CTL_CERT_SUBJECT_TYPE: u32 = 2;
+pub const CTL_FIND_ANY: u32 = 0;
+pub const CTL_FIND_SHA1_HASH: u32 = 1;
+pub const CTL_FIND_MD5_HASH: u32 = 2;
+pub const CTL_FIND_USAGE: u32 = 3;
+pub const CTL_FIND_SUBJECT: u32 = 4;
+pub const CTL_FIND_EXISTING: u32 = 5;
+pub const CTL_FIND_NO_LIST_ID_CBDATA: u32 = 4294967295;
+pub const CTL_FIND_SAME_USAGE_FLAG: u32 = 1;
+pub const CTL_DLL_NAME: &[u8; 11] = b"ControlLib\0";
+pub const CTL_DLL_PATH_LEN: u32 = 512;
 #[doc = "\n @brief Supported initialization flags"]
 pub type ctl_init_flags_t = u32;
 #[doc = "< Use Level0 or not. This is usually required for telemetry,\n< performance, frequency related APIs"]
@@ -16106,3 +16131,1318 @@ pub type ctl_pfnTemperatureGetProperties_t = ::std::option::Option<
 pub type ctl_pfnTemperatureGetState_t = ::std::option::Option<
     unsafe extern "C" fn(arg1: ctl_temp_handle_t, arg2: *mut f64) -> ctl_result_t,
 >;
+pub type DWORD = ::std::os::raw::c_ulong;
+pub type BOOL = ::std::os::raw::c_int;
+pub type BYTE = ::std::os::raw::c_uchar;
+pub type CHAR = ::std::os::raw::c_char;
+pub type LPSTR = *mut CHAR;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _FILETIME {
+    pub dwLowDateTime: DWORD,
+    pub dwHighDateTime: DWORD,
+}
+#[test]
+fn bindgen_test_layout__FILETIME() {
+    const UNINIT: ::std::mem::MaybeUninit<_FILETIME> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_FILETIME>(),
+        8usize,
+        concat!("Size of: ", stringify!(_FILETIME))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_FILETIME>(),
+        4usize,
+        concat!("Alignment of ", stringify!(_FILETIME))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwLowDateTime) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_FILETIME),
+            "::",
+            stringify!(dwLowDateTime)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwHighDateTime) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_FILETIME),
+            "::",
+            stringify!(dwHighDateTime)
+        )
+    );
+}
+pub type FILETIME = _FILETIME;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CRYPTOAPI_BLOB {
+    pub cbData: DWORD,
+    pub pbData: *mut BYTE,
+}
+#[test]
+fn bindgen_test_layout__CRYPTOAPI_BLOB() {
+    const UNINIT: ::std::mem::MaybeUninit<_CRYPTOAPI_BLOB> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CRYPTOAPI_BLOB>(),
+        16usize,
+        concat!("Size of: ", stringify!(_CRYPTOAPI_BLOB))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CRYPTOAPI_BLOB>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CRYPTOAPI_BLOB))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbData) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPTOAPI_BLOB),
+            "::",
+            stringify!(cbData)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pbData) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPTOAPI_BLOB),
+            "::",
+            stringify!(pbData)
+        )
+    );
+}
+pub type CRYPT_INTEGER_BLOB = _CRYPTOAPI_BLOB;
+pub type CRYPT_OBJID_BLOB = _CRYPTOAPI_BLOB;
+pub type CERT_NAME_BLOB = _CRYPTOAPI_BLOB;
+pub type CRYPT_DATA_BLOB = _CRYPTOAPI_BLOB;
+pub type PCRYPT_ATTR_BLOB = *mut _CRYPTOAPI_BLOB;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CRYPT_BIT_BLOB {
+    pub cbData: DWORD,
+    pub pbData: *mut BYTE,
+    pub cUnusedBits: DWORD,
+}
+#[test]
+fn bindgen_test_layout__CRYPT_BIT_BLOB() {
+    const UNINIT: ::std::mem::MaybeUninit<_CRYPT_BIT_BLOB> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CRYPT_BIT_BLOB>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CRYPT_BIT_BLOB))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CRYPT_BIT_BLOB>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CRYPT_BIT_BLOB))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbData) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_BIT_BLOB),
+            "::",
+            stringify!(cbData)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pbData) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_BIT_BLOB),
+            "::",
+            stringify!(pbData)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cUnusedBits) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_BIT_BLOB),
+            "::",
+            stringify!(cUnusedBits)
+        )
+    );
+}
+pub type CRYPT_BIT_BLOB = _CRYPT_BIT_BLOB;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CRYPT_ALGORITHM_IDENTIFIER {
+    pub pszObjId: LPSTR,
+    pub Parameters: CRYPT_OBJID_BLOB,
+}
+#[test]
+fn bindgen_test_layout__CRYPT_ALGORITHM_IDENTIFIER() {
+    const UNINIT: ::std::mem::MaybeUninit<_CRYPT_ALGORITHM_IDENTIFIER> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CRYPT_ALGORITHM_IDENTIFIER>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CRYPT_ALGORITHM_IDENTIFIER))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CRYPT_ALGORITHM_IDENTIFIER>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CRYPT_ALGORITHM_IDENTIFIER))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pszObjId) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_ALGORITHM_IDENTIFIER),
+            "::",
+            stringify!(pszObjId)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).Parameters) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_ALGORITHM_IDENTIFIER),
+            "::",
+            stringify!(Parameters)
+        )
+    );
+}
+pub type CRYPT_ALGORITHM_IDENTIFIER = _CRYPT_ALGORITHM_IDENTIFIER;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CERT_EXTENSION {
+    pub pszObjId: LPSTR,
+    pub fCritical: BOOL,
+    pub Value: CRYPT_OBJID_BLOB,
+}
+#[test]
+fn bindgen_test_layout__CERT_EXTENSION() {
+    const UNINIT: ::std::mem::MaybeUninit<_CERT_EXTENSION> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CERT_EXTENSION>(),
+        32usize,
+        concat!("Size of: ", stringify!(_CERT_EXTENSION))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CERT_EXTENSION>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CERT_EXTENSION))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pszObjId) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_EXTENSION),
+            "::",
+            stringify!(pszObjId)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).fCritical) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_EXTENSION),
+            "::",
+            stringify!(fCritical)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_EXTENSION),
+            "::",
+            stringify!(Value)
+        )
+    );
+}
+pub type PCERT_EXTENSION = *mut _CERT_EXTENSION;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CRYPT_ATTRIBUTE {
+    pub pszObjId: LPSTR,
+    pub cValue: DWORD,
+    pub rgValue: PCRYPT_ATTR_BLOB,
+}
+#[test]
+fn bindgen_test_layout__CRYPT_ATTRIBUTE() {
+    const UNINIT: ::std::mem::MaybeUninit<_CRYPT_ATTRIBUTE> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CRYPT_ATTRIBUTE>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CRYPT_ATTRIBUTE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CRYPT_ATTRIBUTE>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CRYPT_ATTRIBUTE))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pszObjId) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_ATTRIBUTE),
+            "::",
+            stringify!(pszObjId)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cValue) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_ATTRIBUTE),
+            "::",
+            stringify!(cValue)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rgValue) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CRYPT_ATTRIBUTE),
+            "::",
+            stringify!(rgValue)
+        )
+    );
+}
+pub type PCRYPT_ATTRIBUTE = *mut _CRYPT_ATTRIBUTE;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CERT_PUBLIC_KEY_INFO {
+    pub Algorithm: CRYPT_ALGORITHM_IDENTIFIER,
+    pub PublicKey: CRYPT_BIT_BLOB,
+}
+#[test]
+fn bindgen_test_layout__CERT_PUBLIC_KEY_INFO() {
+    const UNINIT: ::std::mem::MaybeUninit<_CERT_PUBLIC_KEY_INFO> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CERT_PUBLIC_KEY_INFO>(),
+        48usize,
+        concat!("Size of: ", stringify!(_CERT_PUBLIC_KEY_INFO))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CERT_PUBLIC_KEY_INFO>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CERT_PUBLIC_KEY_INFO))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).Algorithm) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_PUBLIC_KEY_INFO),
+            "::",
+            stringify!(Algorithm)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).PublicKey) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_PUBLIC_KEY_INFO),
+            "::",
+            stringify!(PublicKey)
+        )
+    );
+}
+pub type CERT_PUBLIC_KEY_INFO = _CERT_PUBLIC_KEY_INFO;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CERT_INFO {
+    pub dwVersion: DWORD,
+    pub SerialNumber: CRYPT_INTEGER_BLOB,
+    pub SignatureAlgorithm: CRYPT_ALGORITHM_IDENTIFIER,
+    pub Issuer: CERT_NAME_BLOB,
+    pub NotBefore: FILETIME,
+    pub NotAfter: FILETIME,
+    pub Subject: CERT_NAME_BLOB,
+    pub SubjectPublicKeyInfo: CERT_PUBLIC_KEY_INFO,
+    pub IssuerUniqueId: CRYPT_BIT_BLOB,
+    pub SubjectUniqueId: CRYPT_BIT_BLOB,
+    pub cExtension: DWORD,
+    pub rgExtension: PCERT_EXTENSION,
+}
+#[test]
+fn bindgen_test_layout__CERT_INFO() {
+    const UNINIT: ::std::mem::MaybeUninit<_CERT_INFO> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CERT_INFO>(),
+        208usize,
+        concat!("Size of: ", stringify!(_CERT_INFO))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CERT_INFO>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CERT_INFO))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwVersion) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(dwVersion)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SerialNumber) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(SerialNumber)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SignatureAlgorithm) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(SignatureAlgorithm)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).Issuer) as usize - ptr as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(Issuer)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).NotBefore) as usize - ptr as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(NotBefore)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).NotAfter) as usize - ptr as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(NotAfter)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).Subject) as usize - ptr as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(Subject)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectPublicKeyInfo) as usize - ptr as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(SubjectPublicKeyInfo)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).IssuerUniqueId) as usize - ptr as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(IssuerUniqueId)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectUniqueId) as usize - ptr as usize },
+        168usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(SubjectUniqueId)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cExtension) as usize - ptr as usize },
+        192usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(cExtension)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rgExtension) as usize - ptr as usize },
+        200usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_INFO),
+            "::",
+            stringify!(rgExtension)
+        )
+    );
+}
+pub type PCERT_INFO = *mut _CERT_INFO;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_USAGE {
+    pub cUsageIdentifier: DWORD,
+    pub rgpszUsageIdentifier: *mut LPSTR,
+}
+#[test]
+fn bindgen_test_layout__CTL_USAGE() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_USAGE> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_USAGE>(),
+        16usize,
+        concat!("Size of: ", stringify!(_CTL_USAGE))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_USAGE>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_USAGE))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cUsageIdentifier) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_USAGE),
+            "::",
+            stringify!(cUsageIdentifier)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rgpszUsageIdentifier) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_USAGE),
+            "::",
+            stringify!(rgpszUsageIdentifier)
+        )
+    );
+}
+pub type CTL_USAGE = _CTL_USAGE;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_ENTRY {
+    pub SubjectIdentifier: CRYPT_DATA_BLOB,
+    pub cAttribute: DWORD,
+    pub rgAttribute: PCRYPT_ATTRIBUTE,
+}
+#[test]
+fn bindgen_test_layout__CTL_ENTRY() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_ENTRY> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_ENTRY>(),
+        32usize,
+        concat!("Size of: ", stringify!(_CTL_ENTRY))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_ENTRY>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_ENTRY))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectIdentifier) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_ENTRY),
+            "::",
+            stringify!(SubjectIdentifier)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cAttribute) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_ENTRY),
+            "::",
+            stringify!(cAttribute)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rgAttribute) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_ENTRY),
+            "::",
+            stringify!(rgAttribute)
+        )
+    );
+}
+pub type CTL_ENTRY = _CTL_ENTRY;
+pub type PCTL_ENTRY = *mut _CTL_ENTRY;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_INFO {
+    pub dwVersion: DWORD,
+    pub SubjectUsage: CTL_USAGE,
+    pub ListIdentifier: CRYPT_DATA_BLOB,
+    pub SequenceNumber: CRYPT_INTEGER_BLOB,
+    pub ThisUpdate: FILETIME,
+    pub NextUpdate: FILETIME,
+    pub SubjectAlgorithm: CRYPT_ALGORITHM_IDENTIFIER,
+    pub cCTLEntry: DWORD,
+    pub rgCTLEntry: PCTL_ENTRY,
+    pub cExtension: DWORD,
+    pub rgExtension: PCERT_EXTENSION,
+}
+#[test]
+fn bindgen_test_layout__CTL_INFO() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_INFO> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_INFO>(),
+        128usize,
+        concat!("Size of: ", stringify!(_CTL_INFO))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_INFO>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_INFO))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwVersion) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(dwVersion)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectUsage) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(SubjectUsage)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ListIdentifier) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(ListIdentifier)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SequenceNumber) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(SequenceNumber)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ThisUpdate) as usize - ptr as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(ThisUpdate)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).NextUpdate) as usize - ptr as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(NextUpdate)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectAlgorithm) as usize - ptr as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(SubjectAlgorithm)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cCTLEntry) as usize - ptr as usize },
+        96usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(cCTLEntry)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rgCTLEntry) as usize - ptr as usize },
+        104usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(rgCTLEntry)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cExtension) as usize - ptr as usize },
+        112usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(cExtension)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rgExtension) as usize - ptr as usize },
+        120usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_INFO),
+            "::",
+            stringify!(rgExtension)
+        )
+    );
+}
+pub type CTL_INFO = _CTL_INFO;
+pub type PCTL_INFO = *mut _CTL_INFO;
+pub type HCRYPTMSG = *mut ::std::os::raw::c_void;
+pub type HCERTSTORE = *mut ::std::os::raw::c_void;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CERT_CONTEXT {
+    pub dwCertEncodingType: DWORD,
+    pub pbCertEncoded: *mut BYTE,
+    pub cbCertEncoded: DWORD,
+    pub pCertInfo: PCERT_INFO,
+    pub hCertStore: HCERTSTORE,
+}
+#[test]
+fn bindgen_test_layout__CERT_CONTEXT() {
+    const UNINIT: ::std::mem::MaybeUninit<_CERT_CONTEXT> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CERT_CONTEXT>(),
+        40usize,
+        concat!("Size of: ", stringify!(_CERT_CONTEXT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CERT_CONTEXT>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CERT_CONTEXT))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwCertEncodingType) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_CONTEXT),
+            "::",
+            stringify!(dwCertEncodingType)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pbCertEncoded) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_CONTEXT),
+            "::",
+            stringify!(pbCertEncoded)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbCertEncoded) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_CONTEXT),
+            "::",
+            stringify!(cbCertEncoded)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pCertInfo) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_CONTEXT),
+            "::",
+            stringify!(pCertInfo)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hCertStore) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CERT_CONTEXT),
+            "::",
+            stringify!(hCertStore)
+        )
+    );
+}
+pub type CERT_CONTEXT = _CERT_CONTEXT;
+pub type PCCERT_CONTEXT = *const CERT_CONTEXT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_CONTEXT {
+    pub dwMsgAndCertEncodingType: DWORD,
+    pub pbCtlEncoded: *mut BYTE,
+    pub cbCtlEncoded: DWORD,
+    pub pCtlInfo: PCTL_INFO,
+    pub hCertStore: HCERTSTORE,
+    pub hCryptMsg: HCRYPTMSG,
+    pub pbCtlContent: *mut BYTE,
+    pub cbCtlContent: DWORD,
+}
+#[test]
+fn bindgen_test_layout__CTL_CONTEXT() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_CONTEXT> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_CONTEXT>(),
+        64usize,
+        concat!("Size of: ", stringify!(_CTL_CONTEXT))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_CONTEXT>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_CONTEXT))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwMsgAndCertEncodingType) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(dwMsgAndCertEncodingType)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pbCtlEncoded) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(pbCtlEncoded)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbCtlEncoded) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(cbCtlEncoded)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pCtlInfo) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(pCtlInfo)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hCertStore) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(hCertStore)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hCryptMsg) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(hCryptMsg)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pbCtlContent) as usize - ptr as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(pbCtlContent)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbCtlContent) as usize - ptr as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_CONTEXT),
+            "::",
+            stringify!(cbCtlContent)
+        )
+    );
+}
+pub type CTL_CONTEXT = _CTL_CONTEXT;
+pub type PCCTL_CONTEXT = *const CTL_CONTEXT;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_ANY_SUBJECT_INFO {
+    pub SubjectAlgorithm: CRYPT_ALGORITHM_IDENTIFIER,
+    pub SubjectIdentifier: CRYPT_DATA_BLOB,
+}
+#[test]
+fn bindgen_test_layout__CTL_ANY_SUBJECT_INFO() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_ANY_SUBJECT_INFO> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_ANY_SUBJECT_INFO>(),
+        40usize,
+        concat!("Size of: ", stringify!(_CTL_ANY_SUBJECT_INFO))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_ANY_SUBJECT_INFO>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_ANY_SUBJECT_INFO))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectAlgorithm) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_ANY_SUBJECT_INFO),
+            "::",
+            stringify!(SubjectAlgorithm)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectIdentifier) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_ANY_SUBJECT_INFO),
+            "::",
+            stringify!(SubjectIdentifier)
+        )
+    );
+}
+pub type CTL_ANY_SUBJECT_INFO = _CTL_ANY_SUBJECT_INFO;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_FIND_USAGE_PARA {
+    pub cbSize: DWORD,
+    pub SubjectUsage: CTL_USAGE,
+    pub ListIdentifier: CRYPT_DATA_BLOB,
+    pub pSigner: PCERT_INFO,
+}
+#[test]
+fn bindgen_test_layout__CTL_FIND_USAGE_PARA() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_FIND_USAGE_PARA> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_FIND_USAGE_PARA>(),
+        48usize,
+        concat!("Size of: ", stringify!(_CTL_FIND_USAGE_PARA))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_FIND_USAGE_PARA>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_FIND_USAGE_PARA))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbSize) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_USAGE_PARA),
+            "::",
+            stringify!(cbSize)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).SubjectUsage) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_USAGE_PARA),
+            "::",
+            stringify!(SubjectUsage)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ListIdentifier) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_USAGE_PARA),
+            "::",
+            stringify!(ListIdentifier)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pSigner) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_USAGE_PARA),
+            "::",
+            stringify!(pSigner)
+        )
+    );
+}
+pub type CTL_FIND_USAGE_PARA = _CTL_FIND_USAGE_PARA;
+pub type PCTL_FIND_USAGE_PARA = *mut _CTL_FIND_USAGE_PARA;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_FIND_SUBJECT_PARA {
+    pub cbSize: DWORD,
+    pub pUsagePara: PCTL_FIND_USAGE_PARA,
+    pub dwSubjectType: DWORD,
+    pub pvSubject: *mut ::std::os::raw::c_void,
+}
+#[test]
+fn bindgen_test_layout__CTL_FIND_SUBJECT_PARA() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_FIND_SUBJECT_PARA> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_FIND_SUBJECT_PARA>(),
+        32usize,
+        concat!("Size of: ", stringify!(_CTL_FIND_SUBJECT_PARA))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_FIND_SUBJECT_PARA>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_FIND_SUBJECT_PARA))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbSize) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_SUBJECT_PARA),
+            "::",
+            stringify!(cbSize)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pUsagePara) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_SUBJECT_PARA),
+            "::",
+            stringify!(pUsagePara)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwSubjectType) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_SUBJECT_PARA),
+            "::",
+            stringify!(dwSubjectType)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pvSubject) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_FIND_SUBJECT_PARA),
+            "::",
+            stringify!(pvSubject)
+        )
+    );
+}
+pub type CTL_FIND_SUBJECT_PARA = _CTL_FIND_SUBJECT_PARA;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_VERIFY_USAGE_PARA {
+    pub cbSize: DWORD,
+    pub ListIdentifier: CRYPT_DATA_BLOB,
+    pub cCtlStore: DWORD,
+    pub rghCtlStore: *mut HCERTSTORE,
+    pub cSignerStore: DWORD,
+    pub rghSignerStore: *mut HCERTSTORE,
+}
+#[test]
+fn bindgen_test_layout__CTL_VERIFY_USAGE_PARA() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_VERIFY_USAGE_PARA> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_VERIFY_USAGE_PARA>(),
+        56usize,
+        concat!("Size of: ", stringify!(_CTL_VERIFY_USAGE_PARA))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_VERIFY_USAGE_PARA>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_VERIFY_USAGE_PARA))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbSize) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_PARA),
+            "::",
+            stringify!(cbSize)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ListIdentifier) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_PARA),
+            "::",
+            stringify!(ListIdentifier)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cCtlStore) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_PARA),
+            "::",
+            stringify!(cCtlStore)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rghCtlStore) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_PARA),
+            "::",
+            stringify!(rghCtlStore)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cSignerStore) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_PARA),
+            "::",
+            stringify!(cSignerStore)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).rghSignerStore) as usize - ptr as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_PARA),
+            "::",
+            stringify!(rghSignerStore)
+        )
+    );
+}
+pub type CTL_VERIFY_USAGE_PARA = _CTL_VERIFY_USAGE_PARA;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_VERIFY_USAGE_STATUS {
+    pub cbSize: DWORD,
+    pub dwError: DWORD,
+    pub dwFlags: DWORD,
+    pub ppCtl: *mut PCCTL_CONTEXT,
+    pub dwCtlEntryIndex: DWORD,
+    pub ppSigner: *mut PCCERT_CONTEXT,
+    pub dwSignerIndex: DWORD,
+}
+#[test]
+fn bindgen_test_layout__CTL_VERIFY_USAGE_STATUS() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_VERIFY_USAGE_STATUS> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_VERIFY_USAGE_STATUS>(),
+        48usize,
+        concat!("Size of: ", stringify!(_CTL_VERIFY_USAGE_STATUS))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_VERIFY_USAGE_STATUS>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_VERIFY_USAGE_STATUS))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cbSize) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(cbSize)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwError) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(dwError)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwFlags) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(dwFlags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ppCtl) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(ppCtl)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwCtlEntryIndex) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(dwCtlEntryIndex)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ppSigner) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(ppSigner)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwSignerIndex) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_VERIFY_USAGE_STATUS),
+            "::",
+            stringify!(dwSignerIndex)
+        )
+    );
+}
+pub type CTL_VERIFY_USAGE_STATUS = _CTL_VERIFY_USAGE_STATUS;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _CTL_USAGE_MATCH {
+    pub dwType: DWORD,
+    pub Usage: CTL_USAGE,
+}
+#[test]
+fn bindgen_test_layout__CTL_USAGE_MATCH() {
+    const UNINIT: ::std::mem::MaybeUninit<_CTL_USAGE_MATCH> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_CTL_USAGE_MATCH>(),
+        24usize,
+        concat!("Size of: ", stringify!(_CTL_USAGE_MATCH))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_CTL_USAGE_MATCH>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_CTL_USAGE_MATCH))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).dwType) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_USAGE_MATCH),
+            "::",
+            stringify!(dwType)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).Usage) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_CTL_USAGE_MATCH),
+            "::",
+            stringify!(Usage)
+        )
+    );
+}
+pub type CTL_USAGE_MATCH = _CTL_USAGE_MATCH;
