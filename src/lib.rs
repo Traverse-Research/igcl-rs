@@ -2,58 +2,124 @@
 
 use std::mem::MaybeUninit;
 
+use anyhow::Result;
+use device_adapter::DeviceAdapter;
+use ffi::ctl_device_adapter_properties_t;
+
+use crate::{
+    error::Error,
+    ffi::{ctl_api_handle_t, ControlLib},
+};
+
 #[allow(nonstandard_style)]
 pub mod ffi;
 
-use error::{Error, Result};
-use ffi::{ctlEnumerateDevices, ctlInit, ctl_api_handle_t, ctl_device_adapter_handle_t};
-
+pub mod device_adapter;
 pub mod error;
 
 pub struct Igcl {
     api_handle: ctl_api_handle_t,
+    control_lib: ControlLib,
 }
 
 impl Igcl {
-    /// Try to initialize a new instance of IGCL.
+    /// Create a new instance of [`Igcl`].
+    /// This loads the required dll, and initializes the Igcl library.
+    #[doc(alias = "ctlInit")]
     pub fn new() -> Result<Self> {
-        // Pointer to init args struct.
-        let mut init_args = MaybeUninit::uninit();
-        // Pointer to a pointer to an API handle.
-        let mut api_handle = MaybeUninit::uninit();
+        let control_lib = unsafe { ControlLib::new("ControlLib")? };
 
-        let api_handle = Error::from_result_with_assume_init_on_success(
-            unsafe { ctlInit(init_args.as_mut_ptr(), api_handle.as_mut_ptr()) },
+        let api_handle = {
+            // Pointer to init args struct.
+            let mut init_args = MaybeUninit::uninit();
+            // Pointer to a pointer to an API handle.
+            let mut api_handle = MaybeUninit::uninit();
+
+            Error::from_result_with_assume_init_on_success(
+                unsafe { control_lib.ctlInit(init_args.as_mut_ptr(), api_handle.as_mut_ptr()) },
+                api_handle,
+            )?
+        };
+
+        Ok(Self {
             api_handle,
-        )?;
-
-        Ok(Self { api_handle })
+            control_lib,
+        })
     }
 
-    /// Enumerate GPUs available to IGCL.
-    pub fn enumerate_adapters(&self) -> Result<&[ctl_device_adapter_handle_t]> {
-        let mut adapter_handle = MaybeUninit::zeroed();
-        let mut num_adapters = MaybeUninit::zeroed();
+    /// Enumerate all available physical devices.
+    #[doc(alias = "ctlEnumerateDevices")]
+    pub fn enumerate_devices(&self) -> Result<Vec<DeviceAdapter>> {
+        let mut num_adapters = MaybeUninit::uninit();
+
+        let mut num_adapters = Error::from_result_with_assume_init_on_success(
+            unsafe {
+                self.control_lib.ctlEnumerateDevices(
+                    self.api_handle,
+                    num_adapters.as_mut_ptr(),
+                    std::ptr::null_mut(),
+                )
+            },
+            num_adapters,
+        )?;
+
+        let mut adapters = Vec::with_capacity(num_adapters as usize);
 
         Error::from_result(unsafe {
-            ctlEnumerateDevices(
+            self.control_lib.ctlEnumerateDevices(
                 self.api_handle,
-                num_adapters.as_mut_ptr(),
-                adapter_handle.as_mut_ptr(),
+                &mut num_adapters,
+                adapters.as_mut_ptr(),
             )
         })?;
 
-        let num_adapters = unsafe { num_adapters.assume_init() };
-        let mut adapters = vec![MaybeUninit::zeroed(); num_adapters as usize];
+        unsafe { adapters.set_len(num_adapters as usize) };
 
-        Error::from_result(unsafe {
-            ctlEnumerateDevices(
-                self.api_handle,
-                num_adapters as *mut _,
-                adapters[0].as_mut_ptr() as *mut _,
-            )
-        })?;
+        let mut devices = vec![];
 
-        todo!()
+        for idx in 0..(num_adapters as usize) {
+            let device_adapter_handle = adapters[idx];
+            let mut adapter_properties: ctl_device_adapter_properties_t =
+                unsafe { MaybeUninit::zeroed().assume_init() };
+
+            adapter_properties.Size = std::mem::size_of::<ctl_device_adapter_properties_t>() as u32;
+            adapter_properties.pDeviceID = std::ptr::null_mut();
+            adapter_properties.device_id_size = 0;
+
+            // First query the size of the id.
+            Error::from_result(unsafe {
+                self.control_lib
+                    .ctlGetDeviceProperties(device_adapter_handle, &mut adapter_properties)
+            })?;
+
+            let mut device_id = vec![0u8; adapter_properties.device_id_size as usize];
+            adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
+
+            // Then query the actual ID.
+            Error::from_result(unsafe {
+                self.control_lib.ctlGetDeviceProperties(
+                    device_adapter_handle,
+                    (&mut adapter_properties) as *mut _,
+                )
+            })?;
+
+            devices.push(DeviceAdapter {
+                device_adapter_handle,
+                adapter_properties,
+                device_id,
+            })
+        }
+
+        Ok(devices)
+    }
+}
+
+impl Drop for Igcl {
+    fn drop(&mut self) {
+        if let Err(error) =
+            Error::from_result(unsafe { self.control_lib.ctlClose(self.api_handle) })
+        {
+            eprintln!("Igcl close failed with {error:?}");
+        }
     }
 }
