@@ -13,11 +13,17 @@ fn main() {
                 .join("../vendor/drivers.gpu.control-library/include/")
                 .display()
         ))
+        .dynamic_link_require_all(true)
+        .dynamic_library_name("ControlLib")
         .clang_arg("-x")
         .clang_arg("c++")
         .clang_arg("-std=c++11")
         .clang_arg("-Wno-pragma-once-outside-header")
         .allowlist_item("(ctl|CTL)\\w+")
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: true,
+        })
+        // .newtype_enum("_ctl_3d_feature_t_CTL_3D_FEATURE_\\w+")
         .generate()
         .expect("failed to generate igcl bindings");
 
