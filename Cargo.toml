@@ -12,6 +12,8 @@ categories = ["external-ffi-bindings", "api-bindings", "graphics"] # https://cra
 keywords = ["intel", "igcl", "gpu"]
 
 [dependencies]
+anyhow = "1.0.79"
+libloading = "0.8"
 
 [workspace]
 members = [

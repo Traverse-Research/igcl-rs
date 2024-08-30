@@ -3,7 +3,6 @@ use std::path::Path;
 fn main() {
     let crate_root = Path::new(env!("CARGO_MANIFEST_DIR"));
 
-    // let header_path = crate_root.join("wrapper.h");
     let header_path = crate_root.join("wrapper.h");
 
     let bindings = bindgen::Builder::default()
@@ -14,15 +13,9 @@ fn main() {
                 .join("../vendor/drivers.gpu.control-library/include/")
                 .display()
         ))
-        .clang_arg(format!(
-            "-I{}",
-            crate_root
-                .join("../vendor/drivers.gpu.control-library/Source/")
-                .display()
-        ))
         .clang_arg("-x")
         .clang_arg("c++")
-        .clang_arg("-std=c++14")
+        .clang_arg("-std=c++11")
         .clang_arg("-Wno-pragma-once-outside-header")
         .allowlist_item("(ctl|CTL)\\w+")
         .generate()

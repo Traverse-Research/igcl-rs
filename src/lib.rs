@@ -2,16 +2,20 @@
 
 use std::mem::MaybeUninit;
 
+use anyhow::Result;
+use error::Error;
+use ffi::{
+    ctlEnumerateDevices, ctlGetDeviceProperties, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
+    ctl_device_adapter_properties_t,
+};
+use helper::IgclHelper;
+use std::mem::MaybeUninit;
+
 #[allow(nonstandard_style)]
 pub mod ffi;
 
-use error::{Error, Result};
-use ffi::{
-    ctlEnumerateDevices, ctlGetDeviceProperties, ctlInit, ctl_adapter_bdf_t, ctl_api_handle_t,
-    ctl_device_adapter_handle_t, ctl_device_adapter_properties_t,
-};
-
 pub mod error;
+pub mod helper;
 
 pub struct DeviceAdapter {
     device_adapter_handle: ctl_device_adapter_handle_t,
@@ -69,23 +73,14 @@ impl DeviceAdapter {
 }
 
 pub struct Igcl {
-    api_handle: ctl_api_handle_t,
+    igcl_helper: IgclHelper,
 }
 
 impl Igcl {
     /// Try to initialize a new instance of IGCL.
     pub fn new() -> Result<Self> {
-        // Pointer to init args struct.
-        let mut init_args = MaybeUninit::uninit();
-        // Pointer to a pointer to an API handle.
-        let mut api_handle = MaybeUninit::uninit();
-
-        let api_handle = Error::from_result_with_assume_init_on_success(
-            unsafe { ctlInit(init_args.as_mut_ptr(), api_handle.as_mut_ptr()) },
-            api_handle,
-        )?;
-
-        Ok(Self { api_handle })
+        let igcl_helper = IgclHelper::new()?;
+        Ok(Self { igcl_helper })
     }
 
     /// Enumerate GPUs available to IGCL.
@@ -93,9 +88,11 @@ impl Igcl {
         let mut adapter_handle = MaybeUninit::zeroed();
         let mut num_adapters = MaybeUninit::zeroed();
 
+        let api_handle = self.igcl_helper.api_handle();
+
         Error::from_result(unsafe {
             ctlEnumerateDevices(
-                self.api_handle,
+                api_handle,
                 num_adapters.as_mut_ptr(),
                 adapter_handle.as_mut_ptr(),
             )
@@ -106,7 +103,7 @@ impl Igcl {
 
         Error::from_result(unsafe {
             ctlEnumerateDevices(
-                self.api_handle,
+                api_handle,
                 num_adapters as *mut _,
                 adapters[0].as_mut_ptr() as *mut _,
             )
