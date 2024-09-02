@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use std::mem::MaybeUninit;
+use std::{mem::MaybeUninit, sync::Arc};
 
 use anyhow::Result;
 use device_adapter::DeviceAdapter;
@@ -19,7 +19,7 @@ pub mod error;
 
 pub struct Igcl {
     api_handle: ctl_api_handle_t,
-    control_lib: ControlLib,
+    control_lib: Arc<ControlLib>,
 }
 
 impl Igcl {
@@ -27,7 +27,7 @@ impl Igcl {
     /// This loads the required dll, and initializes the Igcl library.
     #[doc(alias = "ctlInit")]
     pub fn new() -> Result<Self> {
-        let control_lib = unsafe { ControlLib::new("ControlLib")? };
+        let control_lib = Arc::new(unsafe { ControlLib::new("ControlLib")? });
 
         let api_handle = {
             let mut init_args = ctl_init_args_t {
@@ -111,16 +111,15 @@ impl Igcl {
 
             // Then query the actual ID.
             Error::from_result(unsafe {
-                self.control_lib.ctlGetDeviceProperties(
-                    device_adapter_handle,
-                    &mut adapter_properties
-                )
+                self.control_lib
+                    .ctlGetDeviceProperties(device_adapter_handle, &mut adapter_properties)
             })?;
 
             devices.push(DeviceAdapter {
                 device_adapter_handle,
                 adapter_properties,
                 device_id,
+                control_lib: self.control_lib.clone(),
             })
         }
 

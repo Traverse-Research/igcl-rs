@@ -5,7 +5,7 @@ use std::{
     mem::MaybeUninit,
 };
 
-pub struct Error(ffi::ctl_result_t);
+pub struct Error(pub ffi::ctl_result_t);
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
