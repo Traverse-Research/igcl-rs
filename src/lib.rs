@@ -4,7 +4,7 @@ use std::mem::MaybeUninit;
 
 use anyhow::Result;
 use device_adapter::DeviceAdapter;
-use ffi::ctl_device_adapter_properties_t;
+use ffi::{ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t};
 
 use crate::{
     error::Error,
@@ -30,13 +30,27 @@ impl Igcl {
         let control_lib = unsafe { ControlLib::new("ControlLib")? };
 
         let api_handle = {
-            // Pointer to init args struct.
-            let mut init_args = MaybeUninit::uninit();
-            // Pointer to a pointer to an API handle.
+            let mut init_args = ctl_init_args_t {
+                Size: std::mem::size_of::<ctl_init_args_t>() as u32,
+                Version: 0,
+                AppVersion: 0,
+                flags: 0,
+                SupportedVersion: 0,
+                // According to the igcl documentation (https://intel.github.io/drivers.gpu.control-library/Control/api.html#ctl-init-args-t),
+                // this can be all zeroes.
+                ApplicationUID: ctl_application_id_t {
+                    Data1: 0,
+                    Data2: 0,
+                    Data3: 0,
+                    Data4: [0; 8],
+                },
+            };
+
+            // Pointer to an API handle.
             let mut api_handle = MaybeUninit::uninit();
 
             Error::from_result_with_assume_init_on_success(
-                unsafe { control_lib.ctlInit(init_args.as_mut_ptr(), api_handle.as_mut_ptr()) },
+                unsafe { control_lib.ctlInit(&mut init_args, api_handle.as_mut_ptr()) },
                 api_handle,
             )?
         };
@@ -99,7 +113,7 @@ impl Igcl {
             Error::from_result(unsafe {
                 self.control_lib.ctlGetDeviceProperties(
                     device_adapter_handle,
-                    (&mut adapter_properties) as *mut _,
+                    &mut adapter_properties
                 )
             })?;
 
