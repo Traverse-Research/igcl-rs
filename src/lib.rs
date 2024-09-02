@@ -5,6 +5,7 @@ use std::{mem::MaybeUninit, sync::Arc};
 use anyhow::Result;
 use device_adapter::DeviceAdapter;
 use ffi::{ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t};
+use windows::Win32::Foundation::LUID;
 
 use crate::{
     error::Error,
@@ -97,19 +98,21 @@ impl Igcl {
                 unsafe { MaybeUninit::zeroed().assume_init() };
 
             adapter_properties.Size = std::mem::size_of::<ctl_device_adapter_properties_t>() as u32;
-            adapter_properties.pDeviceID = std::ptr::null_mut();
-            adapter_properties.device_id_size = 0;
+            adapter_properties.Version = 0;
 
-            // First query the size of the id.
-            Error::from_result(unsafe {
-                self.control_lib
-                    .ctlGetDeviceProperties(device_adapter_handle, &mut adapter_properties)
-            })?;
+            // LUID is only available on windows.
+            #[cfg(target_os = "windows")]
+            let device_id = {
+                let luid_size = std::mem::size_of::<LUID>();
+                let mut device_id = vec![0u8; luid_size];
+                adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
+                adapter_properties.device_id_size = luid_size as u32;
+                device_id
+            };
 
-            let mut device_id = vec![0u8; adapter_properties.device_id_size as usize];
-            adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
+            #[cfg(not(target_os = "windows"))]
+            let device_id = vec![];
 
-            // Then query the actual ID.
             Error::from_result(unsafe {
                 self.control_lib
                     .ctlGetDeviceProperties(device_adapter_handle, &mut adapter_properties)
