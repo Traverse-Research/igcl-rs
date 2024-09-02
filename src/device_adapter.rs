@@ -1,8 +1,9 @@
+use std::os::raw::c_void;
 use std::{ffi::OsStr, sync::Arc};
 
 use crate::error::Result;
 
-use crate::ffi::_ctl_result_t;
+use crate::ffi::{_ctl_result_t, ctl_endurance_gaming_t};
 use crate::{
     error::Error,
     ffi::{
@@ -66,6 +67,39 @@ impl DeviceAdapter {
 
     pub fn device_type(&self) -> ctl_device_type_t {
         self.adapter_properties.device_type
+    }
+
+    pub fn feature_endurance_gaming(&self) -> Result<Box<ctl_endurance_gaming_t>> {
+        let mut current_app = std::env::current_exe().map_or("".to_string(), |path| {
+            path.file_name()
+                .unwrap_or(OsStr::new(""))
+                .to_string_lossy()
+                .to_string()
+        });
+
+        let mut settings: Box<ctl_endurance_gaming_t> = Box::new(unsafe { std::mem::zeroed() });
+        let reference = settings.as_mut();
+        let ptr = reference as *mut _ as *mut c_void;
+
+        let mut feature = ctl_3d_feature_getset_t {
+            Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
+            Version: 0,
+            FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_ENDURANCE_GAMING,
+            ApplicationName: current_app.as_mut_ptr() as *mut _,
+            ApplicationNameLength: current_app.as_bytes().len() as i8,
+            bSet: false,
+            ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_CUSTOM,
+            Value: unsafe { std::mem::zeroed() },
+            CustomValueSize: std::mem::size_of::<ctl_endurance_gaming_t>() as i32,
+            pCustomValue: ptr,
+        };
+
+        Error::from_result(unsafe {
+            self.control_lib
+                .ctlGetSet3DFeature(self.device_adapter_handle, &mut feature)
+        })?;
+
+        Ok(settings)
     }
 
     pub fn feature_frame_limit(&self) -> Result<i32> {
