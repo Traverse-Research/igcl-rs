@@ -4,7 +4,10 @@ use std::{mem::MaybeUninit, sync::Arc};
 
 use anyhow::Result;
 use device_adapter::DeviceAdapter;
-use ffi::{ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t};
+use ffi::{
+    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t, CTL_IMPL_MAJOR_VERSION,
+    CTL_IMPL_MINOR_VERSION,
+};
 use windows::Win32::Foundation::LUID;
 
 use crate::{
@@ -22,6 +25,10 @@ pub struct Igcl {
     api_handle: ctl_api_handle_t,
     control_lib: Arc<ControlLib>,
 }
+#[doc(alias = "CTL_MAKE_VERSION")]
+fn ctl_make_version(major: u32, minor: u32) -> u32 {
+    (major << 16) | (minor & 0x0000ffff)
+}
 
 impl Igcl {
     /// Create a new instance of [`Igcl`].
@@ -34,7 +41,7 @@ impl Igcl {
             let mut init_args = ctl_init_args_t {
                 Size: std::mem::size_of::<ctl_init_args_t>() as u32,
                 Version: 0,
-                AppVersion: 0,
+                AppVersion: ctl_make_version(CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION),
                 flags: 0,
                 SupportedVersion: 0,
                 // According to the igcl documentation (https://intel.github.io/drivers.gpu.control-library/Control/api.html#ctl-init-args-t),
