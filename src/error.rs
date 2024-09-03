@@ -1,4 +1,4 @@
-use crate::ffi::{self, ctl_result_t};
+use crate::ffi::ctl_result_t;
 use core::fmt;
 use std::{
     fmt::{Display, Formatter},
@@ -307,7 +307,7 @@ impl fmt::Debug for Error {
 impl std::error::Error for Error {}
 
 impl Error {
-    pub fn from_result(result: ffi::ctl_result_t) -> Result<(), Self> {
+    pub fn from_result(result: ctl_result_t) -> Result<(), Self> {
         match result {
             ctl_result_t::CTL_RESULT_SUCCESS => Ok(()),
             x => Err(Self(x)),
@@ -315,7 +315,7 @@ impl Error {
     }
 
     pub fn from_result_with_assume_init_on_success<T>(
-        result: ffi::ctl_result_t,
+        result: ctl_result_t,
         ret: MaybeUninit<T>,
     ) -> Result<T, Self> {
         Self::from_result(result).map(|()| unsafe { ret.assume_init() })
