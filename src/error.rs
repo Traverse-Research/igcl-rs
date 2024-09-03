@@ -10,7 +10,7 @@ pub struct Error(pub ctl_result_t);
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
 impl Display for Error {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.write_str(match self.0 {
             ctl_result_t::CTL_RESULT_SUCCESS => {
                 "success."

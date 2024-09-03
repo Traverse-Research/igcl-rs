@@ -187,7 +187,7 @@ impl DeviceAdapter {
         Ok(frame_rate_limit)
     }
 
-    /// Attempt to query the flip mode driver setting. 
+    /// Attempt to query the flip mode driver setting.
     /// Falls back to a higher scope if the setting could not be found in the current one.
     pub fn feature_flip_mode(
         &self,
