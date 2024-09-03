@@ -13,6 +13,32 @@ use crate::{
     },
 };
 
+pub enum DriverSettingScope<'a> {
+    /// Read the global settings.
+    Global,
+    /// Dynamically detect the current process.
+    CurrentProcess,
+    /// A specific process with file extension, e.g. `hl2.exe`.
+    Process { process_name: &'a str },
+}
+
+impl DriverSettingScope<'_> {
+    pub fn to_string(&self) -> String {
+        match self {
+            DriverSettingScope::Global => String::default(),
+            DriverSettingScope::CurrentProcess => {
+                std::env::current_exe().map_or("".to_string(), |path| {
+                    path.file_name()
+                        .unwrap_or(OsStr::new(""))
+                        .to_string_lossy()
+                        .to_string()
+                })
+            }
+            DriverSettingScope::Process { process_name } => process_name.to_string(),
+        }
+    }
+}
+
 #[doc(alias = "ctl_device_adapter_handle_t")]
 pub struct DeviceAdapter {
     pub(crate) device_adapter_handle: ctl_device_adapter_handle_t,
@@ -69,13 +95,11 @@ impl DeviceAdapter {
         self.adapter_properties.device_type
     }
 
-    pub fn feature_endurance_gaming(&self) -> Result<Box<ctl_endurance_gaming_t>> {
-        let mut current_app = std::env::current_exe().map_or("".to_string(), |path| {
-            path.file_name()
-                .unwrap_or(OsStr::new(""))
-                .to_string_lossy()
-                .to_string()
-        });
+    pub fn feature_endurance_gaming(
+        &self,
+        scope: DriverSettingScope<'_>,
+    ) -> Result<Box<ctl_endurance_gaming_t>> {
+        let mut current_app = scope.to_string();
 
         let mut settings: Box<ctl_endurance_gaming_t> = Box::new(unsafe { std::mem::zeroed() });
         let reference = settings.as_mut();
@@ -102,13 +126,8 @@ impl DeviceAdapter {
         Ok(settings)
     }
 
-    pub fn feature_frame_limit(&self) -> Result<i32> {
-        let mut current_app = std::env::current_exe().map_or("".to_string(), |path| {
-            path.file_name()
-                .unwrap_or(OsStr::new(""))
-                .to_string_lossy()
-                .to_string()
-        });
+    pub fn feature_frame_limit(&self, scope: DriverSettingScope<'_>) -> Result<i32> {
+        let mut current_app = scope.to_string();
 
         let mut feature = ctl_3d_feature_getset_t {
             Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
@@ -131,13 +150,11 @@ impl DeviceAdapter {
         Ok(unsafe { feature.Value.IntType.Value })
     }
 
-    pub fn feature_flip_mode(&self) -> Result<ctl_gaming_flip_mode_flag_t> {
-        let mut current_app = std::env::current_exe().map_or("".to_string(), |path| {
-            path.file_name()
-                .unwrap_or(OsStr::new(""))
-                .to_string_lossy()
-                .to_string()
-        });
+    pub fn feature_flip_mode(
+        &self,
+        scope: DriverSettingScope<'_>,
+    ) -> Result<ctl_gaming_flip_mode_flag_t> {
+        let mut current_app = scope.to_string();
 
         let mut feature = ctl_3d_feature_getset_t {
             Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
