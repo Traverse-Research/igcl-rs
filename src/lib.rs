@@ -48,7 +48,7 @@ impl Igcl {
             };
 
             // Pointer to an API handle.
-            let mut api_handle = MaybeUninit::uninit();
+            let mut api_handle = MaybeUninit::zeroed();
 
             Error::from_result_with_assume_init_on_success(
                 unsafe { control_lib.ctlInit(&mut init_args, api_handle.as_mut_ptr()) },
@@ -65,7 +65,8 @@ impl Igcl {
     /// Enumerate all available physical devices.
     #[doc(alias = "ctlEnumerateDevices")]
     pub fn enumerate_devices(&self) -> Result<Vec<DeviceAdapter>> {
-        let mut num_adapters = MaybeUninit::uninit();
+        // Note(Jan): this MUST be zeroed. The `pCount` u32 value written to by `ctlEnumerateDevices` only actually writes 16 bits.
+        let mut num_adapters = MaybeUninit::zeroed();
 
         let mut num_adapters = Error::from_result_with_assume_init_on_success(
             unsafe {
@@ -102,13 +103,16 @@ impl Igcl {
 
             // LUID is only available on windows.
             #[cfg(target_os = "windows")]
-            let device_id = {
+            let mut device_id = {
                 let luid_size = std::mem::size_of::<LUID>();
-                let mut device_id = vec![0u8; luid_size];
-                adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
+                let device_id = vec![0u8; luid_size];
                 adapter_properties.device_id_size = luid_size as u32;
                 device_id
             };
+            #[cfg(target_os = "windows")]
+            {
+                adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
+            }
 
             #[cfg(not(target_os = "windows"))]
             let device_id = vec![];
