@@ -100,8 +100,7 @@ impl Igcl {
 
         let mut devices = vec![];
 
-        for idx in 0..(num_adapters as usize) {
-            let device_adapter_handle = adapters[idx];
+        for device_adapter_handle in adapters.into_iter().take(num_adapters as usize) {
             let mut adapter_properties: ctl_device_adapter_properties_t =
                 unsafe { MaybeUninit::zeroed().assume_init() };
 

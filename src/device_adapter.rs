@@ -26,7 +26,7 @@ pub enum DriverSettingScope<'a> {
 }
 
 impl DriverSettingScope<'_> {
-    pub fn to_string(&self) -> String {
+    pub fn name(&self) -> String {
         match self {
             DriverSettingScope::Global => String::default(),
             DriverSettingScope::CurrentProcess => {
@@ -117,7 +117,7 @@ impl DeviceAdapter {
         let mut settings: Box<ctl_endurance_gaming_t> = Box::new(unsafe { std::mem::zeroed() });
 
         while let Some(driver_setting_scope) = scope.take() {
-            let mut current_app = driver_setting_scope.to_string();
+            let mut current_app = driver_setting_scope.name();
             let reference = settings.as_mut();
             let ptr = reference as *mut _ as *mut c_void;
 
@@ -156,7 +156,7 @@ impl DeviceAdapter {
         let mut frame_rate_limit = 0i32;
 
         while let Some(driver_setting_scope) = scope.take() {
-            let mut current_app = driver_setting_scope.to_string();
+            let mut current_app = driver_setting_scope.name();
 
             let mut feature = ctl_3d_feature_getset_t {
                 Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
@@ -199,7 +199,7 @@ impl DeviceAdapter {
         let mut flip_mode = 0;
 
         while let Some(driver_setting_scope) = scope.take() {
-            let mut current_app = driver_setting_scope.to_string();
+            let mut current_app = driver_setting_scope.name();
 
             let mut feature = ctl_3d_feature_getset_t {
                 Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
