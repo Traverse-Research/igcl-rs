@@ -23,7 +23,6 @@ fn main() {
         .default_enum_style(bindgen::EnumVariation::Rust {
             non_exhaustive: true,
         })
-        // .newtype_enum("_ctl_3d_feature_t_CTL_3D_FEATURE_\\w+")
         .generate()
         .expect("failed to generate igcl bindings");
 
