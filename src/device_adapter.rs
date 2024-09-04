@@ -14,7 +14,7 @@ use crate::{
 
 /// Specifies the scope in which to query for driver settings.
 /// Note that IGCL will not fall back to a wider scope when settings haven't been specified for the current one.
-/// This means it may be necessary to query for both the global and process scopes to retrieve a valid driver setting.
+/// This is solved by manually falling back to wider scopes in the query functions themselves.
 pub enum DriverSettingScope<'a> {
     /// Read the global settings.
     Global,
@@ -40,7 +40,7 @@ impl DriverSettingScope<'_> {
         }
     }
 
-    /// Get the scope that
+    /// Get the scope that encapsulates the current one (if any).
     pub fn fall_back_to_higher_scope(&self) -> Option<Self> {
         match self {
             Self::Global => None,
