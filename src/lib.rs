@@ -28,6 +28,7 @@ pub struct Igcl {
     api_handle: ctl_api_handle_t,
     control_lib: Arc<ControlLib>,
 }
+
 #[doc(alias = "CTL_MAKE_VERSION")]
 fn ctl_make_version(major: u32, minor: u32) -> u32 {
     (major << 16) | (minor & 0x0000ffff)
@@ -75,19 +76,17 @@ impl Igcl {
     /// Enumerate all available physical devices.
     #[doc(alias = "ctlEnumerateDevices")]
     pub fn enumerate_devices(&self) -> Result<Vec<DeviceAdapter>> {
-        // Note(Jan): this MUST be zeroed. The `pCount` u32 value written to by `ctlEnumerateDevices` only actually writes 16 bits.
-        let mut num_adapters = MaybeUninit::zeroed();
+        // Note(Jan): this MUST be zero, otherwise the api does not write the correct value away.
+        // The docs seem to also be wrong, because large values do not get truncated.
+        let mut num_adapters = 0u32;
 
-        let mut num_adapters = Error::from_result_with_assume_init_on_success(
-            unsafe {
-                self.control_lib.ctlEnumerateDevices(
-                    self.api_handle,
-                    num_adapters.as_mut_ptr(),
-                    std::ptr::null_mut(),
-                )
-            },
-            num_adapters,
-        )?;
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumerateDevices(
+                self.api_handle,
+                &mut num_adapters,
+                std::ptr::null_mut(),
+            )
+        })?;
 
         let mut adapters = Vec::with_capacity(num_adapters as usize);
 
