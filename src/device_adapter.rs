@@ -1,3 +1,4 @@
+use std::ffi::CStr;
 use std::os::raw::c_void;
 use std::{ffi::OsStr, sync::Arc};
 
@@ -81,8 +82,8 @@ impl DeviceAdapter {
         (bus, device, function)
     }
 
-    pub fn name(&self) -> &[i8] {
-        &self.adapter_properties.name
+    pub fn name(&self) -> &CStr {
+        CStr::from_bytes_until_nul(bytemuck::cast_slice(&self.adapter_properties.name)).unwrap()
     }
 
     pub fn pci_vendor_id(&self) -> u32 {
