@@ -111,16 +111,13 @@ impl Igcl {
 
             // LUID is only available on windows.
             #[cfg(target_os = "windows")]
-            let mut device_id = {
+            let device_id = {
                 let luid_size = std::mem::size_of::<LUID>();
-                let device_id = vec![0u8; luid_size];
+                let mut device_id = vec![0u8; luid_size];
                 adapter_properties.device_id_size = luid_size as u32;
+                adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
                 device_id
             };
-            #[cfg(target_os = "windows")]
-            {
-                adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
-            }
 
             #[cfg(not(target_os = "windows"))]
             let device_id = vec![];
