@@ -8,6 +8,8 @@ use ffi::{
     ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t, CTL_IMPL_MAJOR_VERSION,
     CTL_IMPL_MINOR_VERSION,
 };
+
+#[cfg(target_os = "windows")]
 use windows::Win32::Foundation::LUID;
 
 use crate::{
@@ -15,6 +17,7 @@ use crate::{
     ffi::{ctl_api_handle_t, ControlLib},
 };
 
+#[allow(clippy::missing_safety_doc)]
 #[allow(nonstandard_style)]
 pub mod ffi;
 
