@@ -3,13 +3,12 @@ use std::{ffi::OsStr, sync::Arc};
 
 use crate::error::Result;
 
-use crate::ffi::{_ctl_result_t, ctl_endurance_gaming_t, ctl_result_t};
 use crate::{
     error::Error,
     ffi::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
         ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
-        ctl_property_value_type_t, ControlLib,
+        ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t, ctl_result_t,
     },
 };
 
