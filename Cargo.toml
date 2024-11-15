@@ -1,9 +1,23 @@
 [package]
-name = "igcl-rs"
-version = "0.1.0"
+name = "igcl"
+version = "0.0.0"
+authors = ["Traverse Research <support@traverseresearch.nl>"]
 edition = "2021"
+license = "MIT"
+homepage = "https://traverseresearch.nl"
+repository = "https://github.com/Traverse-Research/igcl-rs"
+description = "Bindings to Intel GPU Control Library"
+include = ["src", "LICENSE"]
+categories = ["external-ffi-bindings", "api-bindings", "graphics"] # https://crates.io/category_slugs
+keywords = ["intel", "igcl", "gpu"]
 
 [dependencies]
+anyhow = "1.0.79"
+bytemuck = "1.17.1"
+libloading = "0.8"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.58.0", default-features = false, features = ["Win32_Foundation"] }
 
 [workspace]
 members = [
