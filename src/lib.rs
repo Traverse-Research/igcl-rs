@@ -46,7 +46,7 @@ impl Igcl {
                 Size: std::mem::size_of::<ctl_init_args_t>() as u32,
                 Version: 0,
                 AppVersion: ctl_make_version(CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION),
-                flags: CTL_INIT_FLAG_USE_LEVEL_ZERO as u32,
+                flags: 0,
                 SupportedVersion: ctl_make_version(CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION),
                 // According to the igcl documentation (https://intel.github.io/drivers.gpu.control-library/Control/api.html#ctl-init-args-t),
                 // this can be all zeroes.
