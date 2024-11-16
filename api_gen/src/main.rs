@@ -7,6 +7,10 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header(header_path.to_string_lossy())
+        .derive_debug(true)
+        .layout_tests(false)
+        .impl_debug(true)
+        .derive_default(true)
         .clang_arg(format!(
             "-I{}",
             crate_root

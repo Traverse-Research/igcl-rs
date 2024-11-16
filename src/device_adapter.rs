@@ -9,7 +9,8 @@ use crate::{
     ffi::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
         ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
-        ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t, ctl_result_t,
+        ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t,
+        ctl_oc_telemetry_item_t, ctl_power_telemetry_t, ctl_result_t,
     },
 };
 
@@ -240,4 +241,178 @@ impl DeviceAdapter {
 
         Ok(flip_mode)
     }
+
+    pub fn power_telemetry(&self) -> Result<Telemetry> {
+        let mut telemetry = ctl_power_telemetry_t::default();
+        telemetry.Size = std::mem::size_of::<ctl_power_telemetry_t>() as u32;
+
+        let result = unsafe {
+            self.control_lib
+                .ctlPowerTelemetryGet(self.device_adapter_handle, &mut telemetry)
+        };
+
+        Error::from_result(result)?;
+
+        Ok(Telemetry {
+            time_stamp: telemetry.timeStamp.into(),
+            gpu_energy_counter: telemetry.gpuEnergyCounter.into(),
+            gpu_voltage: telemetry.gpuVoltage.into(),
+            gpu_current_clock_frequency: telemetry.gpuCurrentClockFrequency.into(),
+            gpu_current_temperature: telemetry.gpuCurrentTemperature.into(),
+            global_activity_counter: telemetry.globalActivityCounter.into(),
+            render_compute_activity_counter: telemetry.renderComputeActivityCounter.into(),
+            media_activity_counter: telemetry.mediaActivityCounter.into(),
+            vram_energy_counter: telemetry.vramEnergyCounter.into(),
+            vram_voltage: telemetry.vramVoltage.into(),
+            vram_current_clock_frequency: telemetry.vramCurrentClockFrequency.into(),
+            vram_current_effective_frequency: telemetry.vramCurrentEffectiveFrequency.into(),
+            vram_read_bandwidth_counter: telemetry.vramReadBandwidthCounter.into(),
+            vram_write_bandwidth_counter: telemetry.vramWriteBandwidthCounter.into(),
+            vram_current_temperature: telemetry.vramCurrentTemperature.into(),
+            total_card_energy_counter: telemetry.totalCardEnergyCounter.into(),
+            fan_speed: [
+                telemetry.fanSpeed[0].into(),
+                telemetry.fanSpeed[1].into(),
+                telemetry.fanSpeed[2].into(),
+                telemetry.fanSpeed[3].into(),
+                telemetry.fanSpeed[4].into(),
+            ],
+        })
+    }
+}
+
+#[derive(Debug)]
+pub enum Value {
+    I8(i8),
+    U8(u8),
+    I16(i16),
+    U16(u16),
+    I32(i32),
+    U32(u32),
+    I64(i64),
+    U64(u64),
+    F32(f32),
+    F64(f64),
+}
+
+#[derive(Debug)]
+pub enum Unit {
+    FrequencyMhz(Value),
+    OperationsGts(Value),
+    OperationsMts(Value),
+    VoltageVolts(Value),
+    PowerWatts(Value),
+    TemperatureCelsius(Value),
+    EnergyJoules(Value),
+    TimeSeconds(Value),
+    MemoryBytes(Value),
+    AngularSpeedRpm(Value),
+    PowerMilliwatts(Value),
+    Percent(Value),
+    MemSpeedGbps(Value),
+    VoltageMillivolts(Value),
+}
+
+#[derive(Debug)]
+pub struct TelemetryItem(pub Option<Unit>);
+
+impl From<ctl_oc_telemetry_item_t> for TelemetryItem {
+    fn from(item: ctl_oc_telemetry_item_t) -> Self {
+        TelemetryItem(if item.bSupported {
+            let value = match item.type_ {
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT8 => {
+                    Value::I8(unsafe { item.value.data8 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT8 => {
+                    Value::U8(unsafe { item.value.datau8 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT16 => {
+                    Value::I16(unsafe { item.value.data16 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT16 => {
+                    Value::U16(unsafe { item.value.datau16 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT32 => {
+                    Value::I32(unsafe { item.value.data32 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT32 => {
+                    Value::U32(unsafe { item.value.datau32 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT64 => {
+                    Value::I64(unsafe { item.value.data64 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT64 => {
+                    Value::U64(unsafe { item.value.datau64 })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_FLOAT => {
+                    Value::F32(unsafe { item.value.datafloat })
+                }
+                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_DOUBLE => {
+                    Value::F64(unsafe { item.value.datadouble })
+                }
+                _ => return TelemetryItem(None),
+            };
+
+            Some(match item.units {
+                crate::ffi::_ctl_units_t::CTL_UNITS_FREQUENCY_MHZ => Unit::FrequencyMhz(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_OPERATIONS_GTS => Unit::OperationsGts(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_OPERATIONS_MTS => Unit::OperationsMts(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_VOLTAGE_VOLTS => Unit::VoltageVolts(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_POWER_WATTS => Unit::PowerWatts(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_TEMPERATURE_CELSIUS => {
+                    Unit::TemperatureCelsius(value)
+                }
+                crate::ffi::_ctl_units_t::CTL_UNITS_ENERGY_JOULES => Unit::EnergyJoules(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_TIME_SECONDS => Unit::TimeSeconds(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_MEMORY_BYTES => Unit::MemoryBytes(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_ANGULAR_SPEED_RPM => {
+                    Unit::AngularSpeedRpm(value)
+                }
+                crate::ffi::_ctl_units_t::CTL_UNITS_POWER_MILLIWATTS => {
+                    Unit::PowerMilliwatts(value)
+                }
+                crate::ffi::_ctl_units_t::CTL_UNITS_PERCENT => Unit::Percent(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_MEM_SPEED_GBPS => Unit::MemSpeedGbps(value),
+                crate::ffi::_ctl_units_t::CTL_UNITS_VOLTAGE_MILLIVOLTS => {
+                    Unit::VoltageMillivolts(value)
+                }
+                _ => return TelemetryItem(None),
+            })
+        } else {
+            None
+        })
+    }
+}
+
+#[derive(Debug)]
+pub struct Telemetry {
+    pub time_stamp: TelemetryItem,
+    pub gpu_energy_counter: TelemetryItem,
+    pub gpu_voltage: TelemetryItem,
+    pub gpu_current_clock_frequency: TelemetryItem,
+    pub gpu_current_temperature: TelemetryItem,
+    pub global_activity_counter: TelemetryItem,
+    pub render_compute_activity_counter: TelemetryItem,
+    pub media_activity_counter: TelemetryItem,
+    pub vram_energy_counter: TelemetryItem,
+    pub vram_voltage: TelemetryItem,
+    pub vram_current_clock_frequency: TelemetryItem,
+    pub vram_current_effective_frequency: TelemetryItem,
+    pub vram_read_bandwidth_counter: TelemetryItem,
+    pub vram_write_bandwidth_counter: TelemetryItem,
+    pub vram_current_temperature: TelemetryItem,
+    pub total_card_energy_counter: TelemetryItem,
+    pub fan_speed: [TelemetryItem; 5],
+    // pub gpuPowerLimited: bool,
+    // pub gpuTemperatureLimited: bool,
+    // pub gpuCurrentLimited: bool,
+    // pub gpuVoltageLimited: bool,
+    // pub gpuUtilizationLimited: bool,
+    // pub vramPowerLimited: bool,
+    // pub vramTemperatureLimited: bool,
+    // pub vramCurrentLimited: bool,
+    // pub vramVoltageLimited: bool,
+    // pub vramUtilizationLimited: bool,
+    // pub psu: [ctl_psu_info_t; 5usize],
+    // pub fanSpeed: [ctl_oc_telemetry_item_t; 5usize],
 }
