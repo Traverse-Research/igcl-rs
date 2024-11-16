@@ -243,8 +243,10 @@ impl DeviceAdapter {
     }
 
     pub fn power_telemetry(&self) -> Result<Telemetry> {
-        let mut telemetry = ctl_power_telemetry_t::default();
-        telemetry.Size = std::mem::size_of::<ctl_power_telemetry_t>() as u32;
+        let mut telemetry = ctl_power_telemetry_t {
+            Size: std::mem::size_of::<ctl_power_telemetry_t>() as u32,
+            ..Default::default()
+        };
 
         let result = unsafe {
             self.control_lib
