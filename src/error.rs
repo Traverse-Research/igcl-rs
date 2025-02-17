@@ -309,7 +309,8 @@ impl std::error::Error for Error {}
 impl Error {
     pub fn from_result(result: ctl_result_t) -> Result<(), Self> {
         match result {
-            ctl_result_t::CTL_RESULT_SUCCESS => Ok(()),
+            ctl_result_t::CTL_RESULT_SUCCESS
+            | ctl_result_t::CTL_RESULT_SUCCESS_STILL_OPEN_BY_ANOTHER_CALLER => Ok(()),
             x => Err(Self(x)),
         }
     }
