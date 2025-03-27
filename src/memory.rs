@@ -12,6 +12,12 @@ pub struct MemoryState {
     pub free: u64,
 }
 
+impl MemoryState {
+    pub fn used(&self) -> u64 {
+        self.total - self.free
+    }
+}
+
 #[doc(alias = "ctl_mem_handle_t")]
 pub struct MemoryModule {
     pub(crate) control_lib: Arc<ControlLib>,
