@@ -11,7 +11,7 @@ use crate::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
         ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
         ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t,
-        ctl_oc_telemetry_item_t, ctl_pfnEnumMemoryModules_t, ctl_power_telemetry_t, ctl_result_t,
+        ctl_oc_telemetry_item_t, ctl_power_telemetry_t, ctl_result_t,
     },
 };
 
@@ -50,11 +50,6 @@ impl DriverSettingScope<'_> {
             _ => Some(Self::Global),
         }
     }
-}
-
-pub struct MemoryState {
-    pub total_size: u64,
-    pub available: u64,
 }
 
 #[doc(alias = "ctl_device_adapter_handle_t")]
@@ -275,6 +270,7 @@ impl DeviceAdapter {
             .into_iter()
             .map(|handle| MemoryModule {
                 memory_module_handle: handle,
+                control_lib: self.control_lib.clone(),
             })
             .collect())
     }
