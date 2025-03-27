@@ -5,8 +5,8 @@ use std::{mem::MaybeUninit, sync::Arc};
 use anyhow::Result;
 use device_adapter::DeviceAdapter;
 use ffi::{
-    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t, CTL_IMPL_MAJOR_VERSION,
-    CTL_IMPL_MINOR_VERSION,
+    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t,
+    ctl_init_flag_t::CTL_INIT_FLAG_USE_LEVEL_ZERO, CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION,
 };
 
 #[cfg(target_os = "windows")]
@@ -47,7 +47,7 @@ impl Igcl {
                 Version: 0,
                 AppVersion: ctl_make_version(CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION),
                 flags: 0,
-                SupportedVersion: 0,
+                SupportedVersion: ctl_make_version(CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION),
                 // According to the igcl documentation (https://intel.github.io/drivers.gpu.control-library/Control/api.html#ctl-init-args-t),
                 // this can be all zeroes.
                 ApplicationUID: ctl_application_id_t {

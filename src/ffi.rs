@@ -83,48 +83,12 @@ pub struct _ctl_engine_handle_t {
 pub type ctl_engine_handle_t = *mut _ctl_engine_handle_t;
 #[doc = "\n @brief Base for all properties types"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_base_interface_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
     #[doc = "< [in] version of this structure"]
     pub Version: u8,
-}
-#[test]
-fn bindgen_test_layout__ctl_base_interface_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_base_interface_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_base_interface_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_base_interface_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_base_interface_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_base_interface_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_base_interface_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_base_interface_t),
-            "::",
-            stringify!(Version)
-        )
-    );
 }
 #[doc = "\n @brief Base for all properties types"]
 pub type ctl_base_interface_t = _ctl_base_interface_t;
@@ -151,7 +115,7 @@ pub enum _ctl_property_value_type_t {
 pub use self::_ctl_property_value_type_t as ctl_property_value_type_t;
 #[doc = "\n @brief Property range details, a generic struct to hold min/max/step size\n        information of various feature properties"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_range_info_t {
     #[doc = "< [out] Minimum possible value"]
     pub min_possible_value: f32,
@@ -162,67 +126,11 @@ pub struct _ctl_property_range_info_t {
     #[doc = "< [out] Default value"]
     pub default_value: f32,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_range_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_range_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_range_info_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_property_range_info_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_range_info_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_range_info_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).min_possible_value) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_t),
-            "::",
-            stringify!(min_possible_value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).max_possible_value) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_t),
-            "::",
-            stringify!(max_possible_value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).step_size) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_t),
-            "::",
-            stringify!(step_size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).default_value) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_t),
-            "::",
-            stringify!(default_value)
-        )
-    );
-}
 #[doc = "\n @brief Property range details, a generic struct to hold min/max/step size\n        information of various feature properties"]
 pub type ctl_property_range_info_t = _ctl_property_range_info_t;
 #[doc = "\n @brief Property range details of integer type, a generic struct to hold\n        min/max/step size information of various feature properties"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_range_info_int_t {
     #[doc = "< [out] Minimum possible value"]
     pub min_possible_value: i32,
@@ -233,67 +141,11 @@ pub struct _ctl_property_range_info_int_t {
     #[doc = "< [out] Default value"]
     pub default_value: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_range_info_int_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_range_info_int_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_range_info_int_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_property_range_info_int_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_range_info_int_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_range_info_int_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).min_possible_value) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_int_t),
-            "::",
-            stringify!(min_possible_value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).max_possible_value) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_int_t),
-            "::",
-            stringify!(max_possible_value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).step_size) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_int_t),
-            "::",
-            stringify!(step_size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).default_value) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_int_t),
-            "::",
-            stringify!(default_value)
-        )
-    );
-}
 #[doc = "\n @brief Property range details of integer type, a generic struct to hold\n        min/max/step size information of various feature properties"]
 pub type ctl_property_range_info_int_t = _ctl_property_range_info_int_t;
 #[doc = "\n @brief Property range details of unsigned integer type, a generic struct to\n        hold min/max/step size information of various feature properties"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_range_info_uint_t {
     #[doc = "< [out] Minimum possible value"]
     pub min_possible_value: u32,
@@ -304,492 +156,109 @@ pub struct _ctl_property_range_info_uint_t {
     #[doc = "< [out] Default value"]
     pub default_value: u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_range_info_uint_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_range_info_uint_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_range_info_uint_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_property_range_info_uint_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_range_info_uint_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_range_info_uint_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).min_possible_value) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_uint_t),
-            "::",
-            stringify!(min_possible_value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).max_possible_value) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_uint_t),
-            "::",
-            stringify!(max_possible_value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).step_size) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_uint_t),
-            "::",
-            stringify!(step_size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).default_value) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_range_info_uint_t),
-            "::",
-            stringify!(default_value)
-        )
-    );
-}
 #[doc = "\n @brief Property range details of unsigned integer type, a generic struct to\n        hold min/max/step size information of various feature properties"]
 pub type ctl_property_range_info_uint_t = _ctl_property_range_info_uint_t;
 #[doc = "\n @brief Bool feature details"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_info_boolean_t {
     #[doc = "< [out] Default state"]
     pub DefaultState: bool,
-}
-#[test]
-fn bindgen_test_layout__ctl_property_info_boolean_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_info_boolean_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_info_boolean_t>(),
-        1usize,
-        concat!("Size of: ", stringify!(_ctl_property_info_boolean_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_info_boolean_t>(),
-        1usize,
-        concat!("Alignment of ", stringify!(_ctl_property_info_boolean_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DefaultState) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_boolean_t),
-            "::",
-            stringify!(DefaultState)
-        )
-    );
 }
 #[doc = "\n @brief Bool feature details"]
 pub type ctl_property_info_boolean_t = _ctl_property_info_boolean_t;
 #[doc = "\n @brief Bool feature for get/set"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_boolean_t {
     #[doc = "< [in,out] Enable"]
     pub Enable: bool,
-}
-#[test]
-fn bindgen_test_layout__ctl_property_boolean_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_boolean_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_boolean_t>(),
-        1usize,
-        concat!("Size of: ", stringify!(_ctl_property_boolean_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_boolean_t>(),
-        1usize,
-        concat!("Alignment of ", stringify!(_ctl_property_boolean_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_boolean_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
 }
 #[doc = "\n @brief Bool feature for get/set"]
 pub type ctl_property_boolean_t = _ctl_property_boolean_t;
 #[doc = "\n @brief Enumeration feature details"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_info_enum_t {
     #[doc = "< [out] Supported possible values represented as a bitmask"]
     pub SupportedTypes: u64,
     #[doc = "< [out] Default type"]
     pub DefaultType: u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_info_enum_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_info_enum_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_info_enum_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_property_info_enum_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_info_enum_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_property_info_enum_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedTypes) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_enum_t),
-            "::",
-            stringify!(SupportedTypes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DefaultType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_enum_t),
-            "::",
-            stringify!(DefaultType)
-        )
-    );
-}
 #[doc = "\n @brief Enumeration feature details"]
 pub type ctl_property_info_enum_t = _ctl_property_info_enum_t;
 #[doc = "\n @brief Enumeration feature for get/set"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_enum_t {
     #[doc = "< [in,out] Enable with specific type"]
     pub EnableType: u32,
-}
-#[test]
-fn bindgen_test_layout__ctl_property_enum_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_enum_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_enum_t>(),
-        4usize,
-        concat!("Size of: ", stringify!(_ctl_property_enum_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_enum_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_enum_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EnableType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_enum_t),
-            "::",
-            stringify!(EnableType)
-        )
-    );
 }
 #[doc = "\n @brief Enumeration feature for get/set"]
 pub type ctl_property_enum_t = _ctl_property_enum_t;
 #[doc = "\n @brief Float feature details"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_info_float_t {
     #[doc = "< [in,out] DefaultEnable"]
     pub DefaultEnable: bool,
     #[doc = "< [out] Min/max/default/step details"]
     pub RangeInfo: ctl_property_range_info_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_info_float_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_info_float_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_info_float_t>(),
-        20usize,
-        concat!("Size of: ", stringify!(_ctl_property_info_float_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_info_float_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_info_float_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DefaultEnable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_float_t),
-            "::",
-            stringify!(DefaultEnable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RangeInfo) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_float_t),
-            "::",
-            stringify!(RangeInfo)
-        )
-    );
-}
 #[doc = "\n @brief Float feature details"]
 pub type ctl_property_info_float_t = _ctl_property_info_float_t;
 #[doc = "\n @brief Float feature for get/set"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_float_t {
     #[doc = "< [in,out] Enable"]
     pub Enable: bool,
     #[doc = "< [in,out] Value"]
     pub Value: f32,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_float_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_float_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_float_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_property_float_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_float_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_float_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_float_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_float_t),
-            "::",
-            stringify!(Value)
-        )
-    );
-}
 #[doc = "\n @brief Float feature for get/set"]
 pub type ctl_property_float_t = _ctl_property_float_t;
 #[doc = "\n @brief Int32 feature details"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_info_int_t {
     #[doc = "< [in,out] DefaultEnable"]
     pub DefaultEnable: bool,
     #[doc = "< [out] Min/max/default/step details"]
     pub RangeInfo: ctl_property_range_info_int_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_info_int_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_info_int_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_info_int_t>(),
-        20usize,
-        concat!("Size of: ", stringify!(_ctl_property_info_int_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_info_int_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_info_int_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DefaultEnable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_int_t),
-            "::",
-            stringify!(DefaultEnable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RangeInfo) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_int_t),
-            "::",
-            stringify!(RangeInfo)
-        )
-    );
-}
 #[doc = "\n @brief Int32 feature details"]
 pub type ctl_property_info_int_t = _ctl_property_info_int_t;
 #[doc = "\n @brief Int32 feature for get/set"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_int_t {
     #[doc = "< [in,out] Enable"]
     pub Enable: bool,
     #[doc = "< [in,out] Value"]
     pub Value: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_int_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_int_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_int_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_property_int_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_int_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_int_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_int_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_int_t),
-            "::",
-            stringify!(Value)
-        )
-    );
-}
 #[doc = "\n @brief Int32 feature for get/set"]
 pub type ctl_property_int_t = _ctl_property_int_t;
 #[doc = "\n @brief Int32 feature details"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_info_uint_t {
     #[doc = "< [in,out] DefaultEnable"]
     pub DefaultEnable: bool,
     #[doc = "< [out] Min/max/default/step details"]
     pub RangeInfo: ctl_property_range_info_uint_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_info_uint_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_info_uint_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_info_uint_t>(),
-        20usize,
-        concat!("Size of: ", stringify!(_ctl_property_info_uint_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_info_uint_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_info_uint_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DefaultEnable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_uint_t),
-            "::",
-            stringify!(DefaultEnable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RangeInfo) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_uint_t),
-            "::",
-            stringify!(RangeInfo)
-        )
-    );
-}
 #[doc = "\n @brief Int32 feature details"]
 pub type ctl_property_info_uint_t = _ctl_property_info_uint_t;
 #[doc = "\n @brief Int32 feature for get/set"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_property_uint_t {
     #[doc = "< [in,out] Enable"]
     pub Enable: bool,
     #[doc = "< [in,out] Value"]
     pub Value: u32,
-}
-#[test]
-fn bindgen_test_layout__ctl_property_uint_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_uint_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_uint_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_property_uint_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_uint_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_uint_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_uint_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_uint_t),
-            "::",
-            stringify!(Value)
-        )
-    );
 }
 #[doc = "\n @brief Int32 feature for get/set"]
 pub type ctl_property_uint_t = _ctl_property_uint_t;
@@ -808,70 +277,19 @@ pub union _ctl_property_info_t {
     #[doc = "< [in,out] Unsigned Int type fields"]
     pub UIntType: ctl_property_info_uint_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_info_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_info_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_property_info_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_info_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_property_info_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).BoolType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_t),
-            "::",
-            stringify!(BoolType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FloatType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_t),
-            "::",
-            stringify!(FloatType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IntType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_t),
-            "::",
-            stringify!(IntType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EnumType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_t),
-            "::",
-            stringify!(EnumType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).UIntType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_info_t),
-            "::",
-            stringify!(UIntType)
-        )
-    );
+impl Default for _ctl_property_info_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_property_info_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "_ctl_property_info_t {{ union }}")
+    }
 }
 #[doc = "\n @brief Feature element details, union of bool/float/enum property_info\n        structs. Used for feature specific capability check"]
 pub type ctl_property_info_t = _ctl_property_info_t;
@@ -890,70 +308,19 @@ pub union _ctl_property_t {
     #[doc = "< [in,out] Unsigned Int type fields"]
     pub UIntType: ctl_property_uint_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_property_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_property_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_property_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_property_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_property_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_property_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).BoolType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_t),
-            "::",
-            stringify!(BoolType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FloatType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_t),
-            "::",
-            stringify!(FloatType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IntType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_t),
-            "::",
-            stringify!(IntType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EnumType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_t),
-            "::",
-            stringify!(EnumType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).UIntType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_property_t),
-            "::",
-            stringify!(UIntType)
-        )
-    );
+impl Default for _ctl_property_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_property_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "_ctl_property_t {{ union }}")
+    }
 }
 #[doc = "\n @brief Feature element details, union of bool/float/enum property structs.\n        Used for get/set calls"]
 pub type ctl_property_t = _ctl_property_t;
@@ -1256,173 +623,36 @@ pub union _ctl_data_value_t {
     #[doc = "< [out] The data type is 64 bit floating point."]
     pub datadouble: f64,
 }
-#[test]
-fn bindgen_test_layout__ctl_data_value_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_data_value_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_data_value_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_data_value_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_data_value_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_data_value_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).data8) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(data8)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).datau8) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(datau8)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).data16) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(data16)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).datau16) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(datau16)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).data32) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(data32)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).datau32) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(datau32)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).data64) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(data64)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).datau64) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(datau64)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).datafloat) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(datafloat)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).datadouble) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_data_value_t),
-            "::",
-            stringify!(datadouble)
-        )
-    );
+impl Default for _ctl_data_value_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_data_value_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "_ctl_data_value_t {{ union }}")
+    }
 }
 #[doc = "\n @brief Union for Generic Data.\n\n @details\n     - The telemetry data items could be of different types.\n     - Refer to ::ctl_data_type_t to find the current type."]
 pub type ctl_data_value_t = _ctl_data_value_t;
 #[doc = "\n @brief Base for all properties types"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_base_properties_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
     #[doc = "< [in] version of this structure"]
     pub Version: u8,
 }
-#[test]
-fn bindgen_test_layout__ctl_base_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_base_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_base_properties_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_base_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_base_properties_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_base_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_base_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_base_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-}
 #[doc = "\n @brief Base for all properties types"]
 pub type ctl_base_properties_t = _ctl_base_properties_t;
 #[doc = "\n @brief Application Unique ID"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_application_id_t {
     #[doc = "< [in] Data1"]
     pub Data1: u32,
@@ -1433,67 +663,11 @@ pub struct _ctl_application_id_t {
     #[doc = "< [in] Data4"]
     pub Data4: [u8; 8usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_application_id_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_application_id_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_application_id_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_application_id_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_application_id_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_application_id_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data1) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_application_id_t),
-            "::",
-            stringify!(Data1)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data2) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_application_id_t),
-            "::",
-            stringify!(Data2)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data3) as usize - ptr as usize },
-        6usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_application_id_t),
-            "::",
-            stringify!(Data3)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data4) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_application_id_t),
-            "::",
-            stringify!(Data4)
-        )
-    );
-}
 #[doc = "\n @brief Application Unique ID"]
 pub type ctl_application_id_t = _ctl_application_id_t;
 #[doc = "\n @brief Init arguments"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_init_args_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -1507,81 +681,6 @@ pub struct _ctl_init_args_t {
     pub SupportedVersion: ctl_version_info_t,
     #[doc = "< [in] Application Provided Unique ID.Application can pass all 0's as\n< the default ID"]
     pub ApplicationUID: ctl_application_id_t,
-}
-#[test]
-fn bindgen_test_layout__ctl_init_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_init_args_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_init_args_t>(),
-        36usize,
-        concat!("Size of: ", stringify!(_ctl_init_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_init_args_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_init_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_init_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_init_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AppVersion) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_init_args_t),
-            "::",
-            stringify!(AppVersion)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_init_args_t),
-            "::",
-            stringify!(flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedVersion) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_init_args_t),
-            "::",
-            stringify!(SupportedVersion)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationUID) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_init_args_t),
-            "::",
-            stringify!(ApplicationUID)
-        )
-    );
 }
 #[doc = "\n @brief Init arguments"]
 pub type ctl_init_args_t = _ctl_init_args_t;
@@ -1598,142 +697,34 @@ pub struct _ctl_reserved_args_t {
     #[doc = "< [in] struct size"]
     pub ArgSize: u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_reserved_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_reserved_args_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_reserved_args_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_reserved_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_reserved_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_reserved_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_reserved_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_reserved_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pSpecialArg) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_reserved_args_t),
-            "::",
-            stringify!(pSpecialArg)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ArgSize) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_reserved_args_t),
-            "::",
-            stringify!(ArgSize)
-        )
-    );
+impl Default for _ctl_reserved_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Reserved struct"]
 pub type ctl_reserved_args_t = _ctl_reserved_args_t;
 #[doc = "\n @brief Reserved base struct"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_reserved_args_base_t {
     #[doc = "< [in] Unique ID for reserved/special function"]
     pub ReservedFuncID: ctl_application_id_t,
-}
-#[test]
-fn bindgen_test_layout__ctl_reserved_args_base_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_reserved_args_base_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_reserved_args_base_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_reserved_args_base_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_reserved_args_base_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_reserved_args_base_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFuncID) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_reserved_args_base_t),
-            "::",
-            stringify!(ReservedFuncID)
-        )
-    );
 }
 #[doc = "\n @brief Reserved base struct"]
 pub type ctl_reserved_args_base_t = _ctl_reserved_args_base_t;
 #[doc = "\n @brief Reserved - Unlock function capability"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_unlock_capability_t {
     #[doc = "< [in] Unique ID for reserved/special function"]
     pub ReservedFuncID: ctl_application_id_t,
     #[doc = "< [in] Unique ID to unlock a specific function"]
     pub UnlockCapsID: ctl_application_id_t,
-}
-#[test]
-fn bindgen_test_layout__ctl_unlock_capability_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_unlock_capability_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_unlock_capability_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_unlock_capability_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_unlock_capability_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_unlock_capability_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFuncID) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_unlock_capability_t),
-            "::",
-            stringify!(ReservedFuncID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).UnlockCapsID) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_unlock_capability_t),
-            "::",
-            stringify!(UnlockCapsID)
-        )
-    );
 }
 #[doc = "\n @brief Reserved - Unlock function capability"]
 pub type ctl_unlock_capability_t = _ctl_unlock_capability_t;
@@ -1754,81 +745,14 @@ pub struct _ctl_runtime_path_args_t {
     #[doc = "< [in] Revision ID of interest to caller. pRuntimePath should not be\n< NULL."]
     pub RevID: u8,
 }
-#[test]
-fn bindgen_test_layout__ctl_runtime_path_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_runtime_path_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_runtime_path_args_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_runtime_path_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_runtime_path_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_runtime_path_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_runtime_path_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_runtime_path_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).UnlockID) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_runtime_path_args_t),
-            "::",
-            stringify!(UnlockID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pRuntimePath) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_runtime_path_args_t),
-            "::",
-            stringify!(pRuntimePath)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DeviceID) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_runtime_path_args_t),
-            "::",
-            stringify!(DeviceID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RevID) as usize - ptr as usize },
-        34usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_runtime_path_args_t),
-            "::",
-            stringify!(RevID)
-        )
-    );
+impl Default for _ctl_runtime_path_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Used by loader like modules to specify runtime implementation details"]
 pub type ctl_runtime_path_args_t = _ctl_runtime_path_args_t;
@@ -1849,7 +773,7 @@ pub enum _ctl_supported_functions_flag_t {
 pub use self::_ctl_supported_functions_flag_t as ctl_supported_functions_flag_t;
 #[doc = "\n @brief Firmware version"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_firmware_version_t {
     #[doc = "< [out] Major version"]
     pub major_version: u64,
@@ -1857,52 +781,6 @@ pub struct _ctl_firmware_version_t {
     pub minor_version: u64,
     #[doc = "< [out] Build number"]
     pub build_number: u64,
-}
-#[test]
-fn bindgen_test_layout__ctl_firmware_version_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_firmware_version_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_firmware_version_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_firmware_version_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_firmware_version_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_firmware_version_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).major_version) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_firmware_version_t),
-            "::",
-            stringify!(major_version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).minor_version) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_firmware_version_t),
-            "::",
-            stringify!(minor_version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).build_number) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_firmware_version_t),
-            "::",
-            stringify!(build_number)
-        )
-    );
 }
 #[doc = "\n @brief Firmware version"]
 pub type ctl_firmware_version_t = _ctl_firmware_version_t;
@@ -1936,7 +814,7 @@ pub enum _ctl_adapter_properties_flag_t {
 pub use self::_ctl_adapter_properties_flag_t as ctl_adapter_properties_flag_t;
 #[doc = "\n @brief Adapter Pci Bus, Device, Function"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_adapter_bdf_t {
     #[doc = "< [out] PCI Bus Number"]
     pub bus: u8,
@@ -1944,51 +822,6 @@ pub struct _ctl_adapter_bdf_t {
     pub device: u8,
     #[doc = "< [out] PCI function"]
     pub function: u8,
-}
-#[test]
-fn bindgen_test_layout__ctl_adapter_bdf_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_adapter_bdf_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_adapter_bdf_t>(),
-        3usize,
-        concat!("Size of: ", stringify!(_ctl_adapter_bdf_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_adapter_bdf_t>(),
-        1usize,
-        concat!("Alignment of ", stringify!(_ctl_adapter_bdf_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bus) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_bdf_t),
-            "::",
-            stringify!(bus)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).device) as usize - ptr as usize },
-        1usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_bdf_t),
-            "::",
-            stringify!(device)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).function) as usize - ptr as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_bdf_t),
-            "::",
-            stringify!(function)
-        )
-    );
 }
 #[doc = "\n @brief Adapter Pci Bus, Device, Function"]
 pub type ctl_adapter_bdf_t = _ctl_adapter_bdf_t;
@@ -2039,234 +872,14 @@ pub struct _ctl_device_adapter_properties_t {
     #[doc = "< [out] Reserved"]
     pub reserved: [::std::os::raw::c_char; 112usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_device_adapter_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_device_adapter_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_device_adapter_properties_t>(),
-        320usize,
-        concat!("Size of: ", stringify!(_ctl_device_adapter_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_device_adapter_properties_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_device_adapter_properties_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pDeviceID) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(pDeviceID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).device_id_size) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(device_id_size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).device_type) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(device_type)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).supported_subfunction_flags) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(supported_subfunction_flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).driver_version) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(driver_version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).firmware_version) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(firmware_version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pci_vendor_id) as usize - ptr as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(pci_vendor_id)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pci_device_id) as usize - ptr as usize },
-        68usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(pci_device_id)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).rev_id) as usize - ptr as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(rev_id)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).num_eus_per_sub_slice) as usize - ptr as usize },
-        76usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(num_eus_per_sub_slice)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).num_sub_slices_per_slice) as usize - ptr as usize },
-        80usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(num_sub_slices_per_slice)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).num_slices) as usize - ptr as usize },
-        84usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(num_slices)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).name) as usize - ptr as usize },
-        88usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(name)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).graphics_adapter_properties) as usize - ptr as usize },
-        188usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(graphics_adapter_properties)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Frequency) as usize - ptr as usize },
-        192usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(Frequency)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pci_subsys_id) as usize - ptr as usize },
-        196usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(pci_subsys_id)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pci_subsys_vendor_id) as usize - ptr as usize },
-        198usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(pci_subsys_vendor_id)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).adapter_bdf) as usize - ptr as usize },
-        200usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(adapter_bdf)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).reserved) as usize - ptr as usize },
-        203usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_device_adapter_properties_t),
-            "::",
-            stringify!(reserved)
-        )
-    );
+impl Default for _ctl_device_adapter_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Device Adapter properties"]
 pub type ctl_device_adapter_properties_t = _ctl_device_adapter_properties_t;
@@ -2292,47 +905,20 @@ pub struct _ctl_generic_void_datatype_t {
     #[doc = "< [in,out]size of the allocated memory"]
     pub size: u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_generic_void_datatype_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_generic_void_datatype_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_generic_void_datatype_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_generic_void_datatype_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_generic_void_datatype_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_generic_void_datatype_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pData) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_generic_void_datatype_t),
-            "::",
-            stringify!(pData)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).size) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_generic_void_datatype_t),
-            "::",
-            stringify!(size)
-        )
-    );
+impl Default for _ctl_generic_void_datatype_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Generic Structure for Void* datatypes"]
 pub type ctl_generic_void_datatype_t = _ctl_generic_void_datatype_t;
 #[doc = "\n @brief Generic Structure for Revision datatypes"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_revision_datatype_t {
     #[doc = "< [in,out]Major Version"]
     pub major_version: u8,
@@ -2340,52 +926,6 @@ pub struct _ctl_revision_datatype_t {
     pub minor_version: u8,
     #[doc = "< [in,out]Revision Version"]
     pub revision_version: u8,
-}
-#[test]
-fn bindgen_test_layout__ctl_revision_datatype_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_revision_datatype_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_revision_datatype_t>(),
-        3usize,
-        concat!("Size of: ", stringify!(_ctl_revision_datatype_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_revision_datatype_t>(),
-        1usize,
-        concat!("Alignment of ", stringify!(_ctl_revision_datatype_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).major_version) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_revision_datatype_t),
-            "::",
-            stringify!(major_version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).minor_version) as usize - ptr as usize },
-        1usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_revision_datatype_t),
-            "::",
-            stringify!(minor_version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).revision_version) as usize - ptr as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_revision_datatype_t),
-            "::",
-            stringify!(revision_version)
-        )
-    );
 }
 #[doc = "\n @brief Generic Structure for Revision datatypes"]
 pub type ctl_revision_datatype_t = _ctl_revision_datatype_t;
@@ -2425,94 +965,14 @@ pub struct _ctl_wait_property_change_args_t {
     #[doc = "< [out] Reserved out argument for future use"]
     pub ReservedOutFlags: u64,
 }
-#[test]
-fn bindgen_test_layout__ctl_wait_property_change_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_wait_property_change_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_wait_property_change_args_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_wait_property_change_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_wait_property_change_args_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_wait_property_change_args_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PropertyType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(PropertyType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TimeOutMilliSec) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(TimeOutMilliSec)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EventMiscFlags) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(EventMiscFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pReserved) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(pReserved)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedOutFlags) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wait_property_change_args_t),
-            "::",
-            stringify!(ReservedOutFlags)
-        )
-    );
+impl Default for _ctl_wait_property_change_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Arguments related to wait for a property change function"]
 pub type ctl_wait_property_change_args_t = _ctl_wait_property_change_args_t;
@@ -2535,7 +995,7 @@ pub enum _ctl_display_orientation_t {
 pub use self::_ctl_display_orientation_t as ctl_display_orientation_t;
 #[doc = "\n @brief Rectangle"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_rect_t {
     #[doc = "< [in,out] Left"]
     pub Left: i32,
@@ -2545,61 +1005,6 @@ pub struct _ctl_rect_t {
     pub Right: i32,
     #[doc = "< [in,out] Bottom"]
     pub Bottom: i32,
-}
-#[test]
-fn bindgen_test_layout__ctl_rect_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_rect_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_rect_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_rect_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_rect_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_rect_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Left) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_rect_t),
-            "::",
-            stringify!(Left)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Top) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_rect_t),
-            "::",
-            stringify!(Top)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Right) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_rect_t),
-            "::",
-            stringify!(Right)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Bottom) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_rect_t),
-            "::",
-            stringify!(Bottom)
-        )
-    );
 }
 #[doc = "\n @brief Rectangle"]
 pub type ctl_rect_t = _ctl_rect_t;
@@ -3054,48 +1459,12 @@ pub enum _ctl_gaming_flip_mode_flag_t {
 pub use self::_ctl_gaming_flip_mode_flag_t as ctl_gaming_flip_mode_flag_t;
 #[doc = "\n @brief Endurance Gaming caps"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_endurance_gaming_caps_t {
     #[doc = "< [out] Endurance Gaming control capability"]
     pub EGControlCaps: ctl_property_info_enum_t,
     #[doc = "< [out] Endurance Gaming mode capability"]
     pub EGModeCaps: ctl_property_info_enum_t,
-}
-#[test]
-fn bindgen_test_layout__ctl_endurance_gaming_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_endurance_gaming_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_endurance_gaming_caps_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_endurance_gaming_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_endurance_gaming_caps_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_endurance_gaming_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EGControlCaps) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming_caps_t),
-            "::",
-            stringify!(EGControlCaps)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EGModeCaps) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming_caps_t),
-            "::",
-            stringify!(EGModeCaps)
-        )
-    );
 }
 #[doc = "\n @brief Endurance Gaming Get/Set"]
 #[repr(C)]
@@ -3106,41 +1475,14 @@ pub struct _ctl_endurance_gaming_t {
     #[doc = "< [in,out] Endurance Gaming mode - Better Performance/Balanced/Maximum\n< Battery"]
     pub EGMode: ctl_3d_endurance_gaming_mode_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_endurance_gaming_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_endurance_gaming_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_endurance_gaming_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_endurance_gaming_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_endurance_gaming_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_endurance_gaming_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EGControl) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming_t),
-            "::",
-            stringify!(EGControl)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EGMode) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming_t),
-            "::",
-            stringify!(EGMode)
-        )
-    );
+impl Default for _ctl_endurance_gaming_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Endurance Gaming version2 Get/Set"]
 #[repr(C)]
@@ -3159,130 +1501,27 @@ pub struct _ctl_endurance_gaming2_t {
     #[doc = "< [out] Reserved fields"]
     pub Reserved: [u32; 4usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_endurance_gaming2_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_endurance_gaming2_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_endurance_gaming2_t>(),
-        48usize,
-        concat!("Size of: ", stringify!(_ctl_endurance_gaming2_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_endurance_gaming2_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_endurance_gaming2_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EGControl) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming2_t),
-            "::",
-            stringify!(EGControl)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EGMode) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming2_t),
-            "::",
-            stringify!(EGMode)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsFPRequired) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming2_t),
-            "::",
-            stringify!(IsFPRequired)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TargetFPS) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming2_t),
-            "::",
-            stringify!(TargetFPS)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RefreshRate) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming2_t),
-            "::",
-            stringify!(RefreshRate)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_endurance_gaming2_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
+impl Default for _ctl_endurance_gaming2_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Adaptive sync plus caps"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_adaptivesync_caps_t {
     #[doc = "< [out] Adaptive balance supported"]
     pub AdaptiveBalanceSupported: bool,
     #[doc = "< [out] Strength of adaptive balance algorithm - min/max/steps/default"]
     pub AdaptiveBalanceStrengthCaps: ctl_property_info_float_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_adaptivesync_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_adaptivesync_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_adaptivesync_caps_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_adaptivesync_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_adaptivesync_caps_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_adaptivesync_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AdaptiveBalanceSupported) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adaptivesync_caps_t),
-            "::",
-            stringify!(AdaptiveBalanceSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AdaptiveBalanceStrengthCaps) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adaptivesync_caps_t),
-            "::",
-            stringify!(AdaptiveBalanceStrengthCaps)
-        )
-    );
-}
 #[doc = "\n @brief Adaptive sync plus"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_adaptivesync_getset_t {
     #[doc = "< [in,out] Adaptive sync. Note that in Windows, OS controls state of\n< adaptive sync and which game gets the feature using it's own policies"]
     pub AdaptiveSync: bool,
@@ -3292,62 +1531,6 @@ pub struct _ctl_adaptivesync_getset_t {
     pub AllowAsyncForHighFPS: bool,
     #[doc = "< [in,out] Adaptive balance strength"]
     pub AdaptiveBalanceStrength: f32,
-}
-#[test]
-fn bindgen_test_layout__ctl_adaptivesync_getset_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_adaptivesync_getset_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_adaptivesync_getset_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_adaptivesync_getset_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_adaptivesync_getset_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_adaptivesync_getset_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AdaptiveSync) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adaptivesync_getset_t),
-            "::",
-            stringify!(AdaptiveSync)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AdaptiveBalance) as usize - ptr as usize },
-        1usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adaptivesync_getset_t),
-            "::",
-            stringify!(AdaptiveBalance)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AllowAsyncForHighFPS) as usize - ptr as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adaptivesync_getset_t),
-            "::",
-            stringify!(AllowAsyncForHighFPS)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AdaptiveBalanceStrength) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adaptivesync_getset_t),
-            "::",
-            stringify!(AdaptiveBalanceStrength)
-        )
-    );
 }
 #[doc = "\n @brief Game tier types"]
 pub type ctl_3d_tier_type_flags_t = u32;
@@ -3379,48 +1562,12 @@ pub enum _ctl_3d_tier_profile_flag_t {
 pub use self::_ctl_3d_tier_profile_flag_t as ctl_3d_tier_profile_flag_t;
 #[doc = "\n @brief Game Profile Capabilities. Typically these remain the same across\n        games."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_3d_app_profiles_caps_t {
     #[doc = "< [out] Tier of interest for capability check"]
     pub SupportedTierTypes: ctl_3d_tier_type_flags_t,
     #[doc = "< [in,out] Reserved for future"]
     pub Reserved: u64,
-}
-#[test]
-fn bindgen_test_layout__ctl_3d_app_profiles_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_3d_app_profiles_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_3d_app_profiles_caps_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_3d_app_profiles_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_3d_app_profiles_caps_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_3d_app_profiles_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedTierTypes) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_caps_t),
-            "::",
-            stringify!(SupportedTierTypes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_caps_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
 }
 #[doc = "\n @brief Game Profile tiers"]
 #[repr(C)]
@@ -3441,95 +1588,14 @@ pub struct _ctl_3d_app_profiles_t {
     #[doc = "< [in,out] Reserved for future"]
     pub Reserved: u64,
 }
-#[test]
-fn bindgen_test_layout__ctl_3d_app_profiles_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_3d_app_profiles_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_3d_app_profiles_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_3d_app_profiles_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_3d_app_profiles_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_3d_app_profiles_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TierType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(TierType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedTierProfiles) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(SupportedTierProfiles)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DefaultEnabledTierProfiles) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(DefaultEnabledTierProfiles)
-        )
-    );
-    assert_eq!(
+impl Default for _ctl_3d_app_profiles_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            ::std::ptr::addr_of!((*ptr).CustomizationSupportedTierProfiles) as usize - ptr as usize
-        },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(CustomizationSupportedTierProfiles)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EnabledTierProfiles) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(EnabledTierProfiles)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).CustomizationEnabledTierProfiles) as usize - ptr as usize
-        },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(CustomizationEnabledTierProfiles)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_app_profiles_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Game Profile tiers details"]
 #[repr(C)]
@@ -3542,51 +1608,14 @@ pub struct _ctl_3d_tier_details_t {
     #[doc = "< [in,out] Reserved for future"]
     pub Reserved: [u64; 4usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_3d_tier_details_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_3d_tier_details_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_3d_tier_details_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_3d_tier_details_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_3d_tier_details_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_3d_tier_details_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TierType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_tier_details_t),
-            "::",
-            stringify!(TierType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TierProfile) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_tier_details_t),
-            "::",
-            stringify!(TierProfile)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_tier_details_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
+impl Default for _ctl_3d_tier_details_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -3660,131 +1689,19 @@ pub struct _ctl_3d_feature_details_t {
     #[doc = "< [out] Reserved"]
     pub Reserved2: i16,
 }
-#[test]
-fn bindgen_test_layout__ctl_3d_feature_details_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_3d_feature_details_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_3d_feature_details_t>(),
-        72usize,
-        concat!("Size of: ", stringify!(_ctl_3d_feature_details_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_3d_feature_details_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_3d_feature_details_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(FeatureType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ValueType) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(ValueType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(Value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomValueSize) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(CustomValueSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pCustomValue) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(pCustomValue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PerAppSupport) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(PerAppSupport)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ConflictingFeatures) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(ConflictingFeatures)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureMiscSupport) as usize - ptr as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(FeatureMiscSupport)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        66usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved1) as usize - ptr as usize },
-        68usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(Reserved1)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved2) as usize - ptr as usize },
-        70usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_details_t),
-            "::",
-            stringify!(Reserved2)
-        )
-    );
+impl Default for _ctl_3d_feature_details_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_3d_feature_details_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_3d_feature_details_t {{ FeatureType: {:?}, ValueType: {:?}, Value: {:?}, pCustomValue: {:?}, PerAppSupport: {:?} }}" , self . FeatureType , self . ValueType , self . Value , self . pCustomValue , self . PerAppSupport)
+    }
 }
 #[doc = "\n @brief 3D feature which are controllable"]
 #[repr(C)]
@@ -3799,61 +1716,14 @@ pub struct _ctl_3d_feature_caps_t {
     #[doc = "< [in,out] Array of feature details"]
     pub pFeatureDetails: *mut ctl_3d_feature_details_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_3d_feature_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_3d_feature_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_3d_feature_caps_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_3d_feature_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_3d_feature_caps_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_3d_feature_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_caps_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_caps_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumSupportedFeatures) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_caps_t),
-            "::",
-            stringify!(NumSupportedFeatures)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pFeatureDetails) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_caps_t),
-            "::",
-            stringify!(pFeatureDetails)
-        )
-    );
+impl Default for _ctl_3d_feature_caps_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief 3D feature for get/set"]
 #[repr(C)]
@@ -3880,121 +1750,19 @@ pub struct _ctl_3d_feature_getset_t {
     #[doc = "< [in,out] Pointer to a custom structure. Caller should allocate this\n< buffer with known custom feature structure size. This member is valid\n< iff ValueType is CTL_PROPERTY_VALUE_TYPE_CUSTOM"]
     pub pCustomValue: *mut ::std::os::raw::c_void,
 }
-#[test]
-fn bindgen_test_layout__ctl_3d_feature_getset_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_3d_feature_getset_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_3d_feature_getset_t>(),
-        56usize,
-        concat!("Size of: ", stringify!(_ctl_3d_feature_getset_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_3d_feature_getset_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_3d_feature_getset_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(FeatureType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationName) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(ApplicationName)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationNameLength) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(ApplicationNameLength)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bSet) as usize - ptr as usize },
-        25usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(bSet)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ValueType) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(ValueType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(Value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomValueSize) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(CustomValueSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pCustomValue) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_3d_feature_getset_t),
-            "::",
-            stringify!(pCustomValue)
-        )
-    );
+impl Default for _ctl_3d_feature_getset_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_3d_feature_getset_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_3d_feature_getset_t {{ FeatureType: {:?}, ApplicationName: {:?}, bSet: {:?}, ValueType: {:?}, Value: {:?}, pCustomValue: {:?} }}" , self . FeatureType , self . ApplicationName , self . bSet , self . ValueType , self . Value , self . pCustomValue)
+    }
 }
 #[doc = "\n @brief Load KMD gaming features. Restricted function"]
 #[repr(C)]
@@ -4015,91 +1783,14 @@ pub struct _ctl_kmd_load_features_t {
     #[doc = "< [in] Reserved field"]
     pub Reserved: [i64; 4usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_kmd_load_features_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_kmd_load_features_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_kmd_load_features_t>(),
-        80usize,
-        concat!("Size of: ", stringify!(_ctl_kmd_load_features_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_kmd_load_features_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_kmd_load_features_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFuncID) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(ReservedFuncID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bLoad) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(bLoad)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SubsetFeatureMask) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(SubsetFeatureMask)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationName) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(ApplicationName)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationNameLength) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(ApplicationNameLength)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CallerComponent) as usize - ptr as usize },
-        41usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(CallerComponent)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_kmd_load_features_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
+impl Default for _ctl_kmd_load_features_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4124,47 +1815,19 @@ pub union _ctl_os_display_encoder_identifier_t {
     #[doc = "< [out] Display encoder ID for non-windows OS"]
     pub DisplayEncoderID: ctl_generic_void_datatype_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_os_display_encoder_identifier_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_os_display_encoder_identifier_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_os_display_encoder_identifier_t>(),
-        16usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_os_display_encoder_identifier_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_os_display_encoder_identifier_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_os_display_encoder_identifier_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).WindowsDisplayEncoderID) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_os_display_encoder_identifier_t),
-            "::",
-            stringify!(WindowsDisplayEncoderID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DisplayEncoderID) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_os_display_encoder_identifier_t),
-            "::",
-            stringify!(DisplayEncoderID)
-        )
-    );
+impl Default for _ctl_os_display_encoder_identifier_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_os_display_encoder_identifier_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "_ctl_os_display_encoder_identifier_t {{ union }}")
+    }
 }
 #[doc = "\n @brief OS specific Display identifiers"]
 pub type ctl_os_display_encoder_identifier_t = _ctl_os_display_encoder_identifier_t;
@@ -4382,161 +2045,14 @@ pub struct _ctl_display_timing_t {
     #[doc = "< [out] VIC ID for CTA timings"]
     pub VicId: u8,
 }
-#[test]
-fn bindgen_test_layout__ctl_display_timing_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_display_timing_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_display_timing_t>(),
-        64usize,
-        concat!("Size of: ", stringify!(_ctl_display_timing_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_display_timing_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_display_timing_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PixelClock) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(PixelClock)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).HActive) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(HActive)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).VActive) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(VActive)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).HTotal) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(HTotal)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).VTotal) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(VTotal)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).HBlank) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(HBlank)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).VBlank) as usize - ptr as usize },
-        36usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(VBlank)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).HSync) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(HSync)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).VSync) as usize - ptr as usize },
-        44usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(VSync)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RefreshRate) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(RefreshRate)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SignalStandard) as usize - ptr as usize },
-        52usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(SignalStandard)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).VicId) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_timing_t),
-            "::",
-            stringify!(VicId)
-        )
-    );
+impl Default for _ctl_display_timing_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief This structure will contain the properties of the display currently\n        attached to the encoder."]
 #[repr(C)]
@@ -4575,183 +2091,19 @@ pub struct _ctl_display_properties_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_display_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_display_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_display_properties_t>(),
-        200usize,
-        concat!("Size of: ", stringify!(_ctl_display_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_display_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_display_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Os_display_encoder_handle) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(Os_display_encoder_handle)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Type) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(Type)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AttachedDisplayMuxType) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(AttachedDisplayMuxType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ProtocolConverterOutput) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(ProtocolConverterOutput)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedSpec) as usize - ptr as usize },
-        36usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(SupportedSpec)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedOutputBPCFlags) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(SupportedOutputBPCFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ProtocolConverterType) as usize - ptr as usize },
-        44usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(ProtocolConverterType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DisplayConfigFlags) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(DisplayConfigFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureEnabledFlags) as usize - ptr as usize },
-        52usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(FeatureEnabledFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureSupportedFlags) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(FeatureSupportedFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AdvancedFeatureEnabledFlags) as usize - ptr as usize },
-        60usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(AdvancedFeatureEnabledFlags)
-        )
-    );
-    assert_eq!(
+impl Default for _ctl_display_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            ::std::ptr::addr_of!((*ptr).AdvancedFeatureSupportedFlags) as usize - ptr as usize
-        },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(AdvancedFeatureSupportedFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Display_Timing_Info) as usize - ptr as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(Display_Timing_Info)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        136usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_properties_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_display_properties_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_display_properties_t {{ Os_display_encoder_handle: {:?}, Type: {:?}, AttachedDisplayMuxType: {:?}, ProtocolConverterOutput: {:?}, SupportedSpec: {:?}, Display_Timing_Info: {:?}, ReservedFields: {:?} }}" , self . Os_display_encoder_handle , self . Type , self . AttachedDisplayMuxType , self . ProtocolConverterOutput , self . SupportedSpec , self . Display_Timing_Info , self . ReservedFields)
+    }
 }
 #[doc = "\n @brief Adapter's display encoder properties"]
 #[repr(C)]
@@ -4780,142 +2132,19 @@ pub struct _ctl_adapter_display_encoder_properties_t {
     #[doc = "< [out] Reserved field of 60 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_adapter_display_encoder_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_adapter_display_encoder_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_adapter_display_encoder_properties_t>(),
-        112usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_adapter_display_encoder_properties_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_adapter_display_encoder_properties_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Os_display_encoder_handle) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(Os_display_encoder_handle)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Type) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(Type)
-        )
-    );
-    assert_eq!(
+impl Default for _ctl_adapter_display_encoder_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            ::std::ptr::addr_of!((*ptr).IsOnBoardProtocolConverterOutputPresent) as usize
-                - ptr as usize
-        },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(IsOnBoardProtocolConverterOutputPresent)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedSpec) as usize - ptr as usize },
-        29usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(SupportedSpec)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedOutputBPCFlags) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(SupportedOutputBPCFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EncoderConfigFlags) as usize - ptr as usize },
-        36usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(EncoderConfigFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureSupportedFlags) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(FeatureSupportedFlags)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).AdvancedFeatureSupportedFlags) as usize - ptr as usize
-        },
-        44usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(AdvancedFeatureSupportedFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_adapter_display_encoder_properties_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_adapter_display_encoder_properties_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_adapter_display_encoder_properties_t {{ Os_display_encoder_handle: {:?}, Type: {:?}, IsOnBoardProtocolConverterOutputPresent: {:?}, SupportedSpec: {:?}, ReservedFields: {:?} }}" , self . Os_display_encoder_handle , self . Type , self . IsOnBoardProtocolConverterOutputPresent , self . SupportedSpec , self . ReservedFields)
+    }
 }
 #[doc = "\n @brief Various sharpness filter types"]
 pub type ctl_sharpness_filter_type_flags_t = u32;
@@ -4932,51 +2161,12 @@ pub enum _ctl_sharpness_filter_type_flag_t {
 pub use self::_ctl_sharpness_filter_type_flag_t as ctl_sharpness_filter_type_flag_t;
 #[doc = "\n @brief Sharpness filter properties"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_sharpness_filter_properties_t {
     #[doc = "< [out] Filter type. Refer ::ctl_sharpness_filter_type_flag_t"]
     pub FilterType: ctl_sharpness_filter_type_flags_t,
     #[doc = "< [out] Min, max & step size information"]
     pub FilterDetails: ctl_property_range_info_t,
-}
-#[test]
-fn bindgen_test_layout__ctl_sharpness_filter_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_sharpness_filter_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_sharpness_filter_properties_t>(),
-        20usize,
-        concat!("Size of: ", stringify!(_ctl_sharpness_filter_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_sharpness_filter_properties_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_sharpness_filter_properties_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FilterType) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_filter_properties_t),
-            "::",
-            stringify!(FilterType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FilterDetails) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_filter_properties_t),
-            "::",
-            stringify!(FilterDetails)
-        )
-    );
 }
 #[doc = "\n @brief Various sharpness filter types"]
 #[repr(C)]
@@ -4993,75 +2183,18 @@ pub struct _ctl_sharpness_caps_t {
     #[doc = "< [in,out] Array of filter properties structure describing supported\n< filter capabilities. Caller should provide a pre-allocated memory for\n< this."]
     pub pFilterProperty: *mut ctl_sharpness_filter_properties_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_sharpness_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_sharpness_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_sharpness_caps_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_sharpness_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_sharpness_caps_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_sharpness_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_caps_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_caps_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedFilterFlags) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_caps_t),
-            "::",
-            stringify!(SupportedFilterFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumFilterTypes) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_caps_t),
-            "::",
-            stringify!(NumFilterTypes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pFilterProperty) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_caps_t),
-            "::",
-            stringify!(pFilterProperty)
-        )
-    );
+impl Default for _ctl_sharpness_caps_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Current sharpness setting"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_sharpness_settings_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -5073,72 +2206,6 @@ pub struct _ctl_sharpness_settings_t {
     pub FilterType: ctl_sharpness_filter_type_flags_t,
     #[doc = "< [in,out] Setting intensity to be applied"]
     pub Intensity: f32,
-}
-#[test]
-fn bindgen_test_layout__ctl_sharpness_settings_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_sharpness_settings_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_sharpness_settings_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_sharpness_settings_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_sharpness_settings_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_sharpness_settings_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_settings_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_settings_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_settings_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FilterType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_settings_t),
-            "::",
-            stringify!(FilterType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Intensity) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sharpness_settings_t),
-            "::",
-            stringify!(Intensity)
-        )
-    );
 }
 #[doc = "\n @brief I2C Access Args input Flags bitmasks"]
 pub type ctl_i2c_flags_t = u32;
@@ -5186,111 +2253,14 @@ pub struct _ctl_i2c_access_args_t {
     #[doc = "< [in,out] Data array"]
     pub Data: [u8; 128usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_i2c_access_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_i2c_access_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_i2c_access_args_t>(),
-        168usize,
-        concat!("Size of: ", stringify!(_ctl_i2c_access_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_i2c_access_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_i2c_access_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DataSize) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(DataSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Address) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(Address)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpType) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(OpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Offset) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(Offset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(Flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RAD) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(RAD)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_args_t),
-            "::",
-            stringify!(Data)
-        )
-    );
+impl Default for _ctl_i2c_access_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief I2C Access on PinPair Args input Flags bitmasks"]
 pub type ctl_i2c_pinpair_flags_t = u32;
@@ -5338,111 +2308,14 @@ pub struct _ctl_i2c_access_pinpair_args_t {
     #[doc = "< [in] Reserved for future use, must be set to Zero."]
     pub ReservedFields: [u32; 4usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_i2c_access_pinpair_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_i2c_access_pinpair_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_i2c_access_pinpair_args_t>(),
-        172usize,
-        concat!("Size of: ", stringify!(_ctl_i2c_access_pinpair_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_i2c_access_pinpair_args_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_i2c_access_pinpair_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DataSize) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(DataSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Address) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(Address)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpType) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(OpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Offset) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(Offset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(Flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(Data)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        156usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_i2c_access_pinpair_args_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
+impl Default for _ctl_i2c_access_pinpair_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief AUX Flags bitmasks"]
 pub type ctl_aux_flags_t = u32;
@@ -5482,111 +2355,14 @@ pub struct _ctl_aux_access_args_t {
     #[doc = "< [in,out] Data array"]
     pub Data: [u8; 132usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_aux_access_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_aux_access_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_aux_access_args_t>(),
-        176usize,
-        concat!("Size of: ", stringify!(_ctl_aux_access_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_aux_access_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_aux_access_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(OpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(Flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Address) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(Address)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RAD) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(RAD)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PortID) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(PortID)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DataSize) as usize - ptr as usize },
-        36usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(DataSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Data) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_aux_access_args_t),
-            "::",
-            stringify!(Data)
-        )
-    );
+impl Default for _ctl_aux_access_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Power saving features (Each individual feature's set & get call can be\n        called only once at a time)"]
 pub type ctl_power_optimization_flags_t = u32;
@@ -5681,7 +2457,7 @@ pub enum _ctl_power_optimization_lrr_flag_t {
 pub use self::_ctl_power_optimization_lrr_flag_t as ctl_power_optimization_lrr_flag_t;
 #[doc = "\n @brief Power optimization caps"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_optimization_caps_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -5690,55 +2466,9 @@ pub struct _ctl_power_optimization_caps_t {
     #[doc = "< [out] Supported power optimization features. Refer\n< ::ctl_power_optimization_flag_t"]
     pub SupportedFeatures: ctl_power_optimization_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_optimization_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_optimization_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_optimization_caps_t>(),
-        12usize,
-        concat!("Size of: ", stringify!(_ctl_power_optimization_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_optimization_caps_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_optimization_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_caps_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_caps_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedFeatures) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_caps_t),
-            "::",
-            stringify!(SupportedFeatures)
-        )
-    );
-}
 #[doc = "\n @brief LRR detailed settings"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_optimization_lrr_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -5753,85 +2483,9 @@ pub struct _ctl_power_optimization_lrr_t {
     #[doc = "< [out] Lowest RR used for LRR functionality if known to source"]
     pub LowRR: u16,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_optimization_lrr_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_optimization_lrr_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_optimization_lrr_t>(),
-        20usize,
-        concat!("Size of: ", stringify!(_ctl_power_optimization_lrr_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_optimization_lrr_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_optimization_lrr_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_lrr_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_lrr_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedLRRTypes) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_lrr_t),
-            "::",
-            stringify!(SupportedLRRTypes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CurrentLRRTypes) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_lrr_t),
-            "::",
-            stringify!(CurrentLRRTypes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bRequirePSRDisable) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_lrr_t),
-            "::",
-            stringify!(bRequirePSRDisable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).LowRR) as usize - ptr as usize },
-        18usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_lrr_t),
-            "::",
-            stringify!(LowRR)
-        )
-    );
-}
 #[doc = "\n @brief PSR detailed settings"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_optimization_psr_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -5842,65 +2496,9 @@ pub struct _ctl_power_optimization_psr_t {
     #[doc = "< [in,out] Full fetch and update"]
     pub FullFetchUpdate: bool,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_optimization_psr_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_optimization_psr_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_optimization_psr_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_power_optimization_psr_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_optimization_psr_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_optimization_psr_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_psr_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_psr_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PSRVersion) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_psr_t),
-            "::",
-            stringify!(PSRVersion)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FullFetchUpdate) as usize - ptr as usize },
-        6usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_psr_t),
-            "::",
-            stringify!(FullFetchUpdate)
-        )
-    );
-}
 #[doc = "\n @brief DPST detailed settings"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_optimization_dpst_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -5917,92 +2515,6 @@ pub struct _ctl_power_optimization_dpst_t {
     #[doc = "< [in,out] Features enabled or to be enabled. Fill only one feature for\n< SET call"]
     pub EnabledFeatures: ctl_power_optimization_dpst_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_optimization_dpst_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_optimization_dpst_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_optimization_dpst_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_power_optimization_dpst_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_optimization_dpst_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_optimization_dpst_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MinLevel) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(MinLevel)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxLevel) as usize - ptr as usize },
-        6usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(MaxLevel)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Level) as usize - ptr as usize },
-        7usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(Level)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedFeatures) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(SupportedFeatures)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EnabledFeatures) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_dpst_t),
-            "::",
-            stringify!(EnabledFeatures)
-        )
-    );
-}
 #[doc = "\n @brief Feature specific power optimization data"]
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6014,57 +2526,22 @@ pub union _ctl_power_optimization_feature_specific_info_t {
     #[doc = "< [in,out] DPST info"]
     pub DPSTInfo: ctl_power_optimization_dpst_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_optimization_feature_specific_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_optimization_feature_specific_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_optimization_feature_specific_info_t>(),
-        20usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_power_optimization_feature_specific_info_t)
+impl Default for _ctl_power_optimization_feature_specific_info_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_power_optimization_feature_specific_info_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(
+            f,
+            "_ctl_power_optimization_feature_specific_info_t {{ union }}"
         )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_optimization_feature_specific_info_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_power_optimization_feature_specific_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).LRRInfo) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_feature_specific_info_t),
-            "::",
-            stringify!(LRRInfo)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PSRInfo) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_feature_specific_info_t),
-            "::",
-            stringify!(PSRInfo)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DPSTInfo) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_feature_specific_info_t),
-            "::",
-            stringify!(DPSTInfo)
-        )
-    );
+    }
 }
 #[doc = "\n @brief Feature specific power optimization data"]
 pub type ctl_power_optimization_feature_specific_info_t =
@@ -6088,98 +2565,23 @@ pub struct _ctl_power_optimization_settings_t {
     #[doc = "< [in] AC/DC"]
     pub PowerSource: ctl_power_source_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_optimization_settings_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_optimization_settings_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_optimization_settings_t>(),
-        44usize,
-        concat!("Size of: ", stringify!(_ctl_power_optimization_settings_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_optimization_settings_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_power_optimization_settings_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PowerOptimizationPlan) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(PowerOptimizationPlan)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PowerOptimizationFeature) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(PowerOptimizationFeature)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureSpecificData) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(FeatureSpecificData)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PowerSource) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_optimization_settings_t),
-            "::",
-            stringify!(PowerSource)
-        )
-    );
+impl Default for _ctl_power_optimization_settings_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_power_optimization_settings_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_power_optimization_settings_t {{ PowerOptimizationPlan: {:?}, Enable: {:?}, FeatureSpecificData: {:?}, PowerSource: {:?} }}" , self . PowerOptimizationPlan , self . Enable , self . FeatureSpecificData , self . PowerSource)
+    }
 }
 #[doc = "\n @brief Brightness settings for SET call"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_set_brightness_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -6192,75 +2594,9 @@ pub struct _ctl_set_brightness_t {
     #[doc = "< [in] Reserved for future use"]
     pub ReservedFields: [u32; 4usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_set_brightness_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_set_brightness_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_set_brightness_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_set_brightness_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_set_brightness_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_set_brightness_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_set_brightness_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_set_brightness_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TargetBrightness) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_set_brightness_t),
-            "::",
-            stringify!(TargetBrightness)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SmoothTransitionTimeInMs) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_set_brightness_t),
-            "::",
-            stringify!(SmoothTransitionTimeInMs)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_set_brightness_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Brightness settings for GET call"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_get_brightness_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -6272,72 +2608,6 @@ pub struct _ctl_get_brightness_t {
     pub CurrentBrightness: u32,
     #[doc = "< [out] Reserved for future use"]
     pub ReservedFields: [u32; 4usize],
-}
-#[test]
-fn bindgen_test_layout__ctl_get_brightness_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_get_brightness_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_get_brightness_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_get_brightness_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_get_brightness_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_get_brightness_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_brightness_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_brightness_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TargetBrightness) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_brightness_t),
-            "::",
-            stringify!(TargetBrightness)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CurrentBrightness) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_brightness_t),
-            "::",
-            stringify!(CurrentBrightness)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_brightness_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
 }
 #[doc = "\n @brief Pixtx pipe set configuration flags bitmasks"]
 pub type ctl_pixtx_pipe_set_config_flags_t = u32;
@@ -6475,7 +2745,7 @@ pub enum _ctl_pixtx_color_model_t {
 pub use self::_ctl_pixtx_color_model_t as ctl_pixtx_color_model_t;
 #[doc = "\n @brief Pixel transformation color primaries"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pixtx_color_primaries_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -6497,122 +2767,6 @@ pub struct _ctl_pixtx_color_primaries_t {
     pub xW: f64,
     #[doc = "< [out] CIE1931 y value with maximum white pixel value"]
     pub yW: f64,
-}
-#[test]
-fn bindgen_test_layout__ctl_pixtx_color_primaries_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_color_primaries_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_color_primaries_t>(),
-        72usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_color_primaries_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_color_primaries_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_color_primaries_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).xR) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(xR)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).yR) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(yR)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).xG) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(xG)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).yG) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(yG)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).xB) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(xB)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).yB) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(yB)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).xW) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(xW)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).yW) as usize - ptr as usize },
-        64usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_color_primaries_t),
-            "::",
-            stringify!(yW)
-        )
-    );
 }
 #[doc = "\n @brief Pixel transformation pixel format"]
 #[repr(C)]
@@ -6639,121 +2793,14 @@ pub struct _ctl_pixtx_pixel_format_t {
     #[doc = "< [out] Minimum brightness of pixel values"]
     pub MinBrightness: f64,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_pixel_format_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_pixel_format_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_pixel_format_t>(),
-        120usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_pixel_format_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_pixel_format_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_pixel_format_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).BitsPerColor) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(BitsPerColor)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsFloat) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(IsFloat)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EncodingType) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(EncodingType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ColorSpace) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(ColorSpace)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ColorModel) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(ColorModel)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ColorPrimaries) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(ColorPrimaries)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxBrightness) as usize - ptr as usize },
-        104usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(MaxBrightness)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MinBrightness) as usize - ptr as usize },
-        112usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pixel_format_t),
-            "::",
-            stringify!(MinBrightness)
-        )
-    );
+impl Default for _ctl_pixtx_pixel_format_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Pixel transformation 1D LUT configuration"]
 #[repr(C)]
@@ -6774,95 +2821,18 @@ pub struct _ctl_pixtx_1dlut_config_t {
     #[doc = "< [out] LUT (same for all channels) to represent sampling positions for\n< non-uniformly sampled LUTs.Can be NULL in case uniformly sampled LUTs"]
     pub pSamplePositions: *mut f64,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_1dlut_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_1dlut_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_1dlut_config_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_1dlut_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_1dlut_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_1dlut_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SamplingType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(SamplingType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumSamplesPerChannel) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(NumSamplesPerChannel)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumChannels) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(NumChannels)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pSampleValues) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(pSampleValues)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pSamplePositions) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_1dlut_config_t),
-            "::",
-            stringify!(pSamplePositions)
-        )
-    );
+impl Default for _ctl_pixtx_1dlut_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Pixel transformation matrix configuration"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pixtx_matrix_config_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -6875,75 +2845,9 @@ pub struct _ctl_pixtx_matrix_config_t {
     #[doc = "< [in,out] 3x3 Matrix"]
     pub Matrix: [[f64; 3usize]; 3usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_matrix_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_matrix_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_matrix_config_t>(),
-        128usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_matrix_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_matrix_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_matrix_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_matrix_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_matrix_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PreOffsets) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_matrix_config_t),
-            "::",
-            stringify!(PreOffsets)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PostOffsets) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_matrix_config_t),
-            "::",
-            stringify!(PostOffsets)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Matrix) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_matrix_config_t),
-            "::",
-            stringify!(Matrix)
-        )
-    );
-}
 #[doc = "\n @brief Pixel transformation 3D LUT sample. Samples are converted to integer\n        based on underlying HW capabilities. Hence slight precision loss will\n        be observed while getting sample values."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pixtx_3dlut_sample_t {
     #[doc = "< [in,out] Red output value"]
     pub Red: f64,
@@ -6951,52 +2855,6 @@ pub struct _ctl_pixtx_3dlut_sample_t {
     pub Green: f64,
     #[doc = "< [in,out] Blue output value"]
     pub Blue: f64,
-}
-#[test]
-fn bindgen_test_layout__ctl_pixtx_3dlut_sample_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_3dlut_sample_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_3dlut_sample_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_3dlut_sample_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_3dlut_sample_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_3dlut_sample_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Red) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_sample_t),
-            "::",
-            stringify!(Red)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Green) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_sample_t),
-            "::",
-            stringify!(Green)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Blue) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_sample_t),
-            "::",
-            stringify!(Blue)
-        )
-    );
 }
 #[doc = "\n @brief Pixel transformation 3D LUT configuration"]
 #[repr(C)]
@@ -7011,61 +2869,14 @@ pub struct _ctl_pixtx_3dlut_config_t {
     #[doc = "< [in,out] Pointer to sample values, R in outer most loop followed by G\n< and B"]
     pub pSampleValues: *mut ctl_pixtx_3dlut_sample_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_3dlut_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_3dlut_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_3dlut_config_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_3dlut_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_3dlut_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_3dlut_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumSamplesPerChannel) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_config_t),
-            "::",
-            stringify!(NumSamplesPerChannel)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pSampleValues) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_3dlut_config_t),
-            "::",
-            stringify!(pSampleValues)
-        )
-    );
+impl Default for _ctl_pixtx_3dlut_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Pixel transformation configuration"]
 #[repr(C)]
@@ -7078,50 +2889,19 @@ pub union _ctl_pixtx_config_t {
     #[doc = "< [in,out] Matrix configuration"]
     pub MatrixConfig: ctl_pixtx_matrix_config_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_config_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_config_t>(),
-        128usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OneDLutConfig) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_config_t),
-            "::",
-            stringify!(OneDLutConfig)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ThreeDLutConfig) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_config_t),
-            "::",
-            stringify!(ThreeDLutConfig)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MatrixConfig) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_config_t),
-            "::",
-            stringify!(MatrixConfig)
-        )
-    );
+impl Default for _ctl_pixtx_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_pixtx_config_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "_ctl_pixtx_config_t {{ union }}")
+    }
 }
 #[doc = "\n @brief Pixel transformation configuration"]
 pub type ctl_pixtx_config_t = _ctl_pixtx_config_t;
@@ -7140,71 +2920,23 @@ pub struct _ctl_pixtx_block_config_t {
     #[doc = "< [in,out] Configuration"]
     pub Config: ctl_pixtx_config_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_block_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_block_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_block_config_t>(),
-        144usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_block_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_block_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_block_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_block_config_t),
-            "::",
-            stringify!(Size)
+impl Default for _ctl_pixtx_block_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_pixtx_block_config_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(
+            f,
+            "_ctl_pixtx_block_config_t {{ BlockType: {:?}, Config: {:?} }}",
+            self.BlockType, self.Config
         )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_block_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).BlockId) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_block_config_t),
-            "::",
-            stringify!(BlockId)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).BlockType) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_block_config_t),
-            "::",
-            stringify!(BlockType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Config) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_block_config_t),
-            "::",
-            stringify!(Config)
-        )
-    );
+    }
 }
 #[doc = "\n @brief Pixel transformation pipe get configuration"]
 #[repr(C)]
@@ -7225,91 +2957,14 @@ pub struct _ctl_pixtx_pipe_get_config_t {
     #[doc = "< [out] Pointer to specific configs"]
     pub pBlockConfigs: *mut ctl_pixtx_block_config_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_pipe_get_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_pipe_get_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_pipe_get_config_t>(),
-        272usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_pipe_get_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_pipe_get_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_pipe_get_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).QueryType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(QueryType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).InputPixelFormat) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(InputPixelFormat)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OutputPixelFormat) as usize - ptr as usize },
-        136usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(OutputPixelFormat)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumBlocks) as usize - ptr as usize },
-        256usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(NumBlocks)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pBlockConfigs) as usize - ptr as usize },
-        264usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_get_config_t),
-            "::",
-            stringify!(pBlockConfigs)
-        )
-    );
+impl Default for _ctl_pixtx_pipe_get_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Pixel transformation pipe set configuration"]
 #[repr(C)]
@@ -7328,81 +2983,14 @@ pub struct _ctl_pixtx_pipe_set_config_t {
     #[doc = "< [in,out] Array of block specific configs"]
     pub pBlockConfigs: *mut ctl_pixtx_block_config_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_pixtx_pipe_set_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pixtx_pipe_set_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pixtx_pipe_set_config_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_pixtx_pipe_set_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pixtx_pipe_set_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pixtx_pipe_set_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_set_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_set_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpertaionType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_set_config_t),
-            "::",
-            stringify!(OpertaionType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Flags) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_set_config_t),
-            "::",
-            stringify!(Flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumBlocks) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_set_config_t),
-            "::",
-            stringify!(NumBlocks)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pBlockConfigs) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pixtx_pipe_set_config_t),
-            "::",
-            stringify!(pBlockConfigs)
-        )
-    );
+impl Default for _ctl_pixtx_pipe_set_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Panel descriptor access arguments"]
 #[repr(C)]
@@ -7421,84 +3009,14 @@ pub struct _ctl_panel_descriptor_access_args_t {
     #[doc = "< [in,out] Panel descriptor data"]
     pub pDescriptorData: *mut u8,
 }
-#[test]
-fn bindgen_test_layout__ctl_panel_descriptor_access_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_panel_descriptor_access_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_panel_descriptor_access_args_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_panel_descriptor_access_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_panel_descriptor_access_args_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_panel_descriptor_access_args_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_panel_descriptor_access_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_panel_descriptor_access_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_panel_descriptor_access_args_t),
-            "::",
-            stringify!(OpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).BlockNumber) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_panel_descriptor_access_args_t),
-            "::",
-            stringify!(BlockNumber)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DescriptorDataSize) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_panel_descriptor_access_args_t),
-            "::",
-            stringify!(DescriptorDataSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pDescriptorData) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_panel_descriptor_access_args_t),
-            "::",
-            stringify!(pDescriptorData)
-        )
-    );
+impl Default for _ctl_panel_descriptor_access_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief  Retro Scaling Types"]
 pub type ctl_retro_scaling_type_flags_t = u32;
@@ -7515,7 +3033,7 @@ pub enum _ctl_retro_scaling_type_flag_t {
 pub use self::_ctl_retro_scaling_type_flag_t as ctl_retro_scaling_type_flag_t;
 #[doc = "\n @brief Set/Get Retro Scaling Type"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_retro_scaling_settings_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -7528,75 +3046,9 @@ pub struct _ctl_retro_scaling_settings_t {
     #[doc = "< [out] Requested retro scaling types. Refer\n< ::ctl_retro_scaling_type_flag_t"]
     pub RetroScalingType: ctl_retro_scaling_type_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_retro_scaling_settings_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_retro_scaling_settings_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_retro_scaling_settings_t>(),
-        12usize,
-        concat!("Size of: ", stringify!(_ctl_retro_scaling_settings_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_retro_scaling_settings_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_retro_scaling_settings_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_settings_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_settings_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Get) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_settings_t),
-            "::",
-            stringify!(Get)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        6usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_settings_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RetroScalingType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_settings_t),
-            "::",
-            stringify!(RetroScalingType)
-        )
-    );
-}
 #[doc = "\n @brief Retro Scaling caps"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_retro_scaling_caps_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -7604,52 +3056,6 @@ pub struct _ctl_retro_scaling_caps_t {
     pub Version: u8,
     #[doc = "< [out] Supported retro scaling types"]
     pub SupportedRetroScaling: ctl_retro_scaling_type_flags_t,
-}
-#[test]
-fn bindgen_test_layout__ctl_retro_scaling_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_retro_scaling_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_retro_scaling_caps_t>(),
-        12usize,
-        concat!("Size of: ", stringify!(_ctl_retro_scaling_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_retro_scaling_caps_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_retro_scaling_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_caps_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_caps_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedRetroScaling) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_retro_scaling_caps_t),
-            "::",
-            stringify!(SupportedRetroScaling)
-        )
-    );
 }
 #[doc = "\n @brief Scaling Types"]
 pub type ctl_scaling_type_flags_t = u32;
@@ -7672,7 +3078,7 @@ pub enum _ctl_scaling_type_flag_t {
 pub use self::_ctl_scaling_type_flag_t as ctl_scaling_type_flag_t;
 #[doc = "\n @brief Scaling caps"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_scaling_caps_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -7681,54 +3087,9 @@ pub struct _ctl_scaling_caps_t {
     #[doc = "< [out] Supported scaling types. Refer ::ctl_scaling_type_flag_t"]
     pub SupportedScaling: ctl_scaling_type_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_scaling_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_scaling_caps_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_scaling_caps_t>(),
-        12usize,
-        concat!("Size of: ", stringify!(_ctl_scaling_caps_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_scaling_caps_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_scaling_caps_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_caps_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_caps_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedScaling) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_caps_t),
-            "::",
-            stringify!(SupportedScaling)
-        )
-    );
-}
 #[doc = "\n @brief Set/Get Scaling type"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_scaling_settings_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -7747,146 +3108,14 @@ pub struct _ctl_scaling_settings_t {
     #[doc = "< [out] Indicates OS persisted scaling type. This field is only valid\n< when version > 0. Refer ::ctl_scaling_type_flag_t"]
     pub PreferredScalingType: ctl_scaling_type_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_scaling_settings_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_scaling_settings_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_scaling_settings_t>(),
-        28usize,
-        concat!("Size of: ", stringify!(_ctl_scaling_settings_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_scaling_settings_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_scaling_settings_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ScalingType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(ScalingType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomScalingX) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(CustomScalingX)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomScalingY) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(CustomScalingY)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).HardwareModeSet) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(HardwareModeSet)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PreferredScalingType) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_scaling_settings_t),
-            "::",
-            stringify!(PreferredScalingType)
-        )
-    );
-}
 #[doc = "\n @brief Ambient light based enhancement table entry"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_lace_lux_aggr_map_entry_t {
     #[doc = "< [in,out] Ambient lux"]
     pub Lux: u32,
     #[doc = "< [in,out] Pixel boost agressiveness"]
     pub AggressivenessPercent: u8,
-}
-#[test]
-fn bindgen_test_layout__ctl_lace_lux_aggr_map_entry_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_lace_lux_aggr_map_entry_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_lace_lux_aggr_map_entry_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_lace_lux_aggr_map_entry_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_lace_lux_aggr_map_entry_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_lace_lux_aggr_map_entry_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Lux) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_lux_aggr_map_entry_t),
-            "::",
-            stringify!(Lux)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AggressivenessPercent) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_lux_aggr_map_entry_t),
-            "::",
-            stringify!(AggressivenessPercent)
-        )
-    );
 }
 #[doc = "\n @brief Ambient light based enhancement table"]
 #[repr(C)]
@@ -7899,51 +3128,14 @@ pub struct _ctl_lace_lux_aggr_map_t {
     #[doc = "< [in] Max number of Entries which can be passed in\n< LuxToAggrMappingTable"]
     pub pLuxToAggrMappingTable: *mut ctl_lace_lux_aggr_map_entry_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_lace_lux_aggr_map_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_lace_lux_aggr_map_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_lace_lux_aggr_map_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_lace_lux_aggr_map_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_lace_lux_aggr_map_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_lace_lux_aggr_map_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxNumEntries) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_lux_aggr_map_t),
-            "::",
-            stringify!(MaxNumEntries)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumEntries) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_lux_aggr_map_t),
-            "::",
-            stringify!(NumEntries)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pLuxToAggrMappingTable) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_lux_aggr_map_t),
-            "::",
-            stringify!(pLuxToAggrMappingTable)
-        )
-    );
+impl Default for _ctl_lace_lux_aggr_map_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Data specific to the mode caller is interested in"]
 #[repr(C)]
@@ -7954,43 +3146,19 @@ pub union _ctl_lace_aggr_config_t {
     #[doc = "< [in,out] Lux to enhancement mapping table, applicable for\n< CTL_LACE_MODE_AMBIENT_ADAPTIVE"]
     pub AggrLevelMap: ctl_lace_lux_aggr_map_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_lace_aggr_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_lace_aggr_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_lace_aggr_config_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_lace_aggr_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_lace_aggr_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_lace_aggr_config_t))
-    );
-    assert_eq!(
+impl Default for _ctl_lace_aggr_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            ::std::ptr::addr_of!((*ptr).FixedAggressivenessLevelPercent) as usize - ptr as usize
-        },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_aggr_config_t),
-            "::",
-            stringify!(FixedAggressivenessLevelPercent)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AggrLevelMap) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_aggr_config_t),
-            "::",
-            stringify!(AggrLevelMap)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_lace_aggr_config_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "_ctl_lace_aggr_config_t {{ union }}")
+    }
 }
 #[doc = "\n @brief Data specific to the mode caller is interested in"]
 pub type ctl_lace_aggr_config_t = _ctl_lace_aggr_config_t;
@@ -8054,94 +3222,27 @@ pub struct _ctl_lace_config_t {
     #[doc = "< [in,out] Data specific to the mode, caller is interested in"]
     pub LaceConfig: ctl_lace_aggr_config_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_lace_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_lace_config_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_lace_config_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_lace_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_lace_config_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_lace_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(Size)
+impl Default for _ctl_lace_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_lace_config_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(
+            f,
+            "_ctl_lace_config_t {{ Enabled: {:?}, OpTypeSet: {:?}, LaceConfig: {:?} }}",
+            self.Enabled, self.OpTypeSet, self.LaceConfig
         )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enabled) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(Enabled)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpTypeGet) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(OpTypeGet)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpTypeSet) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(OpTypeSet)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Trigger) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(Trigger)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).LaceConfig) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lace_config_t),
-            "::",
-            stringify!(LaceConfig)
-        )
-    );
+    }
 }
 #[doc = "\n @brief Get Software PSR status/Set Software PSR settings"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_sw_psr_settings_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -8154,75 +3255,9 @@ pub struct _ctl_sw_psr_settings_t {
     #[doc = "< [in,out] When Get is True, returns current state of  Software PSR.\n< When Get is False, Enables/Diasbles Software PSR"]
     pub Enable: bool,
 }
-#[test]
-fn bindgen_test_layout__ctl_sw_psr_settings_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_sw_psr_settings_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_sw_psr_settings_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_sw_psr_settings_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_sw_psr_settings_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_sw_psr_settings_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sw_psr_settings_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sw_psr_settings_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Set) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sw_psr_settings_t),
-            "::",
-            stringify!(Set)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Supported) as usize - ptr as usize },
-        6usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sw_psr_settings_t),
-            "::",
-            stringify!(Supported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        7usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_sw_psr_settings_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-}
 #[doc = "\n @brief Intel Arc Sync Monitor Params"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_intel_arc_sync_monitor_params_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -8238,98 +3273,6 @@ pub struct _ctl_intel_arc_sync_monitor_params_t {
     pub MaxFrameTimeIncreaseInUs: u32,
     #[doc = "< [out] Max frame time decrease in micro seconds from DID2.1 Adaptive\n< Sync block"]
     pub MaxFrameTimeDecreaseInUs: u32,
-}
-#[test]
-fn bindgen_test_layout__ctl_intel_arc_sync_monitor_params_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_intel_arc_sync_monitor_params_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_intel_arc_sync_monitor_params_t>(),
-        24usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_intel_arc_sync_monitor_params_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsIntelArcSyncSupported) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(IsIntelArcSyncSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MinimumRefreshRateInHz) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(MinimumRefreshRateInHz)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaximumRefreshRateInHz) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(MaximumRefreshRateInHz)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxFrameTimeIncreaseInUs) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(MaxFrameTimeIncreaseInUs)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxFrameTimeDecreaseInUs) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_monitor_params_t),
-            "::",
-            stringify!(MaxFrameTimeDecreaseInUs)
-        )
-    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -8355,83 +3298,14 @@ pub struct _ctl_mux_properties_t {
     #[doc = "< [out] [range(0, (Count-1))] This is the index into the\n< phDisplayOutputs list to the display output which currently owns the\n< MUX output. This doesn't mean display is active"]
     pub IndexOfDisplayOutputOwningMux: u8,
 }
-#[test]
-fn bindgen_test_layout__ctl_mux_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_mux_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_mux_properties_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_mux_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_mux_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_mux_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mux_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mux_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MuxId) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mux_properties_t),
-            "::",
-            stringify!(MuxId)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Count) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mux_properties_t),
-            "::",
-            stringify!(Count)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).phDisplayOutputs) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mux_properties_t),
-            "::",
-            stringify!(phDisplayOutputs)
-        )
-    );
-    assert_eq!(
+impl Default for _ctl_mux_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            ::std::ptr::addr_of!((*ptr).IndexOfDisplayOutputOwningMux) as usize - ptr as usize
-        },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mux_properties_t),
-            "::",
-            stringify!(IndexOfDisplayOutputOwningMux)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -8477,97 +3351,14 @@ pub struct _ctl_intel_arc_sync_profile_params_t {
     #[doc = "< [in,out] Maximum frame time decrease (in micro seconds) imposed by the\n< driver"]
     pub MaxFrameTimeDecreaseInUs: u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_intel_arc_sync_profile_params_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_intel_arc_sync_profile_params_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_intel_arc_sync_profile_params_t>(),
-        28usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_intel_arc_sync_profile_params_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IntelArcSyncProfile) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(IntelArcSyncProfile)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxRefreshRateInHz) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(MaxRefreshRateInHz)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MinRefreshRateInHz) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(MinRefreshRateInHz)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxFrameTimeIncreaseInUs) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(MaxFrameTimeIncreaseInUs)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).MaxFrameTimeDecreaseInUs) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_intel_arc_sync_profile_params_t),
-            "::",
-            stringify!(MaxFrameTimeDecreaseInUs)
-        )
-    );
+impl Default for _ctl_intel_arc_sync_profile_params_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -8639,91 +3430,14 @@ pub struct _ctl_edid_management_args_t {
     #[doc = "< [out] Output flags to inform about status of EDID management\n< operations"]
     pub OutFlags: ctl_edid_management_out_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_edid_management_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_edid_management_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_edid_management_args_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_edid_management_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_edid_management_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_edid_management_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(OpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EdidType) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(EdidType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).EdidSize) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(EdidSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pEdidBuf) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(pEdidBuf)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OutFlags) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_edid_management_args_t),
-            "::",
-            stringify!(OutFlags)
-        )
-    );
+impl Default for _ctl_edid_management_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -8755,116 +3469,23 @@ pub struct _ctl_get_set_custom_mode_args_t {
     #[doc = "< [in,out] Custom mode source list which holds source modes to be\n< added/removed/Read."]
     pub pCustomSrcModeList: *mut ctl_custom_src_mode_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_get_set_custom_mode_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_get_set_custom_mode_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_get_set_custom_mode_args_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_get_set_custom_mode_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_get_set_custom_mode_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_get_set_custom_mode_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_custom_mode_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_custom_mode_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomModeOpType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_custom_mode_args_t),
-            "::",
-            stringify!(CustomModeOpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumOfModes) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_custom_mode_args_t),
-            "::",
-            stringify!(NumOfModes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pCustomSrcModeList) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_custom_mode_args_t),
-            "::",
-            stringify!(pCustomSrcModeList)
-        )
-    );
+impl Default for _ctl_get_set_custom_mode_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Get/Set Custom Mode"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_custom_src_mode_t {
     #[doc = "< [in,out] CustomMode Source X Size"]
     pub SourceX: u32,
     #[doc = "< [in,out] CustomMode Source Y Size"]
     pub SourceY: u32,
-}
-#[test]
-fn bindgen_test_layout__ctl_custom_src_mode_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_custom_src_mode_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_custom_src_mode_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_custom_src_mode_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_custom_src_mode_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_custom_src_mode_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SourceX) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_custom_src_mode_t),
-            "::",
-            stringify!(SourceX)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SourceY) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_custom_src_mode_t),
-            "::",
-            stringify!(SourceY)
-        )
-    );
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -8885,7 +3506,7 @@ pub enum _ctl_combined_display_optype_t {
 pub use self::_ctl_combined_display_optype_t as ctl_combined_display_optype_t;
 #[doc = "\n @brief Combined Display's child display target mode"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_child_display_target_mode_t {
     #[doc = "< [in,out] Width"]
     pub Width: u32,
@@ -8895,65 +3516,6 @@ pub struct _ctl_child_display_target_mode_t {
     pub RefreshRate: f32,
     #[doc = "< [out] Reserved field of 16 bytes"]
     pub ReservedFields: [u32; 4usize],
-}
-#[test]
-fn bindgen_test_layout__ctl_child_display_target_mode_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_child_display_target_mode_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_child_display_target_mode_t>(),
-        28usize,
-        concat!("Size of: ", stringify!(_ctl_child_display_target_mode_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_child_display_target_mode_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_child_display_target_mode_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Width) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_child_display_target_mode_t),
-            "::",
-            stringify!(Width)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Height) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_child_display_target_mode_t),
-            "::",
-            stringify!(Height)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).RefreshRate) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_child_display_target_mode_t),
-            "::",
-            stringify!(RefreshRate)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_child_display_target_mode_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
 }
 #[doc = "\n @brief Combined Display's child display information"]
 #[repr(C)]
@@ -8970,74 +3532,14 @@ pub struct _ctl_combined_display_child_info_t {
     #[doc = "< [in,out] Desired target mode (width, height, refresh)"]
     pub TargetMode: ctl_child_display_target_mode_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_combined_display_child_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_combined_display_child_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_combined_display_child_info_t>(),
-        72usize,
-        concat!("Size of: ", stringify!(_ctl_combined_display_child_info_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_combined_display_child_info_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_combined_display_child_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hDisplayOutput) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_child_info_t),
-            "::",
-            stringify!(hDisplayOutput)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FbSrc) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_child_info_t),
-            "::",
-            stringify!(FbSrc)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FbPos) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_child_info_t),
-            "::",
-            stringify!(FbPos)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).DisplayOrientation) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_child_info_t),
-            "::",
-            stringify!(DisplayOrientation)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TargetMode) as usize - ptr as usize },
-        44usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_child_info_t),
-            "::",
-            stringify!(TargetMode)
-        )
-    );
+impl Default for _ctl_combined_display_child_info_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Combined Display arguments"]
 #[repr(C)]
@@ -9062,111 +3564,14 @@ pub struct _ctl_combined_display_args_t {
     #[doc = "< [in,out] Handle to combined display output"]
     pub hCombinedDisplayOutput: ctl_display_output_handle_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_combined_display_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_combined_display_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_combined_display_args_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_combined_display_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_combined_display_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_combined_display_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).OpType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(OpType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsSupported) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(IsSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumOutputs) as usize - ptr as usize },
-        13usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(NumOutputs)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CombinedDesktopWidth) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(CombinedDesktopWidth)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CombinedDesktopHeight) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(CombinedDesktopHeight)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pChildInfo) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(pChildInfo)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hCombinedDisplayOutput) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_combined_display_args_t),
-            "::",
-            stringify!(hCombinedDisplayOutput)
-        )
-    );
+impl Default for _ctl_combined_display_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -9196,41 +3601,14 @@ pub struct _ctl_genlock_display_info_t {
     #[doc = "< [in,out] Genlock Primary"]
     pub IsPrimary: bool,
 }
-#[test]
-fn bindgen_test_layout__ctl_genlock_display_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_genlock_display_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_genlock_display_info_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_genlock_display_info_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_genlock_display_info_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_genlock_display_info_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hDisplayOutput) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_display_info_t),
-            "::",
-            stringify!(hDisplayOutput)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsPrimary) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_display_info_t),
-            "::",
-            stringify!(IsPrimary)
-        )
-    );
+impl Default for _ctl_genlock_display_info_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Genlock Target Mode List"]
 #[repr(C)]
@@ -9243,51 +3621,14 @@ pub struct _ctl_genlock_target_mode_list_t {
     #[doc = "< [out] Display Genlock operation and information"]
     pub pTargetModes: *mut ctl_display_timing_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_genlock_target_mode_list_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_genlock_target_mode_list_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_genlock_target_mode_list_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_genlock_target_mode_list_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_genlock_target_mode_list_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_genlock_target_mode_list_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hDisplayOutput) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_target_mode_list_t),
-            "::",
-            stringify!(hDisplayOutput)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumModes) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_target_mode_list_t),
-            "::",
-            stringify!(NumModes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pTargetModes) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_target_mode_list_t),
-            "::",
-            stringify!(pTargetModes)
-        )
-    );
+impl Default for _ctl_genlock_target_mode_list_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Genlock Topology"]
 #[repr(C)]
@@ -9304,71 +3645,14 @@ pub struct _ctl_genlock_topology_t {
     #[doc = "< [out] List of Genlock target modes"]
     pub pGenlockModeList: *mut ctl_genlock_target_mode_list_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_genlock_topology_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_genlock_topology_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_genlock_topology_t>(),
-        88usize,
-        concat!("Size of: ", stringify!(_ctl_genlock_topology_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_genlock_topology_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_genlock_topology_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumGenlockDisplays) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_topology_t),
-            "::",
-            stringify!(NumGenlockDisplays)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsPrimaryGenlockSystem) as usize - ptr as usize },
-        1usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_topology_t),
-            "::",
-            stringify!(IsPrimaryGenlockSystem)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CommonTargetMode) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_topology_t),
-            "::",
-            stringify!(CommonTargetMode)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pGenlockDisplayInfo) as usize - ptr as usize },
-        72usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_topology_t),
-            "::",
-            stringify!(pGenlockDisplayInfo)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pGenlockModeList) as usize - ptr as usize },
-        80usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_topology_t),
-            "::",
-            stringify!(pGenlockModeList)
-        )
-    );
+impl Default for _ctl_genlock_topology_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Display Genlock Arg type"]
 #[repr(C)]
@@ -9387,84 +3671,18 @@ pub struct _ctl_genlock_args_t {
     #[doc = "< [out] Indicates if Genlock can be enabled/disabled with the given\n< topology"]
     pub IsGenlockPossible: bool,
 }
-#[test]
-fn bindgen_test_layout__ctl_genlock_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_genlock_args_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_genlock_args_t>(),
-        112usize,
-        concat!("Size of: ", stringify!(_ctl_genlock_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_genlock_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_genlock_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Operation) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_args_t),
-            "::",
-            stringify!(Operation)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).GenlockTopology) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_args_t),
-            "::",
-            stringify!(GenlockTopology)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsGenlockEnabled) as usize - ptr as usize },
-        104usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_args_t),
-            "::",
-            stringify!(IsGenlockEnabled)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsGenlockPossible) as usize - ptr as usize },
-        105usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_genlock_args_t),
-            "::",
-            stringify!(IsGenlockPossible)
-        )
-    );
+impl Default for _ctl_genlock_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Vblank timestamp arguments"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_vblank_ts_args_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -9474,62 +3692,6 @@ pub struct _ctl_vblank_ts_args_t {
     pub NumOfTargets: u8,
     #[doc = "< [out] List of vblank timestamps in microseconds per child target"]
     pub VblankTS: [u64; 16usize],
-}
-#[test]
-fn bindgen_test_layout__ctl_vblank_ts_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_vblank_ts_args_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_vblank_ts_args_t>(),
-        136usize,
-        concat!("Size of: ", stringify!(_ctl_vblank_ts_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_vblank_ts_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_vblank_ts_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_vblank_ts_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_vblank_ts_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumOfTargets) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_vblank_ts_args_t),
-            "::",
-            stringify!(NumOfTargets)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).VblankTS) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_vblank_ts_args_t),
-            "::",
-            stringify!(VblankTS)
-        )
-    );
 }
 #[doc = "\n @brief Link Display Adapters Arguments"]
 #[repr(C)]
@@ -9546,70 +3708,14 @@ pub struct _ctl_lda_args_t {
     #[doc = "< [out] Reserved fields. Set to zero."]
     pub Reserved: [u64; 4usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_lda_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_lda_args_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_lda_args_t>(),
-        48usize,
-        concat!("Size of: ", stringify!(_ctl_lda_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_lda_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_lda_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lda_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lda_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumAdapters) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lda_args_t),
-            "::",
-            stringify!(NumAdapters)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hLinkedAdapters) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lda_args_t),
-            "::",
-            stringify!(hLinkedAdapters)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_lda_args_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
+impl Default for _ctl_lda_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Get/Set Dynamic Contrast Enhancement arguments"]
 #[repr(C)]
@@ -9634,110 +3740,14 @@ pub struct _ctl_dce_args_t {
     #[doc = "< [out] Bin wise histogram data of size NumBins * sizeof(uint32_t) for\n< current frame"]
     pub pHistogram: *mut u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_dce_args_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_dce_args_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_dce_args_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_dce_args_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_dce_args_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_dce_args_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Set) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(Set)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).TargetBrightnessPercent) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(TargetBrightnessPercent)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PhaseinSpeedMultiplier) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(PhaseinSpeedMultiplier)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumBins) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(NumBins)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Enable) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(Enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).IsSupported) as usize - ptr as usize },
-        29usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(IsSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pHistogram) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_dce_args_t),
-            "::",
-            stringify!(pHistogram)
-        )
-    );
+impl Default for _ctl_dce_args_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -9784,60 +3794,14 @@ pub struct _ctl_wire_format_t {
     #[doc = "< [in,out] Color Depth"]
     pub ColorDepth: ctl_output_bpc_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_wire_format_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_wire_format_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_wire_format_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_wire_format_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_wire_format_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_wire_format_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wire_format_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wire_format_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ColorModel) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wire_format_t),
-            "::",
-            stringify!(ColorModel)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ColorDepth) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_wire_format_t),
-            "::",
-            stringify!(ColorDepth)
-        )
-    );
+impl Default for _ctl_wire_format_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Get Set Wire Format"]
 #[repr(C)]
@@ -9854,74 +3818,14 @@ pub struct _ctl_get_set_wire_format_config_t {
     #[doc = "< [in,out]  Current/Requested WireFormat based on Operation. During SET\n< Operation, if multiple bpc is set, the MIN bpc will be applied"]
     pub WireFormat: ctl_wire_format_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_get_set_wire_format_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_get_set_wire_format_config_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_get_set_wire_format_config_t>(),
-        92usize,
-        concat!("Size of: ", stringify!(_ctl_get_set_wire_format_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_get_set_wire_format_config_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_get_set_wire_format_config_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_wire_format_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_wire_format_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Operation) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_wire_format_config_t),
-            "::",
-            stringify!(Operation)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedWireFormat) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_wire_format_config_t),
-            "::",
-            stringify!(SupportedWireFormat)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).WireFormat) as usize - ptr as usize },
-        76usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_get_set_wire_format_config_t),
-            "::",
-            stringify!(WireFormat)
-        )
-    );
+impl Default for _ctl_get_set_wire_format_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Various display settings"]
 pub type ctl_display_setting_flags_t = u32;
@@ -10075,161 +3979,14 @@ pub struct _ctl_display_settings_t {
     #[doc = "< [out] Reserved fields for future enumerations"]
     pub Reserved: [u32; 25usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_display_settings_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_display_settings_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_display_settings_t>(),
-        148usize,
-        concat!("Size of: ", stringify!(_ctl_display_settings_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_display_settings_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_display_settings_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Set) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(Set)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedFlags) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(SupportedFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ControllableFlags) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(ControllableFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ValidFlags) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(ValidFlags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).LowLatency) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(LowLatency)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SourceTM) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(SourceTM)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ContentType) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(ContentType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).QuantizationRange) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(QuantizationRange)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).SupportedPictureAR) as usize - ptr as usize },
-        36usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(SupportedPictureAR)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).PictureAR) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(PictureAR)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).AudioSettings) as usize - ptr as usize },
-        44usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(AudioSettings)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Reserved) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_display_settings_t),
-            "::",
-            stringify!(Reserved)
-        )
-    );
+impl Default for _ctl_display_settings_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -10257,55 +4014,18 @@ pub struct _ctl_engine_properties_t {
     #[doc = "< [out] The engine group"]
     pub type_: ctl_engine_group_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_engine_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_engine_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_engine_properties_t>(),
-        12usize,
-        concat!("Size of: ", stringify!(_ctl_engine_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_engine_properties_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_engine_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_properties_t),
-            "::",
-            stringify!(type_)
-        )
-    );
+impl Default for _ctl_engine_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Engine activity counters\n\n @details\n     - Percent utilization is calculated by taking two snapshots (s1, s2) and\n       using the equation: %util = (s2.activeTime - s1.activeTime) /\n       (s2.timestamp - s1.timestamp)"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_engine_stats_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -10315,61 +4035,6 @@ pub struct _ctl_engine_stats_t {
     pub activeTime: u64,
     #[doc = "< [out] Monotonic timestamp counter in microseconds when activeTime\n< counter was sampled.\n< This timestamp should only be used to calculate delta time between\n< snapshots of this structure.\n< Never take the delta of this timestamp with the timestamp from a\n< different structure since they are not guaranteed to have the same base.\n< The absolute value of the timestamp is only valid during within the\n< application and may be different on the next execution."]
     pub timestamp: u64,
-}
-#[test]
-fn bindgen_test_layout__ctl_engine_stats_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_engine_stats_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_engine_stats_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_engine_stats_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_engine_stats_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_engine_stats_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_stats_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_stats_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).activeTime) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_stats_t),
-            "::",
-            stringify!(activeTime)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).timestamp) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_engine_stats_t),
-            "::",
-            stringify!(timestamp)
-        )
-    );
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -10412,60 +4077,14 @@ pub struct _ctl_fan_speed_t {
     #[doc = "< [in,out] The units that the fan speed is expressed in. On output, if\n< fan speed is -1 then units should be ignored."]
     pub units: ctl_fan_speed_units_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_fan_speed_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_fan_speed_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_fan_speed_t>(),
-        16usize,
-        concat!("Size of: ", stringify!(_ctl_fan_speed_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_fan_speed_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_fan_speed_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).speed) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_t),
-            "::",
-            stringify!(speed)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).units) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_t),
-            "::",
-            stringify!(units)
-        )
-    );
+impl Default for _ctl_fan_speed_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Fan temperature/speed pair"]
 #[repr(C)]
@@ -10480,61 +4099,14 @@ pub struct _ctl_fan_temp_speed_t {
     #[doc = "< [in,out] The speed of the fan"]
     pub speed: ctl_fan_speed_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_fan_temp_speed_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_fan_temp_speed_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_fan_temp_speed_t>(),
-        28usize,
-        concat!("Size of: ", stringify!(_ctl_fan_temp_speed_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_fan_temp_speed_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_fan_temp_speed_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_temp_speed_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_temp_speed_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).temperature) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_temp_speed_t),
-            "::",
-            stringify!(temperature)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).speed) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_temp_speed_t),
-            "::",
-            stringify!(speed)
-        )
-    );
+impl Default for _ctl_fan_temp_speed_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Fan speed table"]
 #[repr(C)]
@@ -10549,65 +4121,18 @@ pub struct _ctl_fan_speed_table_t {
     #[doc = "< [in,out] Array of temperature/fan speed pairs. The table is ordered\n< based on temperature from lowest to highest."]
     pub table: [ctl_fan_temp_speed_t; 32usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_fan_speed_table_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_fan_speed_table_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_fan_speed_table_t>(),
-        908usize,
-        concat!("Size of: ", stringify!(_ctl_fan_speed_table_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_fan_speed_table_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_fan_speed_table_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_table_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_table_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).numPoints) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_table_t),
-            "::",
-            stringify!(numPoints)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).table) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_speed_table_t),
-            "::",
-            stringify!(table)
-        )
-    );
+impl Default for _ctl_fan_speed_table_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Fan properties"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_fan_properties_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -10624,92 +4149,6 @@ pub struct _ctl_fan_properties_t {
     #[doc = "< [out] The maximum number of points in the fan temp/speed table. A\n< value of -1 means that this fan doesn't support providing a temp/speed\n< table."]
     pub maxPoints: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_fan_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_fan_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_fan_properties_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_fan_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_fan_properties_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_fan_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).canControl) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(canControl)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).supportedModes) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(supportedModes)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).supportedUnits) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(supportedUnits)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxRPM) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(maxRPM)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxPoints) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_properties_t),
-            "::",
-            stringify!(maxPoints)
-        )
-    );
-}
 #[doc = "\n @brief Fan configuration"]
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -10725,70 +4164,14 @@ pub struct _ctl_fan_config_t {
     #[doc = "< [out] A table containing temperature/speed pairs"]
     pub speedTable: ctl_fan_speed_table_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_fan_config_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_fan_config_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_fan_config_t>(),
-        936usize,
-        concat!("Size of: ", stringify!(_ctl_fan_config_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_fan_config_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_fan_config_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_config_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_config_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).mode) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_config_t),
-            "::",
-            stringify!(mode)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).speedFixed) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_config_t),
-            "::",
-            stringify!(speedFixed)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).speedTable) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_fan_config_t),
-            "::",
-            stringify!(speedTable)
-        )
-    );
+impl Default for _ctl_fan_config_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -10820,85 +4203,18 @@ pub struct _ctl_freq_properties_t {
     #[doc = "< [out] The maximum non-overclock hardware clock frequency in units of\n< MHz."]
     pub max: f64,
 }
-#[test]
-fn bindgen_test_layout__ctl_freq_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_freq_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_freq_properties_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_freq_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_freq_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_freq_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_properties_t),
-            "::",
-            stringify!(type_)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).canControl) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_properties_t),
-            "::",
-            stringify!(canControl)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).min) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_properties_t),
-            "::",
-            stringify!(min)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).max) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_properties_t),
-            "::",
-            stringify!(max)
-        )
-    );
+impl Default for _ctl_freq_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Frequency range between which the hardware can operate. The limits can\n        be above or below the hardware limits - the hardware will clamp\n        appropriately."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_freq_range_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -10908,61 +4224,6 @@ pub struct _ctl_freq_range_t {
     pub min: f64,
     #[doc = "< [in,out] The max frequency in MHz above which hardware frequency\n< management will not request frequencies. On input, setting to 0 or a\n< very big number will permit the frequency to go all the way up to the\n< hardware maximum. On output, a negative number indicates that no\n< external maximum frequency limit is in effect."]
     pub max: f64,
-}
-#[test]
-fn bindgen_test_layout__ctl_freq_range_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_freq_range_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_freq_range_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_freq_range_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_freq_range_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_freq_range_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_range_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_range_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).min) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_range_t),
-            "::",
-            stringify!(min)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).max) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_range_t),
-            "::",
-            stringify!(max)
-        )
-    );
 }
 #[doc = "\n @brief Frequency throttle reasons"]
 pub type ctl_freq_throttle_reason_flags_t = u32;
@@ -10989,7 +4250,7 @@ pub enum _ctl_freq_throttle_reason_flag_t {
 pub use self::_ctl_freq_throttle_reason_flag_t as ctl_freq_throttle_reason_flag_t;
 #[doc = "\n @brief Frequency state"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_freq_state_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11008,104 +4269,9 @@ pub struct _ctl_freq_state_t {
     #[doc = "< [out] The reasons that the frequency is being limited by the hardware.\n< Returns 0 (frequency not throttled) or a combination of ::ctl_freq_throttle_reason_flag_t."]
     pub throttleReasons: ctl_freq_throttle_reason_flags_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_freq_state_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_freq_state_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_freq_state_t>(),
-        56usize,
-        concat!("Size of: ", stringify!(_ctl_freq_state_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_freq_state_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_freq_state_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).currentVoltage) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(currentVoltage)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).request) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(request)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).tdp) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(tdp)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).efficient) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(efficient)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).actual) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(actual)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).throttleReasons) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_state_t),
-            "::",
-            stringify!(throttleReasons)
-        )
-    );
-}
 #[doc = "\n @brief Frequency throttle time snapshot\n\n @details\n     - Percent time throttled is calculated by taking two snapshots (s1, s2)\n       and using the equation: %throttled = (s2.throttleTime -\n       s1.throttleTime) / (s2.timestamp - s1.timestamp)"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_freq_throttle_time_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11115,62 +4281,6 @@ pub struct _ctl_freq_throttle_time_t {
     pub throttleTime: u64,
     #[doc = "< [out] Microsecond timestamp when throttleTime was captured.\n< This timestamp should only be used to calculate delta time between\n< snapshots of this structure.\n< Never take the delta of this timestamp with the timestamp from a\n< different structure since they are not guaranteed to have the same base.\n< The absolute value of the timestamp is only valid during within the\n< application and may be different on the next execution."]
     pub timestamp: u64,
-}
-#[test]
-fn bindgen_test_layout__ctl_freq_throttle_time_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_freq_throttle_time_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_freq_throttle_time_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_freq_throttle_time_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_freq_throttle_time_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_freq_throttle_time_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_throttle_time_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_throttle_time_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).throttleTime) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_throttle_time_t),
-            "::",
-            stringify!(throttleTime)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).timestamp) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_freq_throttle_time_t),
-            "::",
-            stringify!(timestamp)
-        )
-    );
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -11216,7 +4326,7 @@ pub enum _ctl_video_processing_super_resolution_flag_t {
 pub use self::_ctl_video_processing_super_resolution_flag_t as ctl_video_processing_super_resolution_flag_t;
 #[doc = "\n @brief Super Resolution feature details structure to be used with\n        SUPER_RESOLUTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_super_resolution_info_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11231,95 +4341,9 @@ pub struct _ctl_video_processing_super_resolution_info_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_super_resolution_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_super_resolution_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_super_resolution_info_t>(),
-        116usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_super_resolution_info_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_super_resolution_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).super_resolution_flag) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t),
-            "::",
-            stringify!(super_resolution_flag)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).super_resolution_range_in_width) as usize - ptr as usize
-        },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t),
-            "::",
-            stringify!(super_resolution_range_in_width)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).super_resolution_range_in_height) as usize - ptr as usize
-        },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t),
-            "::",
-            stringify!(super_resolution_range_in_height)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        52usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_info_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Super Resolution Get/Set structure to be used with SUPER_RESOLUTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_super_resolution_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11340,129 +4364,9 @@ pub struct _ctl_video_processing_super_resolution_t {
     #[doc = "< [out] Reserved field of 3 bytes"]
     pub ReservedBytes: [::std::os::raw::c_char; 3usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_super_resolution_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_super_resolution_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_super_resolution_t>(),
-        92usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_super_resolution_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_super_resolution_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_super_resolution_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).super_resolution_flag) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(super_resolution_flag)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).super_resolution_max_in_enabled) as usize - ptr as usize
-        },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(super_resolution_max_in_enabled)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).super_resolution_max_in_width) as usize - ptr as usize
-        },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(super_resolution_max_in_width)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).super_resolution_max_in_height) as usize - ptr as usize
-        },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(super_resolution_max_in_height)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).super_resolution_reboot_reset) as usize - ptr as usize
-        },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(super_resolution_reboot_reset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedBytes) as usize - ptr as usize },
-        88usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_super_resolution_t),
-            "::",
-            stringify!(ReservedBytes)
-        )
-    );
-}
 #[doc = "\n @brief Noise Reduction feature details structure to be used with\n        NOISE_REDUCTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_noise_reduction_info_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11477,94 +4381,9 @@ pub struct _ctl_video_processing_noise_reduction_info_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_noise_reduction_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_noise_reduction_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_noise_reduction_info_t>(),
-        96usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_noise_reduction_info_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).noise_reduction) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t),
-            "::",
-            stringify!(noise_reduction)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).noise_reduction_auto_detect_supported) as usize
-                - ptr as usize
-        },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t),
-            "::",
-            stringify!(noise_reduction_auto_detect_supported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).noise_reduction_auto_detect) as usize - ptr as usize },
-        29usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t),
-            "::",
-            stringify!(noise_reduction_auto_detect)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_info_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Noise Reduction Get/Set structure to be used with NOISE_REDUCTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_noise_reduction_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11577,81 +4396,9 @@ pub struct _ctl_video_processing_noise_reduction_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_noise_reduction_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_noise_reduction_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_noise_reduction_t>(),
-        84usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_noise_reduction_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_noise_reduction_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_noise_reduction_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).noise_reduction) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_t),
-            "::",
-            stringify!(noise_reduction)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).noise_reduction_auto_detect) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_t),
-            "::",
-            stringify!(noise_reduction_auto_detect)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_noise_reduction_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Adaptive Contrast Enhancement feature details structure to be used\n        with ADAPTIVE_CONTRAST_ENHANCEMENT"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_adaptive_contrast_enhancement_info_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11666,101 +4413,9 @@ pub struct _ctl_video_processing_adaptive_contrast_enhancement_info_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_adaptive_contrast_enhancement_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<
-        _ctl_video_processing_adaptive_contrast_enhancement_info_t,
-    > = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_adaptive_contrast_enhancement_info_t>(),
-        96usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_adaptive_contrast_enhancement_info_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).adaptive_contrast_enhancement) as usize - ptr as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t),
-            "::",
-            stringify!(adaptive_contrast_enhancement)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).adaptive_contrast_enhancement_coexistence_supported)
-                as usize
-                - ptr as usize
-        },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t),
-            "::",
-            stringify!(adaptive_contrast_enhancement_coexistence_supported)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).adaptive_contrast_enhancement_coexistence) as usize
-                - ptr as usize
-        },
-        29usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t),
-            "::",
-            stringify!(adaptive_contrast_enhancement_coexistence)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_info_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Adaptive Contrast Enhancement Get/Set structure to be used with\n        ADAPTIVE_CONTRAST_ENHANCEMENT"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_adaptive_contrast_enhancement_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11773,86 +4428,9 @@ pub struct _ctl_video_processing_adaptive_contrast_enhancement_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_adaptive_contrast_enhancement_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_adaptive_contrast_enhancement_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_adaptive_contrast_enhancement_t>(),
-        84usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_adaptive_contrast_enhancement_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).adaptive_contrast_enhancement) as usize - ptr as usize
-        },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t),
-            "::",
-            stringify!(adaptive_contrast_enhancement)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).adaptive_contrast_enhancement_coexistence) as usize
-                - ptr as usize
-        },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t),
-            "::",
-            stringify!(adaptive_contrast_enhancement_coexistence)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_adaptive_contrast_enhancement_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Standard Color Correction feature details structure to be used with\n        STANDARD_COLOR_CORRECTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_standard_color_correction_info_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11871,114 +4449,9 @@ pub struct _ctl_video_processing_standard_color_correction_info_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_standard_color_correction_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_standard_color_correction_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_standard_color_correction_info_t>(),
-        152usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_standard_color_correction_info_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).standard_color_correction_default_enable) as usize
-                - ptr as usize
-        },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(standard_color_correction_default_enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).brightness) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(brightness)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).contrast) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(contrast)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hue) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(hue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).saturation) as usize - ptr as usize },
-        68usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(saturation)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        88usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_info_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Standard Color Correction Get/Set structure to be used with\n        STANDARD_COLOR_CORRECTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_standard_color_correction_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -11997,113 +4470,9 @@ pub struct _ctl_video_processing_standard_color_correction_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_standard_color_correction_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_standard_color_correction_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_standard_color_correction_t>(),
-        88usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_standard_color_correction_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_standard_color_correction_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).standard_color_correction_enable) as usize - ptr as usize
-        },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(standard_color_correction_enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).brightness) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(brightness)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).contrast) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(contrast)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).hue) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(hue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).saturation) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(saturation)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_standard_color_correction_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Total Color Correction Get/Set structure to be used with\n        TOTAL_COLOR_CORRECTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_total_color_correction_info_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -12126,134 +4495,9 @@ pub struct _ctl_video_processing_total_color_correction_info_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_total_color_correction_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_total_color_correction_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_total_color_correction_info_t>(),
-        192usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_total_color_correction_info_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).total_color_correction_default_enable) as usize
-                - ptr as usize
-        },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(total_color_correction_default_enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).red) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(red)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).green) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(green)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).blue) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(blue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).yellow) as usize - ptr as usize },
-        68usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(yellow)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).cyan) as usize - ptr as usize },
-        88usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(cyan)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).magenta) as usize - ptr as usize },
-        108usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(magenta)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        128usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_info_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Total Color Correction Get/Set structure to be used with\n        TOTAL_COLOR_CORRECTION"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_video_processing_total_color_correction_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -12276,130 +4520,6 @@ pub struct _ctl_video_processing_total_color_correction_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_total_color_correction_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_total_color_correction_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_total_color_correction_t>(),
-        96usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_total_color_correction_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_total_color_correction_t>(),
-        4usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_total_color_correction_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).total_color_correction_enable) as usize - ptr as usize
-        },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(total_color_correction_enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).red) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(red)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).green) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(green)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).blue) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(blue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).yellow) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(yellow)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).cyan) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(cyan)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).magenta) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(magenta)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_total_color_correction_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
-}
 #[doc = "\n @brief Video Processing feature details which will have range supported and\n        default values"]
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -12421,107 +4541,19 @@ pub struct _ctl_video_processing_feature_details_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_feature_details_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_feature_details_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_feature_details_t>(),
-        120usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_feature_details_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_feature_details_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_feature_details_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(FeatureType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ValueType) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(ValueType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(Value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomValueSize) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(CustomValueSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pCustomValue) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(pCustomValue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_details_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
+impl Default for _ctl_video_processing_feature_details_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_video_processing_feature_details_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_video_processing_feature_details_t {{ FeatureType: {:?}, ValueType: {:?}, Value: {:?}, pCustomValue: {:?}, ReservedFields: {:?} }}" , self . FeatureType , self . ValueType , self . Value , self . pCustomValue , self . ReservedFields)
+    }
 }
 #[doc = "\n @brief Video Processing features which are controllable"]
 #[repr(C)]
@@ -12538,77 +4570,14 @@ pub struct _ctl_video_processing_feature_caps_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_feature_caps_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_feature_caps_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_feature_caps_t>(),
-        88usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_feature_caps_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_feature_caps_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_feature_caps_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_caps_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_caps_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).NumSupportedFeatures) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_caps_t),
-            "::",
-            stringify!(NumSupportedFeatures)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pFeatureDetails) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_caps_t),
-            "::",
-            stringify!(pFeatureDetails)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_caps_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
+impl Default for _ctl_video_processing_feature_caps_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Video Processing feature for get/set"]
 #[repr(C)]
@@ -12637,137 +4606,19 @@ pub struct _ctl_video_processing_feature_getset_t {
     #[doc = "< [out] Reserved field of 64 bytes"]
     pub ReservedFields: [u32; 16usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_video_processing_feature_getset_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_video_processing_feature_getset_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_video_processing_feature_getset_t>(),
-        120usize,
-        concat!(
-            "Size of: ",
-            stringify!(_ctl_video_processing_feature_getset_t)
-        )
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_video_processing_feature_getset_t>(),
-        8usize,
-        concat!(
-            "Alignment of ",
-            stringify!(_ctl_video_processing_feature_getset_t)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).FeatureType) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(FeatureType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationName) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(ApplicationName)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ApplicationNameLength) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(ApplicationNameLength)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bSet) as usize - ptr as usize },
-        25usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(bSet)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ValueType) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(ValueType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Value) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(Value)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).CustomValueSize) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(CustomValueSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).pCustomValue) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(pCustomValue)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).ReservedFields) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_video_processing_feature_getset_t),
-            "::",
-            stringify!(ReservedFields)
-        )
-    );
+impl Default for _ctl_video_processing_feature_getset_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_video_processing_feature_getset_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_video_processing_feature_getset_t {{ FeatureType: {:?}, ApplicationName: {:?}, bSet: {:?}, ValueType: {:?}, Value: {:?}, pCustomValue: {:?}, ReservedFields: {:?} }}" , self . FeatureType , self . ApplicationName , self . bSet , self . ValueType , self . Value , self . pCustomValue , self . ReservedFields)
+    }
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -12842,95 +4693,18 @@ pub struct _ctl_mem_properties_t {
     #[doc = "< [out] The number of memory channels. A value of -1 means that this\n< property is unknown."]
     pub numChannels: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_mem_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_mem_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_mem_properties_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_mem_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_mem_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_mem_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(type_)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).location) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(location)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).physicalSize) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(physicalSize)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).busWidth) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(busWidth)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).numChannels) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_properties_t),
-            "::",
-            stringify!(numChannels)
-        )
-    );
+impl Default for _ctl_mem_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Memory state - health, allocated\n\n @details\n     - Percent allocation is given by 100 * (size - free / size.\n     - Percent free is given by 100 * free / size."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_mem_state_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -12941,64 +4715,9 @@ pub struct _ctl_mem_state_t {
     #[doc = "< [out] The total allocatable memory in bytes (can be less than\n< ::ctl_mem_properties_t.physicalSize)"]
     pub size: u64,
 }
-#[test]
-fn bindgen_test_layout__ctl_mem_state_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_mem_state_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_mem_state_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_mem_state_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_mem_state_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_mem_state_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_state_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_state_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).free) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_state_t),
-            "::",
-            stringify!(free)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).size) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_state_t),
-            "::",
-            stringify!(size)
-        )
-    );
-}
 #[doc = "\n @brief Memory bandwidth\n\n @details\n     - Percent bandwidth is calculated by taking two snapshots (s1, s2) and\n       using the equation: %bw = 10^6 * ((s2.readCounter - s1.readCounter) +\n       (s2.writeCounter - s1.writeCounter)) / (s2.maxBandwidth *\n       (s2.timestamp - s1.timestamp))"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_mem_bandwidth_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -13013,81 +4732,6 @@ pub struct _ctl_mem_bandwidth_t {
     #[doc = "< [out] Total bytes written to memory. Supported only for Version > 0"]
     pub writeCounter: u64,
 }
-#[test]
-fn bindgen_test_layout__ctl_mem_bandwidth_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_mem_bandwidth_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_mem_bandwidth_t>(),
-        40usize,
-        concat!("Size of: ", stringify!(_ctl_mem_bandwidth_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_mem_bandwidth_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_mem_bandwidth_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_bandwidth_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_bandwidth_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxBandwidth) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_bandwidth_t),
-            "::",
-            stringify!(maxBandwidth)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).timestamp) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_bandwidth_t),
-            "::",
-            stringify!(timestamp)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).readCounter) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_bandwidth_t),
-            "::",
-            stringify!(readCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).writeCounter) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_mem_bandwidth_t),
-            "::",
-            stringify!(writeCounter)
-        )
-    );
-}
 #[doc = "\n @brief Telemetry Item for each telemetry property\n\n @details\n     - If the supported field is true, then the entire structure has valid\n       information.\n     - The ::ctl_data_value_t is of type ::ctl_data_type_t and units\n       ::ctl_units_t"]
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -13101,61 +4745,23 @@ pub struct _ctl_oc_telemetry_item_t {
     #[doc = "< [out] The value of type ::ctl_data_type_t and units ::ctl_units_t."]
     pub value: ctl_data_value_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_oc_telemetry_item_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_oc_telemetry_item_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_oc_telemetry_item_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_oc_telemetry_item_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_oc_telemetry_item_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_oc_telemetry_item_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bSupported) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_telemetry_item_t),
-            "::",
-            stringify!(bSupported)
+impl Default for _ctl_oc_telemetry_item_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_oc_telemetry_item_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(
+            f,
+            "_ctl_oc_telemetry_item_t {{ bSupported: {:?}, units: {:?}, type: {:?}, value: {:?} }}",
+            self.bSupported, self.units, self.type_, self.value
         )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).units) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_telemetry_item_t),
-            "::",
-            stringify!(units)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_telemetry_item_t),
-            "::",
-            stringify!(type_)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).value) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_telemetry_item_t),
-            "::",
-            stringify!(value)
-        )
-    );
+    }
 }
 #[doc = "\n @brief Overclocking Control Information\n\n @details\n     - Whether the device supports overclocking.\n     - The\n       bSupported/bRelative/bReference/units/min/max/step/default/reference\n       values for the available overclock controls\n     - The idea is to facilitate the way the applications present overclock\n       settings to the user. If bSupported is false, the corresponding\n       overclock control is not supported\n     - The setting units will be an enum that enables the application to know\n       the units for the control setting e.g. MHz. The min and max settings\n       give the limits for the control.\n     - The step setting gives the minimum change in the control value (plus\n       or minus) - if a control is not changed by at least this amount, the\n       hardware may round up or down.\n     - The default values gives the manufacturing setting for the control.\n       Some controls such as frequency offset and voltage offset are\n       relative; in this case, bRelative will be true, otherwise the control\n       settings are absolute values.\n     - For relative controls and if bReference is true, the reference value\n       gives the absolute value at the default setting.\n     - If bReference is false, the absolute value of the default setting is\n       no not known and it is probably better to display the setting to users\n       as percentage offsets."]
 #[repr(C)]
@@ -13180,111 +4786,14 @@ pub struct _ctl_oc_control_info_t {
     #[doc = "< [out] Reference Value if the bReference is true."]
     pub reference: f64,
 }
-#[test]
-fn bindgen_test_layout__ctl_oc_control_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_oc_control_info_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_oc_control_info_t>(),
-        48usize,
-        concat!("Size of: ", stringify!(_ctl_oc_control_info_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_oc_control_info_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_oc_control_info_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bSupported) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(bSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bRelative) as usize - ptr as usize },
-        1usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(bRelative)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bReference) as usize - ptr as usize },
-        2usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(bReference)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).units) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(units)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).min) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(min)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).max) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(max)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).step) as usize - ptr as usize },
-        24usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(step)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Default) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(Default)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).reference) as usize - ptr as usize },
-        40usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_control_info_t),
-            "::",
-            stringify!(reference)
-        )
-    );
+impl Default for _ctl_oc_control_info_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Overclock properties"]
 #[repr(C)]
@@ -13309,114 +4818,18 @@ pub struct _ctl_oc_properties_t {
     #[doc = "< [out] related to function ::ctlOverclockTemperatureLimitSet"]
     pub temperatureLimit: ctl_oc_control_info_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_oc_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_oc_properties_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_oc_properties_t>(),
-        296usize,
-        concat!("Size of: ", stringify!(_ctl_oc_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_oc_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_oc_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bSupported) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(bSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuFrequencyOffset) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(gpuFrequencyOffset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuVoltageOffset) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(gpuVoltageOffset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramFrequencyOffset) as usize - ptr as usize },
-        104usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(vramFrequencyOffset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramVoltageOffset) as usize - ptr as usize },
-        152usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(vramVoltageOffset)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).powerLimit) as usize - ptr as usize },
-        200usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(powerLimit)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).temperatureLimit) as usize - ptr as usize },
-        248usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_properties_t),
-            "::",
-            stringify!(temperatureLimit)
-        )
-    );
+impl Default for _ctl_oc_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Overclock Voltage Frequency Pair"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_oc_vf_pair_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -13426,61 +4839,6 @@ pub struct _ctl_oc_vf_pair_t {
     pub Voltage: f64,
     #[doc = "< [in,out] Frequency component of the pair in MHz."]
     pub Frequency: f64,
-}
-#[test]
-fn bindgen_test_layout__ctl_oc_vf_pair_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_oc_vf_pair_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_oc_vf_pair_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_oc_vf_pair_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_oc_vf_pair_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_oc_vf_pair_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_vf_pair_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_vf_pair_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Voltage) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_vf_pair_t),
-            "::",
-            stringify!(Voltage)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Frequency) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_oc_vf_pair_t),
-            "::",
-            stringify!(Frequency)
-        )
-    );
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -13512,60 +4870,19 @@ pub struct _ctl_psu_info_t {
     #[doc = "< [out] Instantaneous snapshot of the voltage of this power source."]
     pub voltage: ctl_oc_telemetry_item_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_psu_info_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_psu_info_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_psu_info_t>(),
-        56usize,
-        concat!("Size of: ", stringify!(_ctl_psu_info_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_psu_info_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_psu_info_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bSupported) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_psu_info_t),
-            "::",
-            stringify!(bSupported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).psuType) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_psu_info_t),
-            "::",
-            stringify!(psuType)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).energyCounter) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_psu_info_t),
-            "::",
-            stringify!(energyCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).voltage) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_psu_info_t),
-            "::",
-            stringify!(voltage)
-        )
-    );
+impl Default for _ctl_psu_info_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_psu_info_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_psu_info_t {{ bSupported: {:?}, psuType: {:?}, energyCounter: {:?}, voltage: {:?} }}" , self . bSupported , self . psuType , self . energyCounter , self . voltage)
+    }
 }
 #[doc = "\n @brief Power Telemetry"]
 #[repr(C)]
@@ -13632,329 +4949,23 @@ pub struct _ctl_power_telemetry_t {
     #[doc = "< [out] Fan speed."]
     pub fanSpeed: [ctl_oc_telemetry_item_t; 5usize],
 }
-#[test]
-fn bindgen_test_layout__ctl_power_telemetry_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_telemetry_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_telemetry_t>(),
-        808usize,
-        concat!("Size of: ", stringify!(_ctl_power_telemetry_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_telemetry_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_power_telemetry_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).timeStamp) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(timeStamp)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuEnergyCounter) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuEnergyCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuVoltage) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuVoltage)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuCurrentClockFrequency) as usize - ptr as usize },
-        80usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuCurrentClockFrequency)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuCurrentTemperature) as usize - ptr as usize },
-        104usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuCurrentTemperature)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).globalActivityCounter) as usize - ptr as usize },
-        128usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(globalActivityCounter)
-        )
-    );
-    assert_eq!(
+impl Default for _ctl_power_telemetry_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
         unsafe {
-            ::std::ptr::addr_of!((*ptr).renderComputeActivityCounter) as usize - ptr as usize
-        },
-        152usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(renderComputeActivityCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).mediaActivityCounter) as usize - ptr as usize },
-        176usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(mediaActivityCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuPowerLimited) as usize - ptr as usize },
-        200usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuPowerLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuTemperatureLimited) as usize - ptr as usize },
-        201usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuTemperatureLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuCurrentLimited) as usize - ptr as usize },
-        202usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuCurrentLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuVoltageLimited) as usize - ptr as usize },
-        203usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuVoltageLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gpuUtilizationLimited) as usize - ptr as usize },
-        204usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(gpuUtilizationLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramEnergyCounter) as usize - ptr as usize },
-        208usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramEnergyCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramVoltage) as usize - ptr as usize },
-        232usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramVoltage)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramCurrentClockFrequency) as usize - ptr as usize },
-        256usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramCurrentClockFrequency)
-        )
-    );
-    assert_eq!(
-        unsafe {
-            ::std::ptr::addr_of!((*ptr).vramCurrentEffectiveFrequency) as usize - ptr as usize
-        },
-        280usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramCurrentEffectiveFrequency)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramReadBandwidthCounter) as usize - ptr as usize },
-        304usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramReadBandwidthCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramWriteBandwidthCounter) as usize - ptr as usize },
-        328usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramWriteBandwidthCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramCurrentTemperature) as usize - ptr as usize },
-        352usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramCurrentTemperature)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramPowerLimited) as usize - ptr as usize },
-        376usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramPowerLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramTemperatureLimited) as usize - ptr as usize },
-        377usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramTemperatureLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramCurrentLimited) as usize - ptr as usize },
-        378usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramCurrentLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramVoltageLimited) as usize - ptr as usize },
-        379usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramVoltageLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).vramUtilizationLimited) as usize - ptr as usize },
-        380usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(vramUtilizationLimited)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).totalCardEnergyCounter) as usize - ptr as usize },
-        384usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(totalCardEnergyCounter)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).psu) as usize - ptr as usize },
-        408usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(psu)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).fanSpeed) as usize - ptr as usize },
-        688usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_telemetry_t),
-            "::",
-            stringify!(fanSpeed)
-        )
-    );
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+impl ::std::fmt::Debug for _ctl_power_telemetry_t {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write ! (f , "_ctl_power_telemetry_t {{ timeStamp: {:?}, gpuEnergyCounter: {:?}, gpuVoltage: {:?}, gpuCurrentClockFrequency: {:?}, gpuCurrentTemperature: {:?}, globalActivityCounter: {:?}, renderComputeActivityCounter: {:?}, mediaActivityCounter: {:?}, gpuPowerLimited: {:?}, gpuTemperatureLimited: {:?}, gpuCurrentLimited: {:?}, gpuVoltageLimited: {:?}, gpuUtilizationLimited: {:?}, vramEnergyCounter: {:?}, vramVoltage: {:?}, vramCurrentClockFrequency: {:?}, vramCurrentEffectiveFrequency: {:?}, vramReadBandwidthCounter: {:?}, vramWriteBandwidthCounter: {:?}, vramCurrentTemperature: {:?}, vramPowerLimited: {:?}, vramTemperatureLimited: {:?}, vramCurrentLimited: {:?}, vramVoltageLimited: {:?}, vramUtilizationLimited: {:?}, totalCardEnergyCounter: {:?}, psu: {:?}, fanSpeed: {:?} }}" , self . timeStamp , self . gpuEnergyCounter , self . gpuVoltage , self . gpuCurrentClockFrequency , self . gpuCurrentTemperature , self . globalActivityCounter , self . renderComputeActivityCounter , self . mediaActivityCounter , self . gpuPowerLimited , self . gpuTemperatureLimited , self . gpuCurrentLimited , self . gpuVoltageLimited , self . gpuUtilizationLimited , self . vramEnergyCounter , self . vramVoltage , self . vramCurrentClockFrequency , self . vramCurrentEffectiveFrequency , self . vramReadBandwidthCounter , self . vramWriteBandwidthCounter , self . vramCurrentTemperature , self . vramPowerLimited , self . vramTemperatureLimited , self . vramCurrentLimited , self . vramVoltageLimited , self . vramUtilizationLimited , self . totalCardEnergyCounter , self . psu , self . fanSpeed)
+    }
 }
 #[doc = "\n @brief PCI address"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pci_address_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -13969,84 +4980,9 @@ pub struct _ctl_pci_address_t {
     #[doc = "< [out] BDF function"]
     pub function: u32,
 }
-#[test]
-fn bindgen_test_layout__ctl_pci_address_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pci_address_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pci_address_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_pci_address_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pci_address_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_pci_address_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_address_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_address_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).domain) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_address_t),
-            "::",
-            stringify!(domain)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).bus) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_address_t),
-            "::",
-            stringify!(bus)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).device) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_address_t),
-            "::",
-            stringify!(device)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).function) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_address_t),
-            "::",
-            stringify!(function)
-        )
-    );
-}
 #[doc = "\n @brief PCI speed"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pci_speed_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14059,74 +4995,9 @@ pub struct _ctl_pci_speed_t {
     #[doc = "< [out] The maximum bandwidth in bytes/sec (sum of all lanes). A value\n< of -1 means that this property is unknown."]
     pub maxBandwidth: i64,
 }
-#[test]
-fn bindgen_test_layout__ctl_pci_speed_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pci_speed_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pci_speed_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_pci_speed_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pci_speed_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pci_speed_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_speed_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_speed_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).gen) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_speed_t),
-            "::",
-            stringify!(gen)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).width) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_speed_t),
-            "::",
-            stringify!(width)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxBandwidth) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_speed_t),
-            "::",
-            stringify!(maxBandwidth)
-        )
-    );
-}
 #[doc = "\n @brief Static PCI properties"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pci_properties_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14141,85 +5012,9 @@ pub struct _ctl_pci_properties_t {
     #[doc = "< [out] Resizable Bar enabled on this device"]
     pub resizable_bar_enabled: bool,
 }
-#[test]
-fn bindgen_test_layout__ctl_pci_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pci_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pci_properties_t>(),
-        64usize,
-        concat!("Size of: ", stringify!(_ctl_pci_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pci_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pci_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).address) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_properties_t),
-            "::",
-            stringify!(address)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxSpeed) as usize - ptr as usize },
-        32usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_properties_t),
-            "::",
-            stringify!(maxSpeed)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).resizable_bar_supported) as usize - ptr as usize },
-        56usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_properties_t),
-            "::",
-            stringify!(resizable_bar_supported)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).resizable_bar_enabled) as usize - ptr as usize },
-        57usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_properties_t),
-            "::",
-            stringify!(resizable_bar_enabled)
-        )
-    );
-}
 #[doc = "\n @brief Dynamic PCI state"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_pci_state_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14228,54 +5023,9 @@ pub struct _ctl_pci_state_t {
     #[doc = "< [out] The current port configure speed"]
     pub speed: ctl_pci_speed_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_pci_state_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_pci_state_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_pci_state_t>(),
-        32usize,
-        concat!("Size of: ", stringify!(_ctl_pci_state_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_pci_state_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_pci_state_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_state_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_state_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).speed) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_pci_state_t),
-            "::",
-            stringify!(speed)
-        )
-    );
-}
 #[doc = "\n @brief Properties related to device power settings"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_properties_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14290,85 +5040,9 @@ pub struct _ctl_power_properties_t {
     #[doc = "< [out] The maximum power limit in milliwatts that can be requested."]
     pub maxLimit: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_properties_t>(),
-        20usize,
-        concat!("Size of: ", stringify!(_ctl_power_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_properties_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).canControl) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_properties_t),
-            "::",
-            stringify!(canControl)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).defaultLimit) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_properties_t),
-            "::",
-            stringify!(defaultLimit)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).minLimit) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_properties_t),
-            "::",
-            stringify!(minLimit)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxLimit) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_properties_t),
-            "::",
-            stringify!(maxLimit)
-        )
-    );
-}
 #[doc = "\n @brief Energy counter snapshot\n\n @details\n     - Average power is calculated by taking two snapshots (s1, s2) and using\n       the equation: PowerWatts = (s2.energy - s1.energy) / (s2.timestamp -\n       s1.timestamp)"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_energy_counter_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14379,65 +5053,9 @@ pub struct _ctl_power_energy_counter_t {
     #[doc = "< [out] Microsecond timestamp when energy was captured.\n< This timestamp should only be used to calculate delta time between\n< snapshots of this structure.\n< Never take the delta of this timestamp with the timestamp from a\n< different structure since they are not guaranteed to have the same base.\n< The absolute value of the timestamp is only valid during within the\n< application and may be different on the next execution."]
     pub timestamp: u64,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_energy_counter_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_energy_counter_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_energy_counter_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_power_energy_counter_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_energy_counter_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_power_energy_counter_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_energy_counter_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_energy_counter_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).energy) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_energy_counter_t),
-            "::",
-            stringify!(energy)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).timestamp) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_energy_counter_t),
-            "::",
-            stringify!(timestamp)
-        )
-    );
-}
 #[doc = "\n @brief Sustained power limits\n\n @details\n     - The power controller (Punit) will throttle the operating frequency if\n       the power averaged over a window (typically seconds) exceeds this\n       limit."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_sustained_limit_t {
     #[doc = "< [in,out] indicates if the limit is enabled (true) or ignored (false)"]
     pub enabled: bool,
@@ -14446,145 +5064,27 @@ pub struct _ctl_power_sustained_limit_t {
     #[doc = "< [in,out] power averaging window (Tau) in milliseconds"]
     pub interval: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_sustained_limit_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_sustained_limit_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_sustained_limit_t>(),
-        12usize,
-        concat!("Size of: ", stringify!(_ctl_power_sustained_limit_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_sustained_limit_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_sustained_limit_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).enabled) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_sustained_limit_t),
-            "::",
-            stringify!(enabled)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).power) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_sustained_limit_t),
-            "::",
-            stringify!(power)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).interval) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_sustained_limit_t),
-            "::",
-            stringify!(interval)
-        )
-    );
-}
 #[doc = "\n @brief Burst power limit\n\n @details\n     - The power controller (Punit) will throttle the operating frequency of\n       the device if the power averaged over a few milliseconds exceeds a\n       limit known as PL2. Typically PL2 > PL1 so that it permits the\n       frequency to burst higher for short periods than would be otherwise\n       permitted by PL1."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_burst_limit_t {
     #[doc = "< [in,out] indicates if the limit is enabled (true) or ignored (false)"]
     pub enabled: bool,
     #[doc = "< [in,out] power limit in milliwatts"]
     pub power: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_burst_limit_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_burst_limit_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_burst_limit_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_power_burst_limit_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_burst_limit_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_burst_limit_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).enabled) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_burst_limit_t),
-            "::",
-            stringify!(enabled)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).power) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_burst_limit_t),
-            "::",
-            stringify!(power)
-        )
-    );
-}
 #[doc = "\n @brief Peak power limit\n\n @details\n     - The power controller (Punit) will preemptively throttle the operating\n       frequency of the device when the instantaneous power exceeds this\n       limit. The limit is known as PL4. It expresses the maximum power that\n       can be drawn from the power supply.\n     - If this power limit is removed or set too high, the power supply will\n       generate an interrupt when it detects an overcurrent condition and the\n       power controller will throttle the device frequencies down to min. It\n       is thus better to tune the PL4 value in order to avoid such\n       excursions."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_peak_limit_t {
     #[doc = "< [in,out] power limit in milliwatts for the AC power source."]
     pub powerAC: i32,
     #[doc = "< [in,out] power limit in milliwatts for the DC power source. On input,\n< this is ignored if the product does not have a battery. On output,\n< this will be -1 if the product does not have a battery."]
     pub powerDC: i32,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_peak_limit_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_peak_limit_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_peak_limit_t>(),
-        8usize,
-        concat!("Size of: ", stringify!(_ctl_power_peak_limit_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_peak_limit_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_peak_limit_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).powerAC) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_peak_limit_t),
-            "::",
-            stringify!(powerAC)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).powerDC) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_peak_limit_t),
-            "::",
-            stringify!(powerDC)
-        )
-    );
-}
 #[doc = "\n @brief Power limits"]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_power_limits_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14597,74 +5097,9 @@ pub struct _ctl_power_limits_t {
     #[doc = "< [in,out] peak power limit."]
     pub peakPowerLimits: ctl_power_peak_limit_t,
 }
-#[test]
-fn bindgen_test_layout__ctl_power_limits_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_power_limits_t> = ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_power_limits_t>(),
-        36usize,
-        concat!("Size of: ", stringify!(_ctl_power_limits_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_power_limits_t>(),
-        4usize,
-        concat!("Alignment of ", stringify!(_ctl_power_limits_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_limits_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_limits_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).sustainedPowerLimit) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_limits_t),
-            "::",
-            stringify!(sustainedPowerLimit)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).burstPowerLimit) as usize - ptr as usize },
-        20usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_limits_t),
-            "::",
-            stringify!(burstPowerLimit)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).peakPowerLimits) as usize - ptr as usize },
-        28usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_power_limits_t),
-            "::",
-            stringify!(peakPowerLimits)
-        )
-    );
-}
 #[doc = "\n @brief Energy threshold\n\n @details\n     - ."]
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone)]
 pub struct _ctl_energy_threshold_t {
     #[doc = "< [in] size of this structure"]
     pub Size: u32,
@@ -14676,72 +5111,6 @@ pub struct _ctl_energy_threshold_t {
     pub threshold: f64,
     #[doc = "< [in,out] The host process ID that set the energy threshold. Will be\n< 0xFFFFFFFF if no threshold has been set."]
     pub processId: u32,
-}
-#[test]
-fn bindgen_test_layout__ctl_energy_threshold_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_energy_threshold_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_energy_threshold_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_energy_threshold_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_energy_threshold_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_energy_threshold_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_energy_threshold_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_energy_threshold_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).enable) as usize - ptr as usize },
-        5usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_energy_threshold_t),
-            "::",
-            stringify!(enable)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).threshold) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_energy_threshold_t),
-            "::",
-            stringify!(threshold)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).processId) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_energy_threshold_t),
-            "::",
-            stringify!(processId)
-        )
-    );
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -14777,61 +5146,14 @@ pub struct _ctl_temp_properties_t {
     #[doc = "< [out] Will contain the maximum temperature for the specific device in\n< degrees Celsius."]
     pub maxTemperature: f64,
 }
-#[test]
-fn bindgen_test_layout__ctl_temp_properties_t() {
-    const UNINIT: ::std::mem::MaybeUninit<_ctl_temp_properties_t> =
-        ::std::mem::MaybeUninit::uninit();
-    let ptr = UNINIT.as_ptr();
-    assert_eq!(
-        ::std::mem::size_of::<_ctl_temp_properties_t>(),
-        24usize,
-        concat!("Size of: ", stringify!(_ctl_temp_properties_t))
-    );
-    assert_eq!(
-        ::std::mem::align_of::<_ctl_temp_properties_t>(),
-        8usize,
-        concat!("Alignment of ", stringify!(_ctl_temp_properties_t))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Size) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_temp_properties_t),
-            "::",
-            stringify!(Size)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).Version) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_temp_properties_t),
-            "::",
-            stringify!(Version)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
-        8usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_temp_properties_t),
-            "::",
-            stringify!(type_)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).maxTemperature) as usize - ptr as usize },
-        16usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(_ctl_temp_properties_t),
-            "::",
-            stringify!(maxTemperature)
-        )
-    );
+impl Default for _ctl_temp_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
 }
 #[doc = "\n @brief Function-pointer for ctlInit"]
 pub type ctl_pfnInit_t = ::std::option::Option<
