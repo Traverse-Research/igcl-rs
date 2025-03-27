@@ -4,13 +4,14 @@ use std::{ffi::OsStr, sync::Arc};
 
 use crate::error::Result;
 
+use crate::memory::MemoryModule;
 use crate::{
     error::Error,
     ffi::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
         ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
         ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t,
-        ctl_oc_telemetry_item_t, ctl_power_telemetry_t, ctl_result_t,
+        ctl_oc_telemetry_item_t, ctl_pfnEnumMemoryModules_t, ctl_power_telemetry_t, ctl_result_t,
     },
 };
 
@@ -49,6 +50,11 @@ impl DriverSettingScope<'_> {
             _ => Some(Self::Global),
         }
     }
+}
+
+pub struct MemoryState {
+    pub total_size: u64,
+    pub available: u64,
 }
 
 #[doc(alias = "ctl_device_adapter_handle_t")]
@@ -240,6 +246,37 @@ impl DeviceAdapter {
         };
 
         Ok(flip_mode)
+    }
+
+    #[doc(alias = "ctlEnumMemoryModules")]
+    pub fn enumerate_memory_modules(&self) -> Result<Vec<MemoryModule>> {
+        let mut num_memory_modules = 0u32;
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumMemoryModules(
+                self.device_adapter_handle,
+                &mut num_memory_modules,
+                std::ptr::null_mut(),
+            )
+        })?;
+
+        let mut memory_modules = Vec::with_capacity(num_memory_modules as usize);
+
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumMemoryModules(
+                self.device_adapter_handle,
+                &mut num_memory_modules,
+                memory_modules.as_mut_ptr(),
+            )
+        })?;
+
+        unsafe { memory_modules.set_len(num_memory_modules as usize) };
+
+        Ok(memory_modules
+            .into_iter()
+            .map(|handle| MemoryModule {
+                memory_module_handle: handle,
+            })
+            .collect())
     }
 
     pub fn power_telemetry(&self) -> Result<Telemetry> {
