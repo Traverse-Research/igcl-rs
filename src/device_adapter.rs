@@ -4,6 +4,7 @@ use std::{ffi::OsStr, sync::Arc};
 
 use crate::error::Result;
 
+use crate::memory::MemoryModule;
 use crate::{
     error::Error,
     ffi::{
@@ -240,6 +241,38 @@ impl DeviceAdapter {
         };
 
         Ok(flip_mode)
+    }
+
+    #[doc(alias = "ctlEnumMemoryModules")]
+    pub fn enumerate_memory_modules(&self) -> Result<Vec<MemoryModule>> {
+        let mut num_memory_modules = 0u32;
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumMemoryModules(
+                self.device_adapter_handle,
+                &mut num_memory_modules,
+                std::ptr::null_mut(),
+            )
+        })?;
+
+        let mut memory_modules = Vec::with_capacity(num_memory_modules as usize);
+
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumMemoryModules(
+                self.device_adapter_handle,
+                &mut num_memory_modules,
+                memory_modules.as_mut_ptr(),
+            )
+        })?;
+
+        unsafe { memory_modules.set_len(num_memory_modules as usize) };
+
+        Ok(memory_modules
+            .into_iter()
+            .map(|handle| MemoryModule {
+                memory_module_handle: handle,
+                control_lib: self.control_lib.clone(),
+            })
+            .collect())
     }
 
     pub fn power_telemetry(&self) -> Result<Telemetry> {
