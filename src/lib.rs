@@ -23,6 +23,7 @@ pub mod ffi;
 
 pub mod device_adapter;
 pub mod error;
+pub mod memory;
 
 pub struct Igcl {
     api_handle: ctl_api_handle_t,
