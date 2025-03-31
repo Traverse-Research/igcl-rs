@@ -167,7 +167,7 @@ impl DeviceAdapter {
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
                 ApplicationNameLength: current_app.as_bytes().len() as i8,
                 bSet: false,
-                ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_ENUM,
+                ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_INT32,
                 Value: unsafe { std::mem::zeroed() },
                 CustomValueSize: 0,
                 pCustomValue: std::ptr::null_mut(),
