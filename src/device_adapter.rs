@@ -152,6 +152,9 @@ impl DeviceAdapter {
 
     /// Attempt to query the frame rate limit driver setting.
     /// Falls back to a higher scope if the setting could not be found in the current one.
+    ///  
+    /// Returned value is the current or most-recent configured frame limit,
+    /// seemingly regardless of whether the feature is enabled.
     pub fn feature_frame_limit(&self, scope: DriverSettingScope<'_>) -> Result<i32> {
         let mut result = ctl_result_t::CTL_RESULT_ERROR_UNKNOWN;
         let mut scope = Some(scope);
@@ -167,7 +170,7 @@ impl DeviceAdapter {
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
                 ApplicationNameLength: current_app.as_bytes().len() as i8,
                 bSet: false,
-                ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_ENUM,
+                ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_INT32,
                 Value: unsafe { std::mem::zeroed() },
                 CustomValueSize: 0,
                 pCustomValue: std::ptr::null_mut(),
