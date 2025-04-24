@@ -10,6 +10,7 @@ description = "Bindings to Intel GPU Control Library"
 include = ["src", "LICENSE"]
 categories = ["external-ffi-bindings", "api-bindings", "graphics"] # https://crates.io/category_slugs
 keywords = ["intel", "igcl", "gpu"]
+rust-version = "1.74"
 
 [dependencies]
 anyhow = "1.0.79"
