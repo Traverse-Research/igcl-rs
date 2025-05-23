@@ -152,7 +152,7 @@ impl DeviceAdapter {
 
     /// Attempt to query the frame rate limit driver setting.
     /// Falls back to a higher scope if the setting could not be found in the current one.
-    ///  
+    ///
     /// Returned value is the current or most-recent configured frame limit,
     /// seemingly regardless of whether the feature is enabled.
     pub fn feature_frame_limit(&self, scope: DriverSettingScope<'_>) -> Result<i32> {
