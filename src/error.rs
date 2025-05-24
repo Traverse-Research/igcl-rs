@@ -1,16 +1,14 @@
-use crate::ffi::ctl_result_t;
-use core::fmt;
-use std::{
-    fmt::{Display, Formatter},
-    mem::MaybeUninit,
-};
+use std::{fmt, mem::MaybeUninit};
 
+use crate::ffi::ctl_result_t;
+
+#[doc(alias = "ctl_result_t")]
 pub struct Error(pub ctl_result_t);
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
-impl Display for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str(match self.0 {
             ctl_result_t::CTL_RESULT_SUCCESS => {
                 "success."
@@ -299,7 +297,7 @@ impl Display for Error {
 }
 
 impl fmt::Debug for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "IGCL_RESULT({self})")
     }
 }

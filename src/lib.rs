@@ -3,18 +3,17 @@
 use std::{mem::MaybeUninit, sync::Arc};
 
 use anyhow::Result;
-use device_adapter::DeviceAdapter;
-use ffi::{
-    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t, CTL_IMPL_MAJOR_VERSION,
-    CTL_IMPL_MINOR_VERSION,
-};
 
 #[cfg(target_os = "windows")]
 use windows::Win32::Foundation::LUID;
 
 use crate::{
+    device_adapter::DeviceAdapter,
     error::Error,
-    ffi::{ctl_api_handle_t, ControlLib},
+    ffi::{
+        ctl_api_handle_t, ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t,
+        ControlLib, CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION,
+    },
 };
 
 #[allow(clippy::missing_safety_doc)]
@@ -141,6 +140,7 @@ impl Igcl {
 }
 
 impl Drop for Igcl {
+    #[doc(alias = "ctlClose")]
     fn drop(&mut self) {
         if let Err(error) =
             Error::from_result(unsafe { self.control_lib.ctlClose(self.api_handle) })

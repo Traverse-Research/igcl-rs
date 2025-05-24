@@ -1,20 +1,18 @@
-use std::os::raw::c_void;
 use std::{
     ffi::{CStr, OsStr},
+    os::raw::c_void,
     sync::Arc,
 };
 
-use crate::error::Result;
-
-use crate::memory::MemoryModule;
 use crate::{
-    error::Error,
+    error::{Error, Result},
     ffi::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
         ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
         ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t,
         ctl_oc_telemetry_item_t, ctl_power_telemetry_t, ctl_result_t,
     },
+    memory::MemoryModule,
 };
 
 /// Specifies the scope in which to query for driver settings.
@@ -112,6 +110,7 @@ impl DeviceAdapter {
 
     /// Attempt to query the endurance gaming driver setting for the specified scope.
     /// Falls back to a higher scope if the setting could not be found in the current one.
+    #[doc(alias = "CTL_3D_FEATURE_ENDURANCE_GAMING")]
     pub fn feature_endurance_gaming(
         &self,
         scope: DriverSettingScope<'_>,
@@ -157,6 +156,7 @@ impl DeviceAdapter {
     ///
     /// Returned value is the current or most-recent configured frame limit,
     /// seemingly regardless of whether the feature is enabled.
+    #[doc(alias = "CTL_3D_FEATURE_FRAME_LIMIT")]
     pub fn feature_frame_limit(&self, scope: DriverSettingScope<'_>) -> Result<i32> {
         let mut result = ctl_result_t::CTL_RESULT_ERROR_UNKNOWN;
         let mut scope = Some(scope);
@@ -196,6 +196,7 @@ impl DeviceAdapter {
 
     /// Attempt to query the flip mode driver setting.
     /// Falls back to a higher scope if the setting could not be found in the current one.
+    #[doc(alias = "CTL_3D_FEATURE_GAMING_FLIP_MODES")]
     pub fn feature_flip_mode(
         &self,
         scope: DriverSettingScope<'_>,
@@ -294,6 +295,7 @@ impl DeviceAdapter {
             .collect())
     }
 
+    #[doc(alias = "ctlPowerTelemetryGet")]
     pub fn power_telemetry(&self) -> Result<Telemetry> {
         let mut telemetry = ctl_power_telemetry_t {
             Size: std::mem::size_of::<ctl_power_telemetry_t>() as u32,
@@ -361,6 +363,7 @@ pub enum Unit {
     VoltageMillivolts(Value),
 }
 
+#[doc(alias = "ctl_oc_telemetry_item_t")]
 #[derive(Debug)]
 pub struct TelemetryItem(pub Option<Unit>);
 
@@ -432,6 +435,7 @@ impl From<ctl_oc_telemetry_item_t> for TelemetryItem {
     }
 }
 
+#[doc(alias = "ctl_power_telemetry_t")]
 #[derive(Debug)]
 pub struct Telemetry {
     pub time_stamp: TelemetryItem,
