@@ -4,9 +4,6 @@ use std::{mem::MaybeUninit, sync::Arc};
 
 use anyhow::Result;
 
-#[cfg(target_os = "windows")]
-use windows::Win32::Foundation::LUID;
-
 use crate::{
     device_adapter::DeviceAdapter,
     error::Error,
@@ -109,17 +106,18 @@ impl Igcl {
             adapter_properties.Size = std::mem::size_of::<ctl_device_adapter_properties_t>() as u32;
             adapter_properties.Version = 0;
 
-            // LUID is only available on windows.
-            #[cfg(target_os = "windows")]
+            // On Windows, this "OS specific Device ID" contains the LUID, of which we know the size
+            #[cfg(windows)]
             let device_id = {
-                let luid_size = std::mem::size_of::<LUID>();
-                let mut device_id = vec![0u8; luid_size];
-                adapter_properties.device_id_size = luid_size as u32;
+                use std::mem::size_of_val;
+                let mut device_id = vec![0u8; 8];
+                adapter_properties.device_id_size = size_of_val(&device_id) as u32;
                 adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
                 device_id
             };
 
-            #[cfg(not(target_os = "windows"))]
+            // TODO: Query the device_id_size on other OS'es
+            #[cfg(not(windows))]
             let device_id = vec![];
 
             Error::from_result(unsafe {

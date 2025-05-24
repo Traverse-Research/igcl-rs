@@ -58,6 +58,7 @@ pub struct DeviceAdapter {
     /// Note: the pointer to the device ID is invalid at this point and should not be used.
     /// Use [`Self::device_id`] instead.
     pub(crate) adapter_properties: ctl_device_adapter_properties_t,
+    /// On Windows, this contains the LUID
     pub(crate) device_id: Vec<u8>,
     pub(crate) control_lib: Arc<ControlLib>,
 }
@@ -68,7 +69,7 @@ impl DeviceAdapter {
     }
 
     /// Retrieve the unique device identifier, determined by the operating system.
-    /// On windows, this will be the LUID.
+    /// - On windows, this will be the LUID (8 bytes).
     pub fn device_id(&self) -> &[u8] {
         &self.device_id
     }
