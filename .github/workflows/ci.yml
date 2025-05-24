@@ -5,7 +5,12 @@ on:
 jobs:
   rust:
     name: Lint Rust code
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: Cargo fmt
@@ -17,7 +22,12 @@ jobs:
 
   rust-msrv:
     name: Build-test MSRV (1.74) with minimal crate dependencies
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@nightly
