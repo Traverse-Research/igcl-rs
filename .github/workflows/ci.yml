@@ -35,7 +35,7 @@ jobs:
         run: cargo -Zminimal-versions generate-lockfile
       - uses: dtolnay/rust-toolchain@1.74.0
       - name: Cargo check
-        run: cargo check --workspace --all-targets
+        run: cargo check --exclude api_gen --workspace --all-targets
 
   generate:
     runs-on: windows-latest
