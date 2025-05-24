@@ -5,8 +5,8 @@ use std::{mem::MaybeUninit, sync::Arc};
 use anyhow::Result;
 use device_adapter::DeviceAdapter;
 use ffi::{
-    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t,
-    ctl_init_flag_t::CTL_INIT_FLAG_USE_LEVEL_ZERO, CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION,
+    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t, CTL_IMPL_MAJOR_VERSION,
+    CTL_IMPL_MINOR_VERSION,
 };
 
 #[cfg(target_os = "windows")]

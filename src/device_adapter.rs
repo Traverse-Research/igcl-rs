@@ -1,6 +1,8 @@
-use std::ffi::CStr;
 use std::os::raw::c_void;
-use std::{ffi::OsStr, sync::Arc};
+use std::{
+    ffi::{CStr, OsStr},
+    sync::Arc,
+};
 
 use crate::error::Result;
 
@@ -128,7 +130,7 @@ impl DeviceAdapter {
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_ENDURANCE_GAMING,
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
-                ApplicationNameLength: current_app.as_bytes().len() as i8,
+                ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_CUSTOM,
                 Value: unsafe { std::mem::zeroed() },
@@ -168,7 +170,7 @@ impl DeviceAdapter {
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_FRAME_LIMIT,
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
-                ApplicationNameLength: current_app.as_bytes().len() as i8,
+                ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_INT32,
                 Value: unsafe { std::mem::zeroed() },
@@ -211,7 +213,7 @@ impl DeviceAdapter {
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_GAMING_FLIP_MODES,
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
-                ApplicationNameLength: current_app.as_bytes().len() as i8,
+                ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_ENUM,
                 Value: unsafe { std::mem::zeroed() },
@@ -233,13 +235,27 @@ impl DeviceAdapter {
 
         Error::from_result(result)?;
 
+        // TODO: This is the wrong kind of enum
+        use ctl_gaming_flip_mode_flag_t::*;
         let flip_mode = match flip_mode {
-            1 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT,
-            2 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF,
-            4 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON,
-            8 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC,
-            16 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME,
-            32 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS,
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS
+            }
             _ => return Err(Error(_ctl_result_t::CTL_RESULT_ERROR_UNKNOWN)),
         };
 
@@ -308,13 +324,7 @@ impl DeviceAdapter {
             vram_write_bandwidth_counter: telemetry.vramWriteBandwidthCounter.into(),
             vram_current_temperature: telemetry.vramCurrentTemperature.into(),
             total_card_energy_counter: telemetry.totalCardEnergyCounter.into(),
-            fan_speed: [
-                telemetry.fanSpeed[0].into(),
-                telemetry.fanSpeed[1].into(),
-                telemetry.fanSpeed[2].into(),
-                telemetry.fanSpeed[3].into(),
-                telemetry.fanSpeed[4].into(),
-            ],
+            fan_speed: telemetry.fanSpeed.map(TelemetryItem::from),
         })
     }
 }
