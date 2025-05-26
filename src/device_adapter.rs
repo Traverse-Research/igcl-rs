@@ -1,18 +1,18 @@
-use std::ffi::CStr;
-use std::os::raw::c_void;
-use std::{ffi::OsStr, sync::Arc};
+use std::{
+    ffi::{CStr, OsStr},
+    os::raw::c_void,
+    sync::Arc,
+};
 
-use crate::error::Result;
-
-use crate::memory::MemoryModule;
 use crate::{
-    error::Error,
+    error::{Error, Result},
     ffi::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
         ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
         ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t,
         ctl_oc_telemetry_item_t, ctl_power_telemetry_t, ctl_result_t,
     },
+    memory::MemoryModule,
 };
 
 /// Specifies the scope in which to query for driver settings.
@@ -58,6 +58,7 @@ pub struct DeviceAdapter {
     /// Note: the pointer to the device ID is invalid at this point and should not be used.
     /// Use [`Self::device_id`] instead.
     pub(crate) adapter_properties: ctl_device_adapter_properties_t,
+    /// On Windows, this contains the LUID
     pub(crate) device_id: Vec<u8>,
     pub(crate) control_lib: Arc<ControlLib>,
 }
@@ -68,7 +69,7 @@ impl DeviceAdapter {
     }
 
     /// Retrieve the unique device identifier, determined by the operating system.
-    /// On windows, this will be the LUID.
+    /// - On windows, this will be the LUID (8 bytes).
     pub fn device_id(&self) -> &[u8] {
         &self.device_id
     }
@@ -110,6 +111,7 @@ impl DeviceAdapter {
 
     /// Attempt to query the endurance gaming driver setting for the specified scope.
     /// Falls back to a higher scope if the setting could not be found in the current one.
+    #[doc(alias = "CTL_3D_FEATURE_ENDURANCE_GAMING")]
     pub fn feature_endurance_gaming(
         &self,
         scope: DriverSettingScope<'_>,
@@ -128,7 +130,7 @@ impl DeviceAdapter {
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_ENDURANCE_GAMING,
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
-                ApplicationNameLength: current_app.as_bytes().len() as i8,
+                ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_CUSTOM,
                 Value: unsafe { std::mem::zeroed() },
@@ -152,9 +154,10 @@ impl DeviceAdapter {
 
     /// Attempt to query the frame rate limit driver setting.
     /// Falls back to a higher scope if the setting could not be found in the current one.
-    ///  
+    ///
     /// Returned value is the current or most-recent configured frame limit,
     /// seemingly regardless of whether the feature is enabled.
+    #[doc(alias = "CTL_3D_FEATURE_FRAME_LIMIT")]
     pub fn feature_frame_limit(&self, scope: DriverSettingScope<'_>) -> Result<i32> {
         let mut result = ctl_result_t::CTL_RESULT_ERROR_UNKNOWN;
         let mut scope = Some(scope);
@@ -168,7 +171,7 @@ impl DeviceAdapter {
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_FRAME_LIMIT,
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
-                ApplicationNameLength: current_app.as_bytes().len() as i8,
+                ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_INT32,
                 Value: unsafe { std::mem::zeroed() },
@@ -194,6 +197,7 @@ impl DeviceAdapter {
 
     /// Attempt to query the flip mode driver setting.
     /// Falls back to a higher scope if the setting could not be found in the current one.
+    #[doc(alias = "CTL_3D_FEATURE_GAMING_FLIP_MODES")]
     pub fn feature_flip_mode(
         &self,
         scope: DriverSettingScope<'_>,
@@ -211,7 +215,7 @@ impl DeviceAdapter {
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_GAMING_FLIP_MODES,
                 ApplicationName: current_app.as_mut_ptr() as *mut _,
-                ApplicationNameLength: current_app.as_bytes().len() as i8,
+                ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_ENUM,
                 Value: unsafe { std::mem::zeroed() },
@@ -233,13 +237,27 @@ impl DeviceAdapter {
 
         Error::from_result(result)?;
 
+        // TODO: This is the wrong kind of enum
+        use ctl_gaming_flip_mode_flag_t::*;
         let flip_mode = match flip_mode {
-            1 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT,
-            2 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF,
-            4 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON,
-            8 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC,
-            16 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME,
-            32 => ctl_gaming_flip_mode_flag_t::CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS,
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME
+            }
+            i if i == CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS as u32 => {
+                CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS
+            }
             _ => return Err(Error(_ctl_result_t::CTL_RESULT_ERROR_UNKNOWN)),
         };
 
@@ -278,6 +296,7 @@ impl DeviceAdapter {
             .collect())
     }
 
+    #[doc(alias = "ctlPowerTelemetryGet")]
     pub fn power_telemetry(&self) -> Result<Telemetry> {
         let mut telemetry = ctl_power_telemetry_t {
             Size: std::mem::size_of::<ctl_power_telemetry_t>() as u32,
@@ -308,13 +327,7 @@ impl DeviceAdapter {
             vram_write_bandwidth_counter: telemetry.vramWriteBandwidthCounter.into(),
             vram_current_temperature: telemetry.vramCurrentTemperature.into(),
             total_card_energy_counter: telemetry.totalCardEnergyCounter.into(),
-            fan_speed: [
-                telemetry.fanSpeed[0].into(),
-                telemetry.fanSpeed[1].into(),
-                telemetry.fanSpeed[2].into(),
-                telemetry.fanSpeed[3].into(),
-                telemetry.fanSpeed[4].into(),
-            ],
+            fan_speed: telemetry.fanSpeed.map(TelemetryItem::from),
         })
     }
 }
@@ -351,6 +364,7 @@ pub enum Unit {
     VoltageMillivolts(Value),
 }
 
+#[doc(alias = "ctl_oc_telemetry_item_t")]
 #[derive(Debug)]
 pub struct TelemetryItem(pub Option<Unit>);
 
@@ -422,6 +436,7 @@ impl From<ctl_oc_telemetry_item_t> for TelemetryItem {
     }
 }
 
+#[doc(alias = "ctl_power_telemetry_t")]
 #[derive(Debug)]
 pub struct Telemetry {
     pub time_stamp: TelemetryItem,

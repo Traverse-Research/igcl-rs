@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
+use anyhow::Result;
+
 use crate::{
     error::Error,
     ffi::{ctl_mem_handle_t, ctl_mem_state_t, ControlLib},
 };
-use anyhow::Result;
 
 #[doc(alias = "ctl_mem_state_t")]
 pub struct MemoryState {

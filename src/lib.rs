@@ -3,18 +3,14 @@
 use std::{mem::MaybeUninit, sync::Arc};
 
 use anyhow::Result;
-use device_adapter::DeviceAdapter;
-use ffi::{
-    ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t,
-    ctl_init_flag_t::CTL_INIT_FLAG_USE_LEVEL_ZERO, CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION,
-};
-
-#[cfg(target_os = "windows")]
-use windows::Win32::Foundation::LUID;
 
 use crate::{
+    device_adapter::DeviceAdapter,
     error::Error,
-    ffi::{ctl_api_handle_t, ControlLib},
+    ffi::{
+        ctl_api_handle_t, ctl_application_id_t, ctl_device_adapter_properties_t, ctl_init_args_t,
+        ControlLib, CTL_IMPL_MAJOR_VERSION, CTL_IMPL_MINOR_VERSION,
+    },
 };
 
 #[allow(clippy::missing_safety_doc)]
@@ -110,17 +106,18 @@ impl Igcl {
             adapter_properties.Size = std::mem::size_of::<ctl_device_adapter_properties_t>() as u32;
             adapter_properties.Version = 0;
 
-            // LUID is only available on windows.
-            #[cfg(target_os = "windows")]
+            // On Windows, this "OS specific Device ID" contains the LUID, of which we know the size
+            #[cfg(windows)]
             let device_id = {
-                let luid_size = std::mem::size_of::<LUID>();
-                let mut device_id = vec![0u8; luid_size];
-                adapter_properties.device_id_size = luid_size as u32;
+                use std::mem::size_of_val;
+                let mut device_id = vec![0u8; 8];
+                adapter_properties.device_id_size = size_of_val(&device_id) as u32;
                 adapter_properties.pDeviceID = device_id.as_mut_ptr() as *mut _;
                 device_id
             };
 
-            #[cfg(not(target_os = "windows"))]
+            // TODO: Query the device_id_size on other OS'es
+            #[cfg(not(windows))]
             let device_id = vec![];
 
             Error::from_result(unsafe {
@@ -141,6 +138,7 @@ impl Igcl {
 }
 
 impl Drop for Igcl {
+    #[doc(alias = "ctlClose")]
     fn drop(&mut self) {
         if let Err(error) =
             Error::from_result(unsafe { self.control_lib.ctlClose(self.api_handle) })

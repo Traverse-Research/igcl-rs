@@ -5,7 +5,12 @@ on:
 jobs:
   rust:
     name: Lint Rust code
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: Cargo fmt
@@ -17,7 +22,12 @@ jobs:
 
   rust-msrv:
     name: Build-test MSRV (1.74) with minimal crate dependencies
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@nightly
@@ -26,3 +36,20 @@ jobs:
       - uses: dtolnay/rust-toolchain@1.74.0
       - name: Cargo check
         run: cargo check --workspace --all-targets
+
+  generate:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout submodule
+        # Manually update submodules with --checkout because they are configured with update=none and will be skipped otherwise
+        run: git submodule update --recursive --init --force --checkout
+      - name: Run generator
+        run: cargo r -p api_gen
+      - name: Normalize line endings
+        run: |
+          git add --renormalize -u
+          git reset
+      - name: Diff autogen result
+        shell: bash
+        run: test -z "$(git status --porcelain)" || (echo "::error::Generated files are different, please regenerate with cargo run -p api_gen!"; git diff; false)
