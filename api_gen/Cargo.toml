@@ -5,4 +5,4 @@ edition = "2021"
 
 [dependencies]
 # Version-locked to not make the CI go out of date
-bindgen = "=0.71.1"
+bindgen = "=0.72.0"
