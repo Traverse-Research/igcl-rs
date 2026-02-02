@@ -30,16 +30,14 @@ pub enum DriverSettingScope<'a> {
 impl DriverSettingScope<'_> {
     pub fn name(&self) -> String {
         match self {
-            DriverSettingScope::Global => String::default(),
-            DriverSettingScope::CurrentProcess => {
-                std::env::current_exe().map_or("".to_string(), |path| {
-                    path.file_name()
-                        .unwrap_or(OsStr::new(""))
-                        .to_string_lossy()
-                        .to_string()
-                })
-            }
-            DriverSettingScope::Process { process_name } => process_name.to_string(),
+            Self::Global => String::default(),
+            Self::CurrentProcess => std::env::current_exe().map_or("".to_string(), |path| {
+                path.file_name()
+                    .unwrap_or(OsStr::new(""))
+                    .to_string_lossy()
+                    .to_string()
+            }),
+            Self::Process { process_name } => process_name.to_string(),
         }
     }
 

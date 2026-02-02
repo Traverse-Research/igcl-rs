@@ -20,7 +20,7 @@ fn main() {
                 .join("../vendor/drivers.gpu.control-library/include/")
                 .display()
         ))
-        .dynamic_link_require_all(true)
+        .dynamic_link_require_all(false)
         .dynamic_library_name("ControlLib")
         .clang_arg("-x")
         .clang_arg("c++")

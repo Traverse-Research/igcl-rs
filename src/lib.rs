@@ -2,7 +2,7 @@
 
 use std::{mem::MaybeUninit, sync::Arc};
 
-use anyhow::Result;
+use anyhow::{Context as _, Result};
 
 use crate::{
     device_adapter::DeviceAdapter,
@@ -36,7 +36,10 @@ impl Igcl {
     /// This loads the required dll, and initializes the Igcl library.
     #[doc(alias = "ctlInit")]
     pub fn new() -> Result<Self> {
-        let control_lib = Arc::new(unsafe { ControlLib::new("ControlLib")? });
+        let control_lib = Arc::new(
+            unsafe { ControlLib::new("ControlLib") }
+                .context("Failed to load `ControlLib` library")?,
+        );
 
         let api_handle = {
             let mut init_args = ctl_init_args_t {
@@ -61,7 +64,8 @@ impl Igcl {
             Error::from_result_with_assume_init_on_success(
                 unsafe { control_lib.ctlInit(&mut init_args, api_handle.as_mut_ptr()) },
                 api_handle,
-            )?
+            )
+            .context("ctlInit")?
         };
 
         Ok(Self {
@@ -83,7 +87,8 @@ impl Igcl {
                 &mut num_adapters,
                 std::ptr::null_mut(),
             )
-        })?;
+        })
+        .context("ctlEnumerateDevices")?;
 
         let mut adapters = Vec::with_capacity(num_adapters as usize);
 
@@ -93,7 +98,8 @@ impl Igcl {
                 &mut num_adapters,
                 adapters.as_mut_ptr(),
             )
-        })?;
+        })
+        .context("ctlEnumerateDevices")?;
 
         unsafe { adapters.set_len(num_adapters as usize) };
 
@@ -123,7 +129,8 @@ impl Igcl {
             Error::from_result(unsafe {
                 self.control_lib
                     .ctlGetDeviceProperties(device_adapter_handle, &mut adapter_properties)
-            })?;
+            })
+            .context("ctlGetDeviceProperties")?;
 
             devices.push(DeviceAdapter {
                 device_adapter_handle,
