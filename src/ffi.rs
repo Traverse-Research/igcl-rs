@@ -5789,425 +5789,733 @@ pub type ctl_pfnTemperatureGetState_t = ::std::option::Option<
 >;
 pub struct ControlLib {
     __library: ::libloading::Library,
-    pub ctlInit: unsafe extern "C" fn(
-        pInitDesc: *mut ctl_init_args_t,
-        phAPIHandle: *mut ctl_api_handle_t,
-    ) -> ctl_result_t,
-    pub ctlClose: unsafe extern "C" fn(hAPIHandle: ctl_api_handle_t) -> ctl_result_t,
-    pub ctlSetRuntimePath:
+    pub ctlInit: Result<
+        unsafe extern "C" fn(
+            pInitDesc: *mut ctl_init_args_t,
+            phAPIHandle: *mut ctl_api_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlClose: Result<
+        unsafe extern "C" fn(hAPIHandle: ctl_api_handle_t) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetRuntimePath: Result<
         unsafe extern "C" fn(pArgs: *mut ctl_runtime_path_args_t) -> ctl_result_t,
-    pub ctlWaitForPropertyChange: unsafe extern "C" fn(
-        hDeviceAdapter: ctl_device_adapter_handle_t,
-        pArgs: *mut ctl_wait_property_change_args_t,
-    ) -> ctl_result_t,
-    pub ctlReservedCall: unsafe extern "C" fn(
-        hDeviceAdapter: ctl_device_adapter_handle_t,
-        pArgs: *mut ctl_reserved_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSupported3DCapabilities: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pFeatureCaps: *mut ctl_3d_feature_caps_t,
-    ) -> ctl_result_t,
-    pub ctlGetSet3DFeature: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pFeature: *mut ctl_3d_feature_getset_t,
-    ) -> ctl_result_t,
-    pub ctlCheckDriverVersion: unsafe extern "C" fn(
-        hDeviceAdapter: ctl_device_adapter_handle_t,
-        version_info: ctl_version_info_t,
-    ) -> ctl_result_t,
-    pub ctlEnumerateDevices: unsafe extern "C" fn(
-        hAPIHandle: ctl_api_handle_t,
-        pCount: *mut u32,
-        phDevices: *mut ctl_device_adapter_handle_t,
-    ) -> ctl_result_t,
-    pub ctlEnumerateDisplayOutputs: unsafe extern "C" fn(
-        hDeviceAdapter: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phDisplayOutputs: *mut ctl_display_output_handle_t,
-    ) -> ctl_result_t,
-    pub ctlEnumerateI2CPinPairs: unsafe extern "C" fn(
-        hDeviceAdapter: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phI2cPinPairs: *mut ctl_i2c_pin_pair_handle_t,
-    ) -> ctl_result_t,
-    pub ctlGetDeviceProperties: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pProperties: *mut ctl_device_adapter_properties_t,
-    ) -> ctl_result_t,
-    pub ctlGetDisplayProperties: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pProperties: *mut ctl_display_properties_t,
-    ) -> ctl_result_t,
-    pub ctlGetAdaperDisplayEncoderProperties: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pProperties: *mut ctl_adapter_display_encoder_properties_t,
-    ) -> ctl_result_t,
-    pub ctlGetZeDevice: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pZeDevice: *mut ::std::os::raw::c_void,
-        hInstance: *mut *mut ::std::os::raw::c_void,
-    ) -> ctl_result_t,
-    pub ctlGetSharpnessCaps: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pSharpnessCaps: *mut ctl_sharpness_caps_t,
-    ) -> ctl_result_t,
-    pub ctlGetCurrentSharpness: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pSharpnessSettings: *mut ctl_sharpness_settings_t,
-    ) -> ctl_result_t,
-    pub ctlSetCurrentSharpness: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pSharpnessSettings: *mut ctl_sharpness_settings_t,
-    ) -> ctl_result_t,
-    pub ctlI2CAccess: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pI2cAccessArgs: *mut ctl_i2c_access_args_t,
-    ) -> ctl_result_t,
-    pub ctlI2CAccessOnPinPair: unsafe extern "C" fn(
-        hI2cPinPair: ctl_i2c_pin_pair_handle_t,
-        pI2cAccessArgs: *mut ctl_i2c_access_pinpair_args_t,
-    ) -> ctl_result_t,
-    pub ctlAUXAccess: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pAuxAccessArgs: *mut ctl_aux_access_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetPowerOptimizationCaps: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pPowerOptimizationCaps: *mut ctl_power_optimization_caps_t,
-    ) -> ctl_result_t,
-    pub ctlGetPowerOptimizationSetting: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pPowerOptimizationSettings: *mut ctl_power_optimization_settings_t,
-    ) -> ctl_result_t,
-    pub ctlSetPowerOptimizationSetting: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pPowerOptimizationSettings: *mut ctl_power_optimization_settings_t,
-    ) -> ctl_result_t,
-    pub ctlSetBrightnessSetting: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pSetBrightnessSetting: *mut ctl_set_brightness_t,
-    ) -> ctl_result_t,
-    pub ctlGetBrightnessSetting: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pGetBrightnessSetting: *mut ctl_get_brightness_t,
-    ) -> ctl_result_t,
-    pub ctlPixelTransformationGetConfig: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pPixTxGetConfigArgs: *mut ctl_pixtx_pipe_get_config_t,
-    ) -> ctl_result_t,
-    pub ctlPixelTransformationSetConfig: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pPixTxSetConfigArgs: *mut ctl_pixtx_pipe_set_config_t,
-    ) -> ctl_result_t,
-    pub ctlPanelDescriptorAccess: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pPanelDescriptorAccessArgs: *mut ctl_panel_descriptor_access_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSupportedRetroScalingCapability: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pRetroScalingCaps: *mut ctl_retro_scaling_caps_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetRetroScaling: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pGetSetRetroScalingType: *mut ctl_retro_scaling_settings_t,
-    ) -> ctl_result_t,
-    pub ctlGetSupportedScalingCapability: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pScalingCaps: *mut ctl_scaling_caps_t,
-    ) -> ctl_result_t,
-    pub ctlGetCurrentScaling: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pGetCurrentScalingType: *mut ctl_scaling_settings_t,
-    ) -> ctl_result_t,
-    pub ctlSetCurrentScaling: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pSetScalingType: *mut ctl_scaling_settings_t,
-    ) -> ctl_result_t,
-    pub ctlGetLACEConfig: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pLaceConfig: *mut ctl_lace_config_t,
-    ) -> ctl_result_t,
-    pub ctlSetLACEConfig: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pLaceConfig: *mut ctl_lace_config_t,
-    ) -> ctl_result_t,
-    pub ctlSoftwarePSR: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pSoftwarePsrSetting: *mut ctl_sw_psr_settings_t,
-    ) -> ctl_result_t,
-    pub ctlGetIntelArcSyncInfoForMonitor: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pIntelArcSyncMonitorParams: *mut ctl_intel_arc_sync_monitor_params_t,
-    ) -> ctl_result_t,
-    pub ctlEnumerateMuxDevices: unsafe extern "C" fn(
-        hAPIHandle: ctl_api_handle_t,
-        pCount: *mut u32,
-        phMuxDevices: *mut ctl_mux_output_handle_t,
-    ) -> ctl_result_t,
-    pub ctlGetMuxProperties: unsafe extern "C" fn(
-        hMuxDevice: ctl_mux_output_handle_t,
-        pMuxProperties: *mut ctl_mux_properties_t,
-    ) -> ctl_result_t,
-    pub ctlSwitchMux: unsafe extern "C" fn(
-        hMuxDevice: ctl_mux_output_handle_t,
-        hInactiveDisplayOutput: ctl_display_output_handle_t,
-    ) -> ctl_result_t,
-    pub ctlGetIntelArcSyncProfile: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pIntelArcSyncProfileParams: *mut ctl_intel_arc_sync_profile_params_t,
-    ) -> ctl_result_t,
-    pub ctlSetIntelArcSyncProfile: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pIntelArcSyncProfileParams: *mut ctl_intel_arc_sync_profile_params_t,
-    ) -> ctl_result_t,
-    pub ctlEdidManagement: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pEdidManagementArgs: *mut ctl_edid_management_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetCustomMode: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pCustomModeArgs: *mut ctl_get_set_custom_mode_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetCombinedDisplay: unsafe extern "C" fn(
-        hDeviceAdapter: ctl_device_adapter_handle_t,
-        pCombinedDisplayArgs: *mut ctl_combined_display_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetDisplayGenlock: unsafe extern "C" fn(
-        hDeviceAdapter: *mut ctl_device_adapter_handle_t,
-        pGenlockArgs: *mut ctl_genlock_args_t,
-        AdapterCount: u32,
-        hFailureDeviceAdapter: *mut ctl_device_adapter_handle_t,
-    ) -> ctl_result_t,
-    pub ctlGetVblankTimestamp: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pVblankTSArgs: *mut ctl_vblank_ts_args_t,
-    ) -> ctl_result_t,
-    pub ctlLinkDisplayAdapters: unsafe extern "C" fn(
-        hPrimaryAdapter: ctl_device_adapter_handle_t,
-        pLdaArgs: *mut ctl_lda_args_t,
-    ) -> ctl_result_t,
-    pub ctlUnlinkDisplayAdapters:
+        ::libloading::Error,
+    >,
+    pub ctlWaitForPropertyChange: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pArgs: *mut ctl_wait_property_change_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlReservedCall: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pArgs: *mut ctl_reserved_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSupported3DCapabilities: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pFeatureCaps: *mut ctl_3d_feature_caps_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSet3DFeature: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pFeature: *mut ctl_3d_feature_getset_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlCheckDriverVersion: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            version_info: ctl_version_info_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumerateDevices: Result<
+        unsafe extern "C" fn(
+            hAPIHandle: ctl_api_handle_t,
+            pCount: *mut u32,
+            phDevices: *mut ctl_device_adapter_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumerateDisplayOutputs: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phDisplayOutputs: *mut ctl_display_output_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumerateI2CPinPairs: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phI2cPinPairs: *mut ctl_i2c_pin_pair_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetDeviceProperties: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pProperties: *mut ctl_device_adapter_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetDisplayProperties: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pProperties: *mut ctl_display_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetAdaperDisplayEncoderProperties: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pProperties: *mut ctl_adapter_display_encoder_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetZeDevice: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pZeDevice: *mut ::std::os::raw::c_void,
+            hInstance: *mut *mut ::std::os::raw::c_void,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSharpnessCaps: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pSharpnessCaps: *mut ctl_sharpness_caps_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetCurrentSharpness: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pSharpnessSettings: *mut ctl_sharpness_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetCurrentSharpness: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pSharpnessSettings: *mut ctl_sharpness_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlI2CAccess: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pI2cAccessArgs: *mut ctl_i2c_access_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlI2CAccessOnPinPair: Result<
+        unsafe extern "C" fn(
+            hI2cPinPair: ctl_i2c_pin_pair_handle_t,
+            pI2cAccessArgs: *mut ctl_i2c_access_pinpair_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlAUXAccess: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pAuxAccessArgs: *mut ctl_aux_access_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetPowerOptimizationCaps: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pPowerOptimizationCaps: *mut ctl_power_optimization_caps_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetPowerOptimizationSetting: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pPowerOptimizationSettings: *mut ctl_power_optimization_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetPowerOptimizationSetting: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pPowerOptimizationSettings: *mut ctl_power_optimization_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetBrightnessSetting: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pSetBrightnessSetting: *mut ctl_set_brightness_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetBrightnessSetting: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pGetBrightnessSetting: *mut ctl_get_brightness_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPixelTransformationGetConfig: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pPixTxGetConfigArgs: *mut ctl_pixtx_pipe_get_config_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPixelTransformationSetConfig: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pPixTxSetConfigArgs: *mut ctl_pixtx_pipe_set_config_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPanelDescriptorAccess: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pPanelDescriptorAccessArgs: *mut ctl_panel_descriptor_access_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSupportedRetroScalingCapability: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pRetroScalingCaps: *mut ctl_retro_scaling_caps_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetRetroScaling: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pGetSetRetroScalingType: *mut ctl_retro_scaling_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSupportedScalingCapability: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pScalingCaps: *mut ctl_scaling_caps_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetCurrentScaling: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pGetCurrentScalingType: *mut ctl_scaling_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetCurrentScaling: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pSetScalingType: *mut ctl_scaling_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetLACEConfig: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pLaceConfig: *mut ctl_lace_config_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetLACEConfig: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pLaceConfig: *mut ctl_lace_config_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSoftwarePSR: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pSoftwarePsrSetting: *mut ctl_sw_psr_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetIntelArcSyncInfoForMonitor: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pIntelArcSyncMonitorParams: *mut ctl_intel_arc_sync_monitor_params_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumerateMuxDevices: Result<
+        unsafe extern "C" fn(
+            hAPIHandle: ctl_api_handle_t,
+            pCount: *mut u32,
+            phMuxDevices: *mut ctl_mux_output_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetMuxProperties: Result<
+        unsafe extern "C" fn(
+            hMuxDevice: ctl_mux_output_handle_t,
+            pMuxProperties: *mut ctl_mux_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSwitchMux: Result<
+        unsafe extern "C" fn(
+            hMuxDevice: ctl_mux_output_handle_t,
+            hInactiveDisplayOutput: ctl_display_output_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetIntelArcSyncProfile: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pIntelArcSyncProfileParams: *mut ctl_intel_arc_sync_profile_params_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlSetIntelArcSyncProfile: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pIntelArcSyncProfileParams: *mut ctl_intel_arc_sync_profile_params_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEdidManagement: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pEdidManagementArgs: *mut ctl_edid_management_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetCustomMode: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pCustomModeArgs: *mut ctl_get_set_custom_mode_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetCombinedDisplay: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pCombinedDisplayArgs: *mut ctl_combined_display_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetDisplayGenlock: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: *mut ctl_device_adapter_handle_t,
+            pGenlockArgs: *mut ctl_genlock_args_t,
+            AdapterCount: u32,
+            hFailureDeviceAdapter: *mut ctl_device_adapter_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetVblankTimestamp: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pVblankTSArgs: *mut ctl_vblank_ts_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlLinkDisplayAdapters: Result<
+        unsafe extern "C" fn(
+            hPrimaryAdapter: ctl_device_adapter_handle_t,
+            pLdaArgs: *mut ctl_lda_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlUnlinkDisplayAdapters: Result<
         unsafe extern "C" fn(hPrimaryAdapter: ctl_device_adapter_handle_t) -> ctl_result_t,
-    pub ctlGetLinkedDisplayAdapters: unsafe extern "C" fn(
-        hPrimaryAdapter: ctl_device_adapter_handle_t,
-        pLdaArgs: *mut ctl_lda_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetDynamicContrastEnhancement: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pDceArgs: *mut ctl_dce_args_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetWireFormat: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pGetSetWireFormatSetting: *mut ctl_get_set_wire_format_config_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetDisplaySettings: unsafe extern "C" fn(
-        hDisplayOutput: ctl_display_output_handle_t,
-        pDisplaySettings: *mut ctl_display_settings_t,
-    ) -> ctl_result_t,
-    pub ctlEnumEngineGroups: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phEngine: *mut ctl_engine_handle_t,
-    ) -> ctl_result_t,
-    pub ctlEngineGetProperties: unsafe extern "C" fn(
-        hEngine: ctl_engine_handle_t,
-        pProperties: *mut ctl_engine_properties_t,
-    ) -> ctl_result_t,
-    pub ctlEngineGetActivity: unsafe extern "C" fn(
-        hEngine: ctl_engine_handle_t,
-        pStats: *mut ctl_engine_stats_t,
-    ) -> ctl_result_t,
-    pub ctlEnumFans: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phFan: *mut ctl_fan_handle_t,
-    ) -> ctl_result_t,
-    pub ctlFanGetProperties: unsafe extern "C" fn(
-        hFan: ctl_fan_handle_t,
-        pProperties: *mut ctl_fan_properties_t,
-    ) -> ctl_result_t,
-    pub ctlFanGetConfig: unsafe extern "C" fn(
-        hFan: ctl_fan_handle_t,
-        pConfig: *mut ctl_fan_config_t,
-    ) -> ctl_result_t,
-    pub ctlFanSetDefaultMode: unsafe extern "C" fn(hFan: ctl_fan_handle_t) -> ctl_result_t,
-    pub ctlFanSetFixedSpeedMode:
+        ::libloading::Error,
+    >,
+    pub ctlGetLinkedDisplayAdapters: Result<
+        unsafe extern "C" fn(
+            hPrimaryAdapter: ctl_device_adapter_handle_t,
+            pLdaArgs: *mut ctl_lda_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetDynamicContrastEnhancement: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pDceArgs: *mut ctl_dce_args_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetWireFormat: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pGetSetWireFormatSetting: *mut ctl_get_set_wire_format_config_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetDisplaySettings: Result<
+        unsafe extern "C" fn(
+            hDisplayOutput: ctl_display_output_handle_t,
+            pDisplaySettings: *mut ctl_display_settings_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumEngineGroups: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phEngine: *mut ctl_engine_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEngineGetProperties: Result<
+        unsafe extern "C" fn(
+            hEngine: ctl_engine_handle_t,
+            pProperties: *mut ctl_engine_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEngineGetActivity: Result<
+        unsafe extern "C" fn(
+            hEngine: ctl_engine_handle_t,
+            pStats: *mut ctl_engine_stats_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumFans: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phFan: *mut ctl_fan_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFanGetProperties: Result<
+        unsafe extern "C" fn(
+            hFan: ctl_fan_handle_t,
+            pProperties: *mut ctl_fan_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFanGetConfig: Result<
+        unsafe extern "C" fn(
+            hFan: ctl_fan_handle_t,
+            pConfig: *mut ctl_fan_config_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFanSetDefaultMode:
+        Result<unsafe extern "C" fn(hFan: ctl_fan_handle_t) -> ctl_result_t, ::libloading::Error>,
+    pub ctlFanSetFixedSpeedMode: Result<
         unsafe extern "C" fn(hFan: ctl_fan_handle_t, speed: *const ctl_fan_speed_t) -> ctl_result_t,
-    pub ctlFanSetSpeedTableMode: unsafe extern "C" fn(
-        hFan: ctl_fan_handle_t,
-        speedTable: *const ctl_fan_speed_table_t,
-    ) -> ctl_result_t,
-    pub ctlFanGetState: unsafe extern "C" fn(
-        hFan: ctl_fan_handle_t,
-        units: ctl_fan_speed_units_t,
-        pSpeed: *mut i32,
-    ) -> ctl_result_t,
-    pub ctlEnumFrequencyDomains: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phFrequency: *mut ctl_freq_handle_t,
-    ) -> ctl_result_t,
-    pub ctlFrequencyGetProperties: unsafe extern "C" fn(
-        hFrequency: ctl_freq_handle_t,
-        pProperties: *mut ctl_freq_properties_t,
-    ) -> ctl_result_t,
-    pub ctlFrequencyGetAvailableClocks: unsafe extern "C" fn(
-        hFrequency: ctl_freq_handle_t,
-        pCount: *mut u32,
-        phFrequency: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlFrequencyGetRange: unsafe extern "C" fn(
-        hFrequency: ctl_freq_handle_t,
-        pLimits: *mut ctl_freq_range_t,
-    ) -> ctl_result_t,
-    pub ctlFrequencySetRange: unsafe extern "C" fn(
-        hFrequency: ctl_freq_handle_t,
-        pLimits: *const ctl_freq_range_t,
-    ) -> ctl_result_t,
-    pub ctlFrequencyGetState: unsafe extern "C" fn(
-        hFrequency: ctl_freq_handle_t,
-        pState: *mut ctl_freq_state_t,
-    ) -> ctl_result_t,
-    pub ctlFrequencyGetThrottleTime: unsafe extern "C" fn(
-        hFrequency: ctl_freq_handle_t,
-        pThrottleTime: *mut ctl_freq_throttle_time_t,
-    ) -> ctl_result_t,
-    pub ctlGetSupportedVideoProcessingCapabilities: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pFeatureCaps: *mut ctl_video_processing_feature_caps_t,
-    ) -> ctl_result_t,
-    pub ctlGetSetVideoProcessingFeature: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pFeature: *mut ctl_video_processing_feature_getset_t,
-    ) -> ctl_result_t,
-    pub ctlEnumMemoryModules: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phMemory: *mut ctl_mem_handle_t,
-    ) -> ctl_result_t,
-    pub ctlMemoryGetProperties: unsafe extern "C" fn(
-        hMemory: ctl_mem_handle_t,
-        pProperties: *mut ctl_mem_properties_t,
-    ) -> ctl_result_t,
-    pub ctlMemoryGetState: unsafe extern "C" fn(
-        hMemory: ctl_mem_handle_t,
-        pState: *mut ctl_mem_state_t,
-    ) -> ctl_result_t,
-    pub ctlMemoryGetBandwidth: unsafe extern "C" fn(
-        hMemory: ctl_mem_handle_t,
-        pBandwidth: *mut ctl_mem_bandwidth_t,
-    ) -> ctl_result_t,
-    pub ctlOverclockGetProperties: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pOcProperties: *mut ctl_oc_properties_t,
-    ) -> ctl_result_t,
-    pub ctlOverclockWaiverSet:
+        ::libloading::Error,
+    >,
+    pub ctlFanSetSpeedTableMode: Result<
+        unsafe extern "C" fn(
+            hFan: ctl_fan_handle_t,
+            speedTable: *const ctl_fan_speed_table_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFanGetState: Result<
+        unsafe extern "C" fn(
+            hFan: ctl_fan_handle_t,
+            units: ctl_fan_speed_units_t,
+            pSpeed: *mut i32,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumFrequencyDomains: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phFrequency: *mut ctl_freq_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFrequencyGetProperties: Result<
+        unsafe extern "C" fn(
+            hFrequency: ctl_freq_handle_t,
+            pProperties: *mut ctl_freq_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFrequencyGetAvailableClocks: Result<
+        unsafe extern "C" fn(
+            hFrequency: ctl_freq_handle_t,
+            pCount: *mut u32,
+            phFrequency: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFrequencyGetRange: Result<
+        unsafe extern "C" fn(
+            hFrequency: ctl_freq_handle_t,
+            pLimits: *mut ctl_freq_range_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFrequencySetRange: Result<
+        unsafe extern "C" fn(
+            hFrequency: ctl_freq_handle_t,
+            pLimits: *const ctl_freq_range_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFrequencyGetState: Result<
+        unsafe extern "C" fn(
+            hFrequency: ctl_freq_handle_t,
+            pState: *mut ctl_freq_state_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlFrequencyGetThrottleTime: Result<
+        unsafe extern "C" fn(
+            hFrequency: ctl_freq_handle_t,
+            pThrottleTime: *mut ctl_freq_throttle_time_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSupportedVideoProcessingCapabilities: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pFeatureCaps: *mut ctl_video_processing_feature_caps_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetSetVideoProcessingFeature: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pFeature: *mut ctl_video_processing_feature_getset_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumMemoryModules: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phMemory: *mut ctl_mem_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlMemoryGetProperties: Result<
+        unsafe extern "C" fn(
+            hMemory: ctl_mem_handle_t,
+            pProperties: *mut ctl_mem_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlMemoryGetState: Result<
+        unsafe extern "C" fn(
+            hMemory: ctl_mem_handle_t,
+            pState: *mut ctl_mem_state_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlMemoryGetBandwidth: Result<
+        unsafe extern "C" fn(
+            hMemory: ctl_mem_handle_t,
+            pBandwidth: *mut ctl_mem_bandwidth_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGetProperties: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcProperties: *mut ctl_oc_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockWaiverSet: Result<
         unsafe extern "C" fn(hDeviceHandle: ctl_device_adapter_handle_t) -> ctl_result_t,
-    pub ctlOverclockGpuFrequencyOffsetGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pOcFrequencyOffset: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockGpuFrequencyOffsetSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        ocFrequencyOffset: f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockGpuVoltageOffsetGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pOcVoltageOffset: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockGpuVoltageOffsetSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        ocVoltageOffset: f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockGpuLockGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pVfPair: *mut ctl_oc_vf_pair_t,
-    ) -> ctl_result_t,
-    pub ctlOverclockGpuLockSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        vFPair: ctl_oc_vf_pair_t,
-    ) -> ctl_result_t,
-    pub ctlOverclockVramFrequencyOffsetGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pOcFrequencyOffset: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockVramFrequencyOffsetSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        ocFrequencyOffset: f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockVramVoltageOffsetGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pVoltage: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockVramVoltageOffsetSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        voltage: f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockPowerLimitGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pSustainedPowerLimit: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockPowerLimitSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        sustainedPowerLimit: f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockTemperatureLimitGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pTemperatureLimit: *mut f64,
-    ) -> ctl_result_t,
-    pub ctlOverclockTemperatureLimitSet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        temperatureLimit: f64,
-    ) -> ctl_result_t,
-    pub ctlPowerTelemetryGet: unsafe extern "C" fn(
-        hDeviceHandle: ctl_device_adapter_handle_t,
-        pTelemetryInfo: *mut ctl_power_telemetry_t,
-    ) -> ctl_result_t,
-    pub ctlOverclockResetToDefault:
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuFrequencyOffsetGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcFrequencyOffset: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuFrequencyOffsetSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            ocFrequencyOffset: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuVoltageOffsetGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcVoltageOffset: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuVoltageOffsetSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            ocVoltageOffset: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuLockGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pVfPair: *mut ctl_oc_vf_pair_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuLockSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            vFPair: ctl_oc_vf_pair_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockVramFrequencyOffsetGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcFrequencyOffset: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockVramFrequencyOffsetSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            ocFrequencyOffset: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockVramVoltageOffsetGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pVoltage: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockVramVoltageOffsetSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            voltage: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockPowerLimitGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pSustainedPowerLimit: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockPowerLimitSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            sustainedPowerLimit: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockTemperatureLimitGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pTemperatureLimit: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockTemperatureLimitSet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            temperatureLimit: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPowerTelemetryGet: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pTelemetryInfo: *mut ctl_power_telemetry_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockResetToDefault: Result<
         unsafe extern "C" fn(hDeviceHandle: ctl_device_adapter_handle_t) -> ctl_result_t,
-    pub ctlPciGetProperties: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pProperties: *mut ctl_pci_properties_t,
-    ) -> ctl_result_t,
-    pub ctlPciGetState: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pState: *mut ctl_pci_state_t,
-    ) -> ctl_result_t,
-    pub ctlEnumPowerDomains: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phPower: *mut ctl_pwr_handle_t,
-    ) -> ctl_result_t,
-    pub ctlPowerGetProperties: unsafe extern "C" fn(
-        hPower: ctl_pwr_handle_t,
-        pProperties: *mut ctl_power_properties_t,
-    ) -> ctl_result_t,
-    pub ctlPowerGetEnergyCounter: unsafe extern "C" fn(
-        hPower: ctl_pwr_handle_t,
-        pEnergy: *mut ctl_power_energy_counter_t,
-    ) -> ctl_result_t,
-    pub ctlPowerGetLimits: unsafe extern "C" fn(
-        hPower: ctl_pwr_handle_t,
-        pPowerLimits: *mut ctl_power_limits_t,
-    ) -> ctl_result_t,
-    pub ctlPowerSetLimits: unsafe extern "C" fn(
-        hPower: ctl_pwr_handle_t,
-        pPowerLimits: *const ctl_power_limits_t,
-    ) -> ctl_result_t,
-    pub ctlEnumTemperatureSensors: unsafe extern "C" fn(
-        hDAhandle: ctl_device_adapter_handle_t,
-        pCount: *mut u32,
-        phTemperature: *mut ctl_temp_handle_t,
-    ) -> ctl_result_t,
-    pub ctlTemperatureGetProperties: unsafe extern "C" fn(
-        hTemperature: ctl_temp_handle_t,
-        pProperties: *mut ctl_temp_properties_t,
-    ) -> ctl_result_t,
-    pub ctlTemperatureGetState: unsafe extern "C" fn(
-        hTemperature: ctl_temp_handle_t,
-        pTemperature: *mut f64,
-    ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPciGetProperties: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pProperties: *mut ctl_pci_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPciGetState: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pState: *mut ctl_pci_state_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumPowerDomains: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phPower: *mut ctl_pwr_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPowerGetProperties: Result<
+        unsafe extern "C" fn(
+            hPower: ctl_pwr_handle_t,
+            pProperties: *mut ctl_power_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPowerGetEnergyCounter: Result<
+        unsafe extern "C" fn(
+            hPower: ctl_pwr_handle_t,
+            pEnergy: *mut ctl_power_energy_counter_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPowerGetLimits: Result<
+        unsafe extern "C" fn(
+            hPower: ctl_pwr_handle_t,
+            pPowerLimits: *mut ctl_power_limits_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlPowerSetLimits: Result<
+        unsafe extern "C" fn(
+            hPower: ctl_pwr_handle_t,
+            pPowerLimits: *const ctl_power_limits_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumTemperatureSensors: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phTemperature: *mut ctl_temp_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlTemperatureGetProperties: Result<
+        unsafe extern "C" fn(
+            hTemperature: ctl_temp_handle_t,
+            pProperties: *mut ctl_temp_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlTemperatureGetState: Result<
+        unsafe extern "C" fn(
+            hTemperature: ctl_temp_handle_t,
+            pTemperature: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
 }
 impl ControlLib {
     pub unsafe fn new<P>(path: P) -> Result<Self, ::libloading::Error>
@@ -6222,211 +6530,183 @@ impl ControlLib {
         L: Into<::libloading::Library>,
     {
         let __library = library.into();
-        let ctlInit = __library.get(b"ctlInit\0").map(|sym| *sym)?;
-        let ctlClose = __library.get(b"ctlClose\0").map(|sym| *sym)?;
-        let ctlSetRuntimePath = __library.get(b"ctlSetRuntimePath\0").map(|sym| *sym)?;
-        let ctlWaitForPropertyChange = __library
-            .get(b"ctlWaitForPropertyChange\0")
-            .map(|sym| *sym)?;
-        let ctlReservedCall = __library.get(b"ctlReservedCall\0").map(|sym| *sym)?;
+        let ctlInit = __library.get(b"ctlInit\0").map(|sym| *sym);
+        let ctlClose = __library.get(b"ctlClose\0").map(|sym| *sym);
+        let ctlSetRuntimePath = __library.get(b"ctlSetRuntimePath\0").map(|sym| *sym);
+        let ctlWaitForPropertyChange = __library.get(b"ctlWaitForPropertyChange\0").map(|sym| *sym);
+        let ctlReservedCall = __library.get(b"ctlReservedCall\0").map(|sym| *sym);
         let ctlGetSupported3DCapabilities = __library
             .get(b"ctlGetSupported3DCapabilities\0")
-            .map(|sym| *sym)?;
-        let ctlGetSet3DFeature = __library.get(b"ctlGetSet3DFeature\0").map(|sym| *sym)?;
-        let ctlCheckDriverVersion = __library.get(b"ctlCheckDriverVersion\0").map(|sym| *sym)?;
-        let ctlEnumerateDevices = __library.get(b"ctlEnumerateDevices\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlGetSet3DFeature = __library.get(b"ctlGetSet3DFeature\0").map(|sym| *sym);
+        let ctlCheckDriverVersion = __library.get(b"ctlCheckDriverVersion\0").map(|sym| *sym);
+        let ctlEnumerateDevices = __library.get(b"ctlEnumerateDevices\0").map(|sym| *sym);
         let ctlEnumerateDisplayOutputs = __library
             .get(b"ctlEnumerateDisplayOutputs\0")
-            .map(|sym| *sym)?;
-        let ctlEnumerateI2CPinPairs = __library
-            .get(b"ctlEnumerateI2CPinPairs\0")
-            .map(|sym| *sym)?;
-        let ctlGetDeviceProperties = __library.get(b"ctlGetDeviceProperties\0").map(|sym| *sym)?;
-        let ctlGetDisplayProperties = __library
-            .get(b"ctlGetDisplayProperties\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlEnumerateI2CPinPairs = __library.get(b"ctlEnumerateI2CPinPairs\0").map(|sym| *sym);
+        let ctlGetDeviceProperties = __library.get(b"ctlGetDeviceProperties\0").map(|sym| *sym);
+        let ctlGetDisplayProperties = __library.get(b"ctlGetDisplayProperties\0").map(|sym| *sym);
         let ctlGetAdaperDisplayEncoderProperties = __library
             .get(b"ctlGetAdaperDisplayEncoderProperties\0")
-            .map(|sym| *sym)?;
-        let ctlGetZeDevice = __library.get(b"ctlGetZeDevice\0").map(|sym| *sym)?;
-        let ctlGetSharpnessCaps = __library.get(b"ctlGetSharpnessCaps\0").map(|sym| *sym)?;
-        let ctlGetCurrentSharpness = __library.get(b"ctlGetCurrentSharpness\0").map(|sym| *sym)?;
-        let ctlSetCurrentSharpness = __library.get(b"ctlSetCurrentSharpness\0").map(|sym| *sym)?;
-        let ctlI2CAccess = __library.get(b"ctlI2CAccess\0").map(|sym| *sym)?;
-        let ctlI2CAccessOnPinPair = __library.get(b"ctlI2CAccessOnPinPair\0").map(|sym| *sym)?;
-        let ctlAUXAccess = __library.get(b"ctlAUXAccess\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlGetZeDevice = __library.get(b"ctlGetZeDevice\0").map(|sym| *sym);
+        let ctlGetSharpnessCaps = __library.get(b"ctlGetSharpnessCaps\0").map(|sym| *sym);
+        let ctlGetCurrentSharpness = __library.get(b"ctlGetCurrentSharpness\0").map(|sym| *sym);
+        let ctlSetCurrentSharpness = __library.get(b"ctlSetCurrentSharpness\0").map(|sym| *sym);
+        let ctlI2CAccess = __library.get(b"ctlI2CAccess\0").map(|sym| *sym);
+        let ctlI2CAccessOnPinPair = __library.get(b"ctlI2CAccessOnPinPair\0").map(|sym| *sym);
+        let ctlAUXAccess = __library.get(b"ctlAUXAccess\0").map(|sym| *sym);
         let ctlGetPowerOptimizationCaps = __library
             .get(b"ctlGetPowerOptimizationCaps\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlGetPowerOptimizationSetting = __library
             .get(b"ctlGetPowerOptimizationSetting\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlSetPowerOptimizationSetting = __library
             .get(b"ctlSetPowerOptimizationSetting\0")
-            .map(|sym| *sym)?;
-        let ctlSetBrightnessSetting = __library
-            .get(b"ctlSetBrightnessSetting\0")
-            .map(|sym| *sym)?;
-        let ctlGetBrightnessSetting = __library
-            .get(b"ctlGetBrightnessSetting\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlSetBrightnessSetting = __library.get(b"ctlSetBrightnessSetting\0").map(|sym| *sym);
+        let ctlGetBrightnessSetting = __library.get(b"ctlGetBrightnessSetting\0").map(|sym| *sym);
         let ctlPixelTransformationGetConfig = __library
             .get(b"ctlPixelTransformationGetConfig\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlPixelTransformationSetConfig = __library
             .get(b"ctlPixelTransformationSetConfig\0")
-            .map(|sym| *sym)?;
-        let ctlPanelDescriptorAccess = __library
-            .get(b"ctlPanelDescriptorAccess\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlPanelDescriptorAccess = __library.get(b"ctlPanelDescriptorAccess\0").map(|sym| *sym);
         let ctlGetSupportedRetroScalingCapability = __library
             .get(b"ctlGetSupportedRetroScalingCapability\0")
-            .map(|sym| *sym)?;
-        let ctlGetSetRetroScaling = __library.get(b"ctlGetSetRetroScaling\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlGetSetRetroScaling = __library.get(b"ctlGetSetRetroScaling\0").map(|sym| *sym);
         let ctlGetSupportedScalingCapability = __library
             .get(b"ctlGetSupportedScalingCapability\0")
-            .map(|sym| *sym)?;
-        let ctlGetCurrentScaling = __library.get(b"ctlGetCurrentScaling\0").map(|sym| *sym)?;
-        let ctlSetCurrentScaling = __library.get(b"ctlSetCurrentScaling\0").map(|sym| *sym)?;
-        let ctlGetLACEConfig = __library.get(b"ctlGetLACEConfig\0").map(|sym| *sym)?;
-        let ctlSetLACEConfig = __library.get(b"ctlSetLACEConfig\0").map(|sym| *sym)?;
-        let ctlSoftwarePSR = __library.get(b"ctlSoftwarePSR\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlGetCurrentScaling = __library.get(b"ctlGetCurrentScaling\0").map(|sym| *sym);
+        let ctlSetCurrentScaling = __library.get(b"ctlSetCurrentScaling\0").map(|sym| *sym);
+        let ctlGetLACEConfig = __library.get(b"ctlGetLACEConfig\0").map(|sym| *sym);
+        let ctlSetLACEConfig = __library.get(b"ctlSetLACEConfig\0").map(|sym| *sym);
+        let ctlSoftwarePSR = __library.get(b"ctlSoftwarePSR\0").map(|sym| *sym);
         let ctlGetIntelArcSyncInfoForMonitor = __library
             .get(b"ctlGetIntelArcSyncInfoForMonitor\0")
-            .map(|sym| *sym)?;
-        let ctlEnumerateMuxDevices = __library.get(b"ctlEnumerateMuxDevices\0").map(|sym| *sym)?;
-        let ctlGetMuxProperties = __library.get(b"ctlGetMuxProperties\0").map(|sym| *sym)?;
-        let ctlSwitchMux = __library.get(b"ctlSwitchMux\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlEnumerateMuxDevices = __library.get(b"ctlEnumerateMuxDevices\0").map(|sym| *sym);
+        let ctlGetMuxProperties = __library.get(b"ctlGetMuxProperties\0").map(|sym| *sym);
+        let ctlSwitchMux = __library.get(b"ctlSwitchMux\0").map(|sym| *sym);
         let ctlGetIntelArcSyncProfile = __library
             .get(b"ctlGetIntelArcSyncProfile\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlSetIntelArcSyncProfile = __library
             .get(b"ctlSetIntelArcSyncProfile\0")
-            .map(|sym| *sym)?;
-        let ctlEdidManagement = __library.get(b"ctlEdidManagement\0").map(|sym| *sym)?;
-        let ctlGetSetCustomMode = __library.get(b"ctlGetSetCustomMode\0").map(|sym| *sym)?;
-        let ctlGetSetCombinedDisplay = __library
-            .get(b"ctlGetSetCombinedDisplay\0")
-            .map(|sym| *sym)?;
-        let ctlGetSetDisplayGenlock = __library
-            .get(b"ctlGetSetDisplayGenlock\0")
-            .map(|sym| *sym)?;
-        let ctlGetVblankTimestamp = __library.get(b"ctlGetVblankTimestamp\0").map(|sym| *sym)?;
-        let ctlLinkDisplayAdapters = __library.get(b"ctlLinkDisplayAdapters\0").map(|sym| *sym)?;
-        let ctlUnlinkDisplayAdapters = __library
-            .get(b"ctlUnlinkDisplayAdapters\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlEdidManagement = __library.get(b"ctlEdidManagement\0").map(|sym| *sym);
+        let ctlGetSetCustomMode = __library.get(b"ctlGetSetCustomMode\0").map(|sym| *sym);
+        let ctlGetSetCombinedDisplay = __library.get(b"ctlGetSetCombinedDisplay\0").map(|sym| *sym);
+        let ctlGetSetDisplayGenlock = __library.get(b"ctlGetSetDisplayGenlock\0").map(|sym| *sym);
+        let ctlGetVblankTimestamp = __library.get(b"ctlGetVblankTimestamp\0").map(|sym| *sym);
+        let ctlLinkDisplayAdapters = __library.get(b"ctlLinkDisplayAdapters\0").map(|sym| *sym);
+        let ctlUnlinkDisplayAdapters = __library.get(b"ctlUnlinkDisplayAdapters\0").map(|sym| *sym);
         let ctlGetLinkedDisplayAdapters = __library
             .get(b"ctlGetLinkedDisplayAdapters\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlGetSetDynamicContrastEnhancement = __library
             .get(b"ctlGetSetDynamicContrastEnhancement\0")
-            .map(|sym| *sym)?;
-        let ctlGetSetWireFormat = __library.get(b"ctlGetSetWireFormat\0").map(|sym| *sym)?;
-        let ctlGetSetDisplaySettings = __library
-            .get(b"ctlGetSetDisplaySettings\0")
-            .map(|sym| *sym)?;
-        let ctlEnumEngineGroups = __library.get(b"ctlEnumEngineGroups\0").map(|sym| *sym)?;
-        let ctlEngineGetProperties = __library.get(b"ctlEngineGetProperties\0").map(|sym| *sym)?;
-        let ctlEngineGetActivity = __library.get(b"ctlEngineGetActivity\0").map(|sym| *sym)?;
-        let ctlEnumFans = __library.get(b"ctlEnumFans\0").map(|sym| *sym)?;
-        let ctlFanGetProperties = __library.get(b"ctlFanGetProperties\0").map(|sym| *sym)?;
-        let ctlFanGetConfig = __library.get(b"ctlFanGetConfig\0").map(|sym| *sym)?;
-        let ctlFanSetDefaultMode = __library.get(b"ctlFanSetDefaultMode\0").map(|sym| *sym)?;
-        let ctlFanSetFixedSpeedMode = __library
-            .get(b"ctlFanSetFixedSpeedMode\0")
-            .map(|sym| *sym)?;
-        let ctlFanSetSpeedTableMode = __library
-            .get(b"ctlFanSetSpeedTableMode\0")
-            .map(|sym| *sym)?;
-        let ctlFanGetState = __library.get(b"ctlFanGetState\0").map(|sym| *sym)?;
-        let ctlEnumFrequencyDomains = __library
-            .get(b"ctlEnumFrequencyDomains\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlGetSetWireFormat = __library.get(b"ctlGetSetWireFormat\0").map(|sym| *sym);
+        let ctlGetSetDisplaySettings = __library.get(b"ctlGetSetDisplaySettings\0").map(|sym| *sym);
+        let ctlEnumEngineGroups = __library.get(b"ctlEnumEngineGroups\0").map(|sym| *sym);
+        let ctlEngineGetProperties = __library.get(b"ctlEngineGetProperties\0").map(|sym| *sym);
+        let ctlEngineGetActivity = __library.get(b"ctlEngineGetActivity\0").map(|sym| *sym);
+        let ctlEnumFans = __library.get(b"ctlEnumFans\0").map(|sym| *sym);
+        let ctlFanGetProperties = __library.get(b"ctlFanGetProperties\0").map(|sym| *sym);
+        let ctlFanGetConfig = __library.get(b"ctlFanGetConfig\0").map(|sym| *sym);
+        let ctlFanSetDefaultMode = __library.get(b"ctlFanSetDefaultMode\0").map(|sym| *sym);
+        let ctlFanSetFixedSpeedMode = __library.get(b"ctlFanSetFixedSpeedMode\0").map(|sym| *sym);
+        let ctlFanSetSpeedTableMode = __library.get(b"ctlFanSetSpeedTableMode\0").map(|sym| *sym);
+        let ctlFanGetState = __library.get(b"ctlFanGetState\0").map(|sym| *sym);
+        let ctlEnumFrequencyDomains = __library.get(b"ctlEnumFrequencyDomains\0").map(|sym| *sym);
         let ctlFrequencyGetProperties = __library
             .get(b"ctlFrequencyGetProperties\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlFrequencyGetAvailableClocks = __library
             .get(b"ctlFrequencyGetAvailableClocks\0")
-            .map(|sym| *sym)?;
-        let ctlFrequencyGetRange = __library.get(b"ctlFrequencyGetRange\0").map(|sym| *sym)?;
-        let ctlFrequencySetRange = __library.get(b"ctlFrequencySetRange\0").map(|sym| *sym)?;
-        let ctlFrequencyGetState = __library.get(b"ctlFrequencyGetState\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlFrequencyGetRange = __library.get(b"ctlFrequencyGetRange\0").map(|sym| *sym);
+        let ctlFrequencySetRange = __library.get(b"ctlFrequencySetRange\0").map(|sym| *sym);
+        let ctlFrequencyGetState = __library.get(b"ctlFrequencyGetState\0").map(|sym| *sym);
         let ctlFrequencyGetThrottleTime = __library
             .get(b"ctlFrequencyGetThrottleTime\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlGetSupportedVideoProcessingCapabilities = __library
             .get(b"ctlGetSupportedVideoProcessingCapabilities\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlGetSetVideoProcessingFeature = __library
             .get(b"ctlGetSetVideoProcessingFeature\0")
-            .map(|sym| *sym)?;
-        let ctlEnumMemoryModules = __library.get(b"ctlEnumMemoryModules\0").map(|sym| *sym)?;
-        let ctlMemoryGetProperties = __library.get(b"ctlMemoryGetProperties\0").map(|sym| *sym)?;
-        let ctlMemoryGetState = __library.get(b"ctlMemoryGetState\0").map(|sym| *sym)?;
-        let ctlMemoryGetBandwidth = __library.get(b"ctlMemoryGetBandwidth\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlEnumMemoryModules = __library.get(b"ctlEnumMemoryModules\0").map(|sym| *sym);
+        let ctlMemoryGetProperties = __library.get(b"ctlMemoryGetProperties\0").map(|sym| *sym);
+        let ctlMemoryGetState = __library.get(b"ctlMemoryGetState\0").map(|sym| *sym);
+        let ctlMemoryGetBandwidth = __library.get(b"ctlMemoryGetBandwidth\0").map(|sym| *sym);
         let ctlOverclockGetProperties = __library
             .get(b"ctlOverclockGetProperties\0")
-            .map(|sym| *sym)?;
-        let ctlOverclockWaiverSet = __library.get(b"ctlOverclockWaiverSet\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlOverclockWaiverSet = __library.get(b"ctlOverclockWaiverSet\0").map(|sym| *sym);
         let ctlOverclockGpuFrequencyOffsetGet = __library
             .get(b"ctlOverclockGpuFrequencyOffsetGet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockGpuFrequencyOffsetSet = __library
             .get(b"ctlOverclockGpuFrequencyOffsetSet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockGpuVoltageOffsetGet = __library
             .get(b"ctlOverclockGpuVoltageOffsetGet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockGpuVoltageOffsetSet = __library
             .get(b"ctlOverclockGpuVoltageOffsetSet\0")
-            .map(|sym| *sym)?;
-        let ctlOverclockGpuLockGet = __library.get(b"ctlOverclockGpuLockGet\0").map(|sym| *sym)?;
-        let ctlOverclockGpuLockSet = __library.get(b"ctlOverclockGpuLockSet\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlOverclockGpuLockGet = __library.get(b"ctlOverclockGpuLockGet\0").map(|sym| *sym);
+        let ctlOverclockGpuLockSet = __library.get(b"ctlOverclockGpuLockSet\0").map(|sym| *sym);
         let ctlOverclockVramFrequencyOffsetGet = __library
             .get(b"ctlOverclockVramFrequencyOffsetGet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockVramFrequencyOffsetSet = __library
             .get(b"ctlOverclockVramFrequencyOffsetSet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockVramVoltageOffsetGet = __library
             .get(b"ctlOverclockVramVoltageOffsetGet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockVramVoltageOffsetSet = __library
             .get(b"ctlOverclockVramVoltageOffsetSet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockPowerLimitGet = __library
             .get(b"ctlOverclockPowerLimitGet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockPowerLimitSet = __library
             .get(b"ctlOverclockPowerLimitSet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockTemperatureLimitGet = __library
             .get(b"ctlOverclockTemperatureLimitGet\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlOverclockTemperatureLimitSet = __library
             .get(b"ctlOverclockTemperatureLimitSet\0")
-            .map(|sym| *sym)?;
-        let ctlPowerTelemetryGet = __library.get(b"ctlPowerTelemetryGet\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlPowerTelemetryGet = __library.get(b"ctlPowerTelemetryGet\0").map(|sym| *sym);
         let ctlOverclockResetToDefault = __library
             .get(b"ctlOverclockResetToDefault\0")
-            .map(|sym| *sym)?;
-        let ctlPciGetProperties = __library.get(b"ctlPciGetProperties\0").map(|sym| *sym)?;
-        let ctlPciGetState = __library.get(b"ctlPciGetState\0").map(|sym| *sym)?;
-        let ctlEnumPowerDomains = __library.get(b"ctlEnumPowerDomains\0").map(|sym| *sym)?;
-        let ctlPowerGetProperties = __library.get(b"ctlPowerGetProperties\0").map(|sym| *sym)?;
-        let ctlPowerGetEnergyCounter = __library
-            .get(b"ctlPowerGetEnergyCounter\0")
-            .map(|sym| *sym)?;
-        let ctlPowerGetLimits = __library.get(b"ctlPowerGetLimits\0").map(|sym| *sym)?;
-        let ctlPowerSetLimits = __library.get(b"ctlPowerSetLimits\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlPciGetProperties = __library.get(b"ctlPciGetProperties\0").map(|sym| *sym);
+        let ctlPciGetState = __library.get(b"ctlPciGetState\0").map(|sym| *sym);
+        let ctlEnumPowerDomains = __library.get(b"ctlEnumPowerDomains\0").map(|sym| *sym);
+        let ctlPowerGetProperties = __library.get(b"ctlPowerGetProperties\0").map(|sym| *sym);
+        let ctlPowerGetEnergyCounter = __library.get(b"ctlPowerGetEnergyCounter\0").map(|sym| *sym);
+        let ctlPowerGetLimits = __library.get(b"ctlPowerGetLimits\0").map(|sym| *sym);
+        let ctlPowerSetLimits = __library.get(b"ctlPowerSetLimits\0").map(|sym| *sym);
         let ctlEnumTemperatureSensors = __library
             .get(b"ctlEnumTemperatureSensors\0")
-            .map(|sym| *sym)?;
+            .map(|sym| *sym);
         let ctlTemperatureGetProperties = __library
             .get(b"ctlTemperatureGetProperties\0")
-            .map(|sym| *sym)?;
-        let ctlTemperatureGetState = __library.get(b"ctlTemperatureGetState\0").map(|sym| *sym)?;
+            .map(|sym| *sym);
+        let ctlTemperatureGetState = __library.get(b"ctlTemperatureGetState\0").map(|sym| *sym);
         Ok(ControlLib {
             __library,
             ctlInit,
@@ -6542,15 +6822,24 @@ impl ControlLib {
         pInitDesc: *mut ctl_init_args_t,
         phAPIHandle: *mut ctl_api_handle_t,
     ) -> ctl_result_t {
-        (self.ctlInit)(pInitDesc, phAPIHandle)
+        (self
+            .ctlInit
+            .as_ref()
+            .expect("Expected function, got error."))(pInitDesc, phAPIHandle)
     }
     #[doc = "\n @brief Control Api Destroy\n\n @details\n     - Control Api Close\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hAPIHandle`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlClose(&self, hAPIHandle: ctl_api_handle_t) -> ctl_result_t {
-        (self.ctlClose)(hAPIHandle)
+        (self
+            .ctlClose
+            .as_ref()
+            .expect("Expected function, got error."))(hAPIHandle)
     }
     #[doc = "\n @brief Runtime path\n\n @details\n     - Control Api set runtime path. Optional call from a loader which allows\n       the loaded runtime to enumerate only the adapters which the specified\n       runtime is responsible for. This is done usually by a loader or by\n       callers who know how to get the specific runtime of interest. This\n       call right now is reserved for use by Intel components.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlSetRuntimePath(&self, pArgs: *mut ctl_runtime_path_args_t) -> ctl_result_t {
-        (self.ctlSetRuntimePath)(pArgs)
+        (self
+            .ctlSetRuntimePath
+            .as_ref()
+            .expect("Expected function, got error."))(pArgs)
     }
     #[doc = "\n @brief Wait for a property change. Note that this is a blocking call\n\n @details\n     - Wait for a property change in display, 3d, media etc.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlWaitForPropertyChange(
@@ -6558,7 +6847,10 @@ impl ControlLib {
         hDeviceAdapter: ctl_device_adapter_handle_t,
         pArgs: *mut ctl_wait_property_change_args_t,
     ) -> ctl_result_t {
-        (self.ctlWaitForPropertyChange)(hDeviceAdapter, pArgs)
+        (self
+            .ctlWaitForPropertyChange
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, pArgs)
     }
     #[doc = "\n @brief Reserved function\n\n @details\n     - Reserved function\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlReservedCall(
@@ -6566,7 +6858,10 @@ impl ControlLib {
         hDeviceAdapter: ctl_device_adapter_handle_t,
         pArgs: *mut ctl_reserved_args_t,
     ) -> ctl_result_t {
-        (self.ctlReservedCall)(hDeviceAdapter, pArgs)
+        (self
+            .ctlReservedCall
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, pArgs)
     }
     #[doc = "\n @brief Get 3D capabilities\n\n @details\n     - The application gets 3D properties\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pFeatureCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSupported3DCapabilities(
@@ -6574,7 +6869,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pFeatureCaps: *mut ctl_3d_feature_caps_t,
     ) -> ctl_result_t {
-        (self.ctlGetSupported3DCapabilities)(hDAhandle, pFeatureCaps)
+        (self
+            .ctlGetSupported3DCapabilities
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pFeatureCaps)
     }
     #[doc = "\n @brief Get/Set 3D feature\n\n @details\n     - 3D feature details\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pFeature`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSet3DFeature(
@@ -6582,7 +6880,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pFeature: *mut ctl_3d_feature_getset_t,
     ) -> ctl_result_t {
-        (self.ctlGetSet3DFeature)(hDAhandle, pFeature)
+        (self
+            .ctlGetSet3DFeature
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pFeature)
     }
     #[doc = "\n @brief Check Driver version\n\n @details\n     - The application checks driver version\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlCheckDriverVersion(
@@ -6590,7 +6891,10 @@ impl ControlLib {
         hDeviceAdapter: ctl_device_adapter_handle_t,
         version_info: ctl_version_info_t,
     ) -> ctl_result_t {
-        (self.ctlCheckDriverVersion)(hDeviceAdapter, version_info)
+        (self
+            .ctlCheckDriverVersion
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, version_info)
     }
     #[doc = "\n @brief Enumerate devices\n\n @details\n     - The application enumerates all device adapters in the system\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hAPIHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlEnumerateDevices(
@@ -6599,7 +6903,10 @@ impl ControlLib {
         pCount: *mut u32,
         phDevices: *mut ctl_device_adapter_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumerateDevices)(hAPIHandle, pCount, phDevices)
+        (self
+            .ctlEnumerateDevices
+            .as_ref()
+            .expect("Expected function, got error."))(hAPIHandle, pCount, phDevices)
     }
     #[doc = "\n @brief Enumerate display outputs\n\n @details\n     - Enumerates display output capabilities\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlEnumerateDisplayOutputs(
@@ -6608,7 +6915,12 @@ impl ControlLib {
         pCount: *mut u32,
         phDisplayOutputs: *mut ctl_display_output_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumerateDisplayOutputs)(hDeviceAdapter, pCount, phDisplayOutputs)
+        (self
+            .ctlEnumerateDisplayOutputs
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDeviceAdapter, pCount, phDisplayOutputs
+        )
     }
     #[doc = "\n @brief Enumerate I2C Pin Pairs\n\n @details\n     - Returns available list of I2C Pin-Pairs on a requested adapter\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"The incoming pointer pCount is null\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"The supplied Count is not equal to actual number of i2c pin-pair instances\""]
     pub unsafe fn ctlEnumerateI2CPinPairs(
@@ -6617,7 +6929,10 @@ impl ControlLib {
         pCount: *mut u32,
         phI2cPinPairs: *mut ctl_i2c_pin_pair_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumerateI2CPinPairs)(hDeviceAdapter, pCount, phI2cPinPairs)
+        (self
+            .ctlEnumerateI2CPinPairs
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, pCount, phI2cPinPairs)
     }
     #[doc = "\n @brief Get Device Properties\n\n @details\n     - The application gets device properties\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetDeviceProperties(
@@ -6625,7 +6940,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pProperties: *mut ctl_device_adapter_properties_t,
     ) -> ctl_result_t {
-        (self.ctlGetDeviceProperties)(hDAhandle, pProperties)
+        (self
+            .ctlGetDeviceProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pProperties)
     }
     #[doc = "\n @brief Get Display  Properties\n\n @details\n     - The application gets display  properties\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetDisplayProperties(
@@ -6633,7 +6951,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pProperties: *mut ctl_display_properties_t,
     ) -> ctl_result_t {
-        (self.ctlGetDisplayProperties)(hDisplayOutput, pProperties)
+        (self
+            .ctlGetDisplayProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pProperties)
     }
     #[doc = "\n @brief Get Adapter Display encoder  Properties\n\n @details\n     - The application gets the graphic adapters display encoder properties\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetAdaperDisplayEncoderProperties(
@@ -6641,7 +6962,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pProperties: *mut ctl_adapter_display_encoder_properties_t,
     ) -> ctl_result_t {
-        (self.ctlGetAdaperDisplayEncoderProperties)(hDisplayOutput, pProperties)
+        (self
+            .ctlGetAdaperDisplayEncoderProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pProperties)
     }
     #[doc = "\n @brief Get Level0 Device handle\n\n @details\n     - The application gets OneAPI Level0 Device handles\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pZeDevice`\n         + `nullptr == hInstance`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetZeDevice(
@@ -6650,7 +6974,10 @@ impl ControlLib {
         pZeDevice: *mut ::std::os::raw::c_void,
         hInstance: *mut *mut ::std::os::raw::c_void,
     ) -> ctl_result_t {
-        (self.ctlGetZeDevice)(hDAhandle, pZeDevice, hInstance)
+        (self
+            .ctlGetZeDevice
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pZeDevice, hInstance)
     }
     #[doc = "\n @brief Get Sharpness capability\n\n @details\n     - Returns sharpness capability\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSharpnessCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSharpnessCaps(
@@ -6658,7 +6985,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pSharpnessCaps: *mut ctl_sharpness_caps_t,
     ) -> ctl_result_t {
-        (self.ctlGetSharpnessCaps)(hDisplayOutput, pSharpnessCaps)
+        (self
+            .ctlGetSharpnessCaps
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pSharpnessCaps)
     }
     #[doc = "\n @brief Get Sharpness setting\n\n @details\n     - Returns current sharpness settings\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSharpnessSettings`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetCurrentSharpness(
@@ -6666,7 +6996,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pSharpnessSettings: *mut ctl_sharpness_settings_t,
     ) -> ctl_result_t {
-        (self.ctlGetCurrentSharpness)(hDisplayOutput, pSharpnessSettings)
+        (self
+            .ctlGetCurrentSharpness
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pSharpnessSettings)
     }
     #[doc = "\n @brief Set Sharpness setting\n\n @details\n     - Set current sharpness settings\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSharpnessSettings`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlSetCurrentSharpness(
@@ -6674,7 +7007,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pSharpnessSettings: *mut ctl_sharpness_settings_t,
     ) -> ctl_result_t {
-        (self.ctlSetCurrentSharpness)(hDisplayOutput, pSharpnessSettings)
+        (self
+            .ctlSetCurrentSharpness
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pSharpnessSettings)
     }
     #[doc = "\n @brief I2C Access\n\n @details\n     - Interface to access I2C using display handle as identifier.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pI2cAccessArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"Invalid I2C data size\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\""]
     pub unsafe fn ctlI2CAccess(
@@ -6682,7 +7018,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pI2cAccessArgs: *mut ctl_i2c_access_args_t,
     ) -> ctl_result_t {
-        (self.ctlI2CAccess)(hDisplayOutput, pI2cAccessArgs)
+        (self
+            .ctlI2CAccess
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pI2cAccessArgs)
     }
     #[doc = "\n @brief I2C Access On Pin Pair\n\n @details\n     - Interface to access I2C using pin-pair handle as identifier.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hI2cPinPair`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pI2cAccessArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"Invalid I2C data size\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid Args passed\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_HANDLE - \"Invalid or Null handle passed\"\n     - ::CTL_RESULT_ERROR_EXTERNAL_DISPLAY_ATTACHED - \"Write to Address not allowed when Display is connected\""]
     pub unsafe fn ctlI2CAccessOnPinPair(
@@ -6690,7 +7029,10 @@ impl ControlLib {
         hI2cPinPair: ctl_i2c_pin_pair_handle_t,
         pI2cAccessArgs: *mut ctl_i2c_access_pinpair_args_t,
     ) -> ctl_result_t {
-        (self.ctlI2CAccessOnPinPair)(hI2cPinPair, pI2cAccessArgs)
+        (self
+            .ctlI2CAccessOnPinPair
+            .as_ref()
+            .expect("Expected function, got error."))(hI2cPinPair, pI2cAccessArgs)
     }
     #[doc = "\n @brief Aux Access\n\n @details\n     - The application does Aux access, PSR needs to be disabled for AUX\n       call.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pAuxAccessArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"Invalid AUX data size\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_INVALID_AUX_ACCESS_FLAG - \"Invalid flag for AUX access\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\""]
     pub unsafe fn ctlAUXAccess(
@@ -6698,7 +7040,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pAuxAccessArgs: *mut ctl_aux_access_args_t,
     ) -> ctl_result_t {
-        (self.ctlAUXAccess)(hDisplayOutput, pAuxAccessArgs)
+        (self
+            .ctlAUXAccess
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pAuxAccessArgs)
     }
     #[doc = "\n @brief Get Power optimization features\n\n @details\n     - Returns power optimization capabilities\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pPowerOptimizationCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetPowerOptimizationCaps(
@@ -6706,7 +7051,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pPowerOptimizationCaps: *mut ctl_power_optimization_caps_t,
     ) -> ctl_result_t {
-        (self.ctlGetPowerOptimizationCaps)(hDisplayOutput, pPowerOptimizationCaps)
+        (self
+            .ctlGetPowerOptimizationCaps
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pPowerOptimizationCaps)
     }
     #[doc = "\n @brief Get Power optimization setting\n\n @details\n     - Returns power optimization setting for a specific feature\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pPowerOptimizationSettings`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_POWERFEATURE_OPTIMIZATION_FLAG - \"Unsupported PowerOptimizationFeature\"\n     - ::CTL_RESULT_ERROR_INVALID_POWERSOURCE_TYPE_FOR_DPST - \"DPST is supported only in DC Mode\""]
     pub unsafe fn ctlGetPowerOptimizationSetting(
@@ -6714,7 +7062,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pPowerOptimizationSettings: *mut ctl_power_optimization_settings_t,
     ) -> ctl_result_t {
-        (self.ctlGetPowerOptimizationSetting)(hDisplayOutput, pPowerOptimizationSettings)
+        (self
+            .ctlGetPowerOptimizationSetting
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pPowerOptimizationSettings
+        )
     }
     #[doc = "\n @brief Set Power optimization setting\n\n @details\n     - Set power optimization setting for a specific feature\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pPowerOptimizationSettings`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_POWERFEATURE_OPTIMIZATION_FLAG - \"Unsupported PowerOptimizationFeature\"\n     - ::CTL_RESULT_ERROR_INVALID_POWERSOURCE_TYPE_FOR_DPST - \"DPST is supported only in DC Mode\"\n     - ::CTL_RESULT_ERROR_SET_FBC_FEATURE_NOT_SUPPORTED - \"Set FBC Feature not supported\""]
     pub unsafe fn ctlSetPowerOptimizationSetting(
@@ -6722,7 +7075,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pPowerOptimizationSettings: *mut ctl_power_optimization_settings_t,
     ) -> ctl_result_t {
-        (self.ctlSetPowerOptimizationSetting)(hDisplayOutput, pPowerOptimizationSettings)
+        (self
+            .ctlSetPowerOptimizationSetting
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pPowerOptimizationSettings
+        )
     }
     #[doc = "\n @brief Set Brightness on companion display\n\n @details\n     - Set Brightness for a target display. Currently support is only for\n       companion display.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSetBrightnessSetting`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid Brightness data passed as argument\"\n     - ::CTL_RESULT_ERROR_DISPLAY_NOT_ACTIVE - \"Display not active\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Currently Brightness API is supported only on companion display\""]
     pub unsafe fn ctlSetBrightnessSetting(
@@ -6730,7 +7088,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pSetBrightnessSetting: *mut ctl_set_brightness_t,
     ) -> ctl_result_t {
-        (self.ctlSetBrightnessSetting)(hDisplayOutput, pSetBrightnessSetting)
+        (self
+            .ctlSetBrightnessSetting
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pSetBrightnessSetting)
     }
     #[doc = "\n @brief Get Brightness setting\n\n @details\n     - Get Brightness for a target display. Currently support is only for\n       companion display.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pGetBrightnessSetting`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_DISPLAY_NOT_ACTIVE - \"Display not active\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Currently Brightness API is supported only on companion display\""]
     pub unsafe fn ctlGetBrightnessSetting(
@@ -6738,7 +7099,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pGetBrightnessSetting: *mut ctl_get_brightness_t,
     ) -> ctl_result_t {
-        (self.ctlGetBrightnessSetting)(hDisplayOutput, pGetBrightnessSetting)
+        (self
+            .ctlGetBrightnessSetting
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pGetBrightnessSetting)
     }
     #[doc = "\n @brief Pixel transformation get pipe configuration\n\n @details\n     - The application does pixel transformation get pipe configuration\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pPixTxGetConfigArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_PIXTX_GET_CONFIG_QUERY_TYPE - \"Invalid query type\"\n     - ::CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_ID - \"Invalid block id\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PIXTX_BLOCK_CONFIG_MEMORY - \"Insufficient memery allocated for BlockConfigs\"\n     - ::CTL_RESULT_ERROR_3DLUT_INVALID_PIPE - \"Invalid pipe for 3dlut\"\n     - ::CTL_RESULT_ERROR_3DLUT_INVALID_DATA - \"Invalid 3dlut data\"\n     - ::CTL_RESULT_ERROR_3DLUT_NOT_SUPPORTED_IN_HDR - \"3dlut not supported in HDR\"\n     - ::CTL_RESULT_ERROR_3DLUT_INVALID_OPERATION - \"Invalid 3dlut operation\"\n     - ::CTL_RESULT_ERROR_3DLUT_UNSUCCESSFUL - \"3dlut call unsuccessful\""]
     pub unsafe fn ctlPixelTransformationGetConfig(
@@ -6746,7 +7110,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pPixTxGetConfigArgs: *mut ctl_pixtx_pipe_get_config_t,
     ) -> ctl_result_t {
-        (self.ctlPixelTransformationGetConfig)(hDisplayOutput, pPixTxGetConfigArgs)
+        (self
+            .ctlPixelTransformationGetConfig
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pPixTxGetConfigArgs)
     }
     #[doc = "\n @brief Pixel transformation set pipe configuration\n\n @details\n     - The application does pixel transformation set pipe configuration\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pPixTxSetConfigArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_PIXTX_SET_CONFIG_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_SET_CONFIG_NUMBER_OF_SAMPLES - \"Invalid number of samples\"\n     - ::CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_ID - \"Invalid block id\"\n     - ::CTL_RESULT_ERROR_PERSISTANCE_NOT_SUPPORTED - \"Persistance not supported\"\n     - ::CTL_RESULT_ERROR_3DLUT_INVALID_PIPE - \"Invalid pipe for 3dlut\"\n     - ::CTL_RESULT_ERROR_3DLUT_INVALID_DATA - \"Invalid 3dlut data\"\n     - ::CTL_RESULT_ERROR_3DLUT_NOT_SUPPORTED_IN_HDR - \"3dlut not supported in HDR\"\n     - ::CTL_RESULT_ERROR_3DLUT_INVALID_OPERATION - \"Invalid 3dlut operation\"\n     - ::CTL_RESULT_ERROR_3DLUT_UNSUCCESSFUL - \"3dlut call unsuccessful\""]
     pub unsafe fn ctlPixelTransformationSetConfig(
@@ -6754,7 +7121,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pPixTxSetConfigArgs: *mut ctl_pixtx_pipe_set_config_t,
     ) -> ctl_result_t {
-        (self.ctlPixelTransformationSetConfig)(hDisplayOutput, pPixTxSetConfigArgs)
+        (self
+            .ctlPixelTransformationSetConfig
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pPixTxSetConfigArgs)
     }
     #[doc = "\n @brief Panel Descriptor Access\n\n @details\n     - The application does EDID or Display ID access\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pPanelDescriptorAccessArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\""]
     pub unsafe fn ctlPanelDescriptorAccess(
@@ -6762,7 +7132,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pPanelDescriptorAccessArgs: *mut ctl_panel_descriptor_access_args_t,
     ) -> ctl_result_t {
-        (self.ctlPanelDescriptorAccess)(hDisplayOutput, pPanelDescriptorAccessArgs)
+        (self
+            .ctlPanelDescriptorAccess
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pPanelDescriptorAccessArgs
+        )
     }
     #[doc = "\n @brief Get Supported Retro Scaling Types\n\n @details\n     - Returns supported retro scaling capabilities\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pRetroScalingCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSupportedRetroScalingCapability(
@@ -6770,7 +7145,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pRetroScalingCaps: *mut ctl_retro_scaling_caps_t,
     ) -> ctl_result_t {
-        (self.ctlGetSupportedRetroScalingCapability)(hDAhandle, pRetroScalingCaps)
+        (self
+            .ctlGetSupportedRetroScalingCapability
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pRetroScalingCaps)
     }
     #[doc = "\n @brief Get/Set Retro Scaling\n\n @details\n     - Get or Set the status of retro scaling.This Api will do a physical\n       modeset resulting in flash on the screen\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pGetSetRetroScalingType`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSetRetroScaling(
@@ -6778,7 +7156,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pGetSetRetroScalingType: *mut ctl_retro_scaling_settings_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetRetroScaling)(hDAhandle, pGetSetRetroScalingType)
+        (self
+            .ctlGetSetRetroScaling
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pGetSetRetroScalingType)
     }
     #[doc = "\n @brief Get Supported Scaling Types\n\n @details\n     - Returns supported scaling capabilities\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pScalingCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSupportedScalingCapability(
@@ -6786,7 +7167,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pScalingCaps: *mut ctl_scaling_caps_t,
     ) -> ctl_result_t {
-        (self.ctlGetSupportedScalingCapability)(hDisplayOutput, pScalingCaps)
+        (self
+            .ctlGetSupportedScalingCapability
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pScalingCaps)
     }
     #[doc = "\n @brief Get Current Scaling\n\n @details\n     - Returns current active scaling\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pGetCurrentScalingType`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetCurrentScaling(
@@ -6794,7 +7178,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pGetCurrentScalingType: *mut ctl_scaling_settings_t,
     ) -> ctl_result_t {
-        (self.ctlGetCurrentScaling)(hDisplayOutput, pGetCurrentScalingType)
+        (self
+            .ctlGetCurrentScaling
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pGetCurrentScalingType)
     }
     #[doc = "\n @brief Set Scaling Type\n\n @details\n     - Returns current active scaling\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSetScalingType`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlSetCurrentScaling(
@@ -6802,7 +7189,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pSetScalingType: *mut ctl_scaling_settings_t,
     ) -> ctl_result_t {
-        (self.ctlSetCurrentScaling)(hDisplayOutput, pSetScalingType)
+        (self
+            .ctlSetCurrentScaling
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pSetScalingType)
     }
     #[doc = "\n @brief Get LACE Config\n\n @details\n     - Returns current LACE Config\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pLaceConfig`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_LACE_INVALID_DATA_ARGUMENT_PASSED - \"Lace Incorrrect AggressivePercent data or LuxVsAggressive Map data passed by user\""]
     pub unsafe fn ctlGetLACEConfig(
@@ -6810,7 +7200,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pLaceConfig: *mut ctl_lace_config_t,
     ) -> ctl_result_t {
-        (self.ctlGetLACEConfig)(hDisplayOutput, pLaceConfig)
+        (self
+            .ctlGetLACEConfig
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pLaceConfig)
     }
     #[doc = "\n @brief Sets LACE Config\n\n @details\n     - Sets LACE Config\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pLaceConfig`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_LACE_INVALID_DATA_ARGUMENT_PASSED - \"Lace Incorrrect AggressivePercent data or LuxVsAggressive Map data passed by user\""]
     pub unsafe fn ctlSetLACEConfig(
@@ -6818,7 +7211,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pLaceConfig: *mut ctl_lace_config_t,
     ) -> ctl_result_t {
-        (self.ctlSetLACEConfig)(hDisplayOutput, pLaceConfig)
+        (self
+            .ctlSetLACEConfig
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pLaceConfig)
     }
     #[doc = "\n @brief Get Software PSR caps/Set software PSR State\n\n @details\n     - Returns Software PSR status or Sets Software PSR capabilities. This is\n       a reserved capability. By default, software PSR is not supported/will\n       not be enabled, need application to activate it, please contact Intel\n       for activation.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSoftwarePsrSetting`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlSoftwarePSR(
@@ -6826,7 +7222,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pSoftwarePsrSetting: *mut ctl_sw_psr_settings_t,
     ) -> ctl_result_t {
-        (self.ctlSoftwarePSR)(hDisplayOutput, pSoftwarePsrSetting)
+        (self
+            .ctlSoftwarePSR
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pSoftwarePsrSetting)
     }
     #[doc = "\n @brief Get Intel Arc Sync information for monitor\n\n @details\n     - Returns Intel Arc Sync information for selected monitor\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pIntelArcSyncMonitorParams`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetIntelArcSyncInfoForMonitor(
@@ -6834,7 +7233,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pIntelArcSyncMonitorParams: *mut ctl_intel_arc_sync_monitor_params_t,
     ) -> ctl_result_t {
-        (self.ctlGetIntelArcSyncInfoForMonitor)(hDisplayOutput, pIntelArcSyncMonitorParams)
+        (self
+            .ctlGetIntelArcSyncInfoForMonitor
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pIntelArcSyncMonitorParams
+        )
     }
     #[doc = "\n @brief Enumerate Display MUX Devices on this system across adapters\n\n @details\n     - The application enumerates all MUX devices in the system\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hAPIHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`\n         + `nullptr == phMuxDevices`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlEnumerateMuxDevices(
@@ -6843,7 +7247,10 @@ impl ControlLib {
         pCount: *mut u32,
         phMuxDevices: *mut ctl_mux_output_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumerateMuxDevices)(hAPIHandle, pCount, phMuxDevices)
+        (self
+            .ctlEnumerateMuxDevices
+            .as_ref()
+            .expect("Expected function, got error."))(hAPIHandle, pCount, phMuxDevices)
     }
     #[doc = "\n @brief Get Display Mux properties\n\n @details\n     - Get the propeties of the Mux device\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMuxDevice`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pMuxProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetMuxProperties(
@@ -6851,7 +7258,10 @@ impl ControlLib {
         hMuxDevice: ctl_mux_output_handle_t,
         pMuxProperties: *mut ctl_mux_properties_t,
     ) -> ctl_result_t {
-        (self.ctlGetMuxProperties)(hMuxDevice, pMuxProperties)
+        (self
+            .ctlGetMuxProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hMuxDevice, pMuxProperties)
     }
     #[doc = "\n @brief Switch Mux output\n\n @details\n     - Switches the MUX output\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMuxDevice`\n         + `nullptr == hInactiveDisplayOutput`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlSwitchMux(
@@ -6859,7 +7269,10 @@ impl ControlLib {
         hMuxDevice: ctl_mux_output_handle_t,
         hInactiveDisplayOutput: ctl_display_output_handle_t,
     ) -> ctl_result_t {
-        (self.ctlSwitchMux)(hMuxDevice, hInactiveDisplayOutput)
+        (self
+            .ctlSwitchMux
+            .as_ref()
+            .expect("Expected function, got error."))(hMuxDevice, hInactiveDisplayOutput)
     }
     #[doc = "\n @brief Get Intel Arc Sync profile\n\n @details\n     - Returns Intel Arc Sync profile for selected monitor\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pIntelArcSyncProfileParams`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetIntelArcSyncProfile(
@@ -6867,7 +7280,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pIntelArcSyncProfileParams: *mut ctl_intel_arc_sync_profile_params_t,
     ) -> ctl_result_t {
-        (self.ctlGetIntelArcSyncProfile)(hDisplayOutput, pIntelArcSyncProfileParams)
+        (self
+            .ctlGetIntelArcSyncProfile
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pIntelArcSyncProfileParams
+        )
     }
     #[doc = "\n @brief Set Intel Arc Sync profile\n\n @details\n     - Sets Intel Arc Sync profile for selected monitor. In a mux situation,\n       this API should be called for all display IDs associated with a\n       physical display.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pIntelArcSyncProfileParams`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlSetIntelArcSyncProfile(
@@ -6875,7 +7293,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pIntelArcSyncProfileParams: *mut ctl_intel_arc_sync_profile_params_t,
     ) -> ctl_result_t {
-        (self.ctlSetIntelArcSyncProfile)(hDisplayOutput, pIntelArcSyncProfileParams)
+        (self
+            .ctlSetIntelArcSyncProfile
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pIntelArcSyncProfileParams
+        )
     }
     #[doc = "\n @brief EDID Management allows managing an output's EDID or Plugged Status.\n\n @details\n     - To manage output's EDID or Display ID. Supports native DP SST and HDMI\n       Display types.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pEdidManagementArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid combination of parameters\"\n     - ::CTL_RESULT_ERROR_DISPLAY_NOT_ATTACHED - \"Error for Output Device not attached\"\n     - ::CTL_RESULT_ERROR_OUT_OF_DEVICE_MEMORY - \"Insufficient device memory to satisfy call\"\n     - ::CTL_RESULT_ERROR_DATA_NOT_FOUND - \"Requested EDID data not present.\""]
     pub unsafe fn ctlEdidManagement(
@@ -6883,7 +7306,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pEdidManagementArgs: *mut ctl_edid_management_args_t,
     ) -> ctl_result_t {
-        (self.ctlEdidManagement)(hDisplayOutput, pEdidManagementArgs)
+        (self
+            .ctlEdidManagement
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pEdidManagementArgs)
     }
     #[doc = "\n @brief Get/Set Custom mode.\n\n @details\n     - To get or set custom mode.\n     - Add custom source mode operation supports only single mode additon at\n       a time.\n     - Remove custom source mode operation supports single or multiple mode\n       removal at a time.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCustomModeArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid combination of parameters\"\n     - ::CTL_RESULT_ERROR_CUSTOM_MODE_STANDARD_CUSTOM_MODE_EXISTS - \"Standard custom mode exists\"\n     - ::CTL_RESULT_ERROR_CUSTOM_MODE_NON_CUSTOM_MATCHING_MODE_EXISTS - \"Non custom matching mode exists\"\n     - ::CTL_RESULT_ERROR_CUSTOM_MODE_INSUFFICIENT_MEMORY - \"Custom mode insufficent memory\""]
     pub unsafe fn ctlGetSetCustomMode(
@@ -6891,7 +7317,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pCustomModeArgs: *mut ctl_get_set_custom_mode_args_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetCustomMode)(hDisplayOutput, pCustomModeArgs)
+        (self
+            .ctlGetSetCustomMode
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pCustomModeArgs)
     }
     #[doc = "\n @brief Get/Set Combined Display\n\n @details\n     - To get or set combined display with given Child Targets on a Single\n       GPU or across identical GPUs. Multi-GPU(MGPU) combined display is\n       reserved i.e. it is not public and requires special application GUID.\n       MGPU Combined Display will get activated or deactivated in next boot.\n       MGPU scenario will internally link the associated adapters via Linked\n       Display Adapter Call, with supplied hDeviceAdapter being the LDA\n       Primary. If Genlock and enabled in Driver registry and supported by\n       given Display Config, MGPU Combined Display will enable MGPU Genlock\n       with supplied hDeviceAdapter being the Genlock Primary Adapter and the\n       First Child Display being the Primary Display.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCombinedDisplayArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\"\n     - ::CTL_RESULT_ERROR_FEATURE_NOT_SUPPORTED - \"Combined Display feature is not supported in this platform\"\n     - ::CTL_RESULT_ERROR_ADAPTER_NOT_SUPPORTED_ON_LDA_SECONDARY - \"Unsupported (secondary) adapter handle passed\""]
     pub unsafe fn ctlGetSetCombinedDisplay(
@@ -6899,7 +7328,10 @@ impl ControlLib {
         hDeviceAdapter: ctl_device_adapter_handle_t,
         pCombinedDisplayArgs: *mut ctl_combined_display_args_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetCombinedDisplay)(hDeviceAdapter, pCombinedDisplayArgs)
+        (self
+            .ctlGetSetCombinedDisplay
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, pCombinedDisplayArgs)
     }
     #[doc = "\n @brief Get/Set Display Genlock\n\n @details\n     - To get or set Display Genlock.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == hDeviceAdapter`\n         + `nullptr == pGenlockArgs`\n         + `nullptr == hFailureDeviceAdapter`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"Invalid topology structure size\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\""]
     pub unsafe fn ctlGetSetDisplayGenlock(
@@ -6909,7 +7341,10 @@ impl ControlLib {
         AdapterCount: u32,
         hFailureDeviceAdapter: *mut ctl_device_adapter_handle_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetDisplayGenlock)(
+        (self
+            .ctlGetSetDisplayGenlock
+            .as_ref()
+            .expect("Expected function, got error."))(
             hDeviceAdapter,
             pGenlockArgs,
             AdapterCount,
@@ -6922,7 +7357,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pVblankTSArgs: *mut ctl_vblank_ts_args_t,
     ) -> ctl_result_t {
-        (self.ctlGetVblankTimestamp)(hDisplayOutput, pVblankTSArgs)
+        (self
+            .ctlGetVblankTimestamp
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pVblankTSArgs)
     }
     #[doc = "\n @brief Link Display Adapters\n\n @details\n     - To Link Display Adapters.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPrimaryAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pLdaArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\"\n     - ::CTL_RESULT_ERROR_ADAPTER_ALREADY_LINKED - \"Adapter is already linked\""]
     pub unsafe fn ctlLinkDisplayAdapters(
@@ -6930,14 +7368,20 @@ impl ControlLib {
         hPrimaryAdapter: ctl_device_adapter_handle_t,
         pLdaArgs: *mut ctl_lda_args_t,
     ) -> ctl_result_t {
-        (self.ctlLinkDisplayAdapters)(hPrimaryAdapter, pLdaArgs)
+        (self
+            .ctlLinkDisplayAdapters
+            .as_ref()
+            .expect("Expected function, got error."))(hPrimaryAdapter, pLdaArgs)
     }
     #[doc = "\n @brief Unlink Display Adapters\n\n @details\n     - To Unlink Display Adapters\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPrimaryAdapter`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\"\n     - ::CTL_RESULT_ERROR_ADAPTER_NOT_SUPPORTED_ON_LDA_SECONDARY - \"Unsupported (secondary) adapter handle passed\""]
     pub unsafe fn ctlUnlinkDisplayAdapters(
         &self,
         hPrimaryAdapter: ctl_device_adapter_handle_t,
     ) -> ctl_result_t {
-        (self.ctlUnlinkDisplayAdapters)(hPrimaryAdapter)
+        (self
+            .ctlUnlinkDisplayAdapters
+            .as_ref()
+            .expect("Expected function, got error."))(hPrimaryAdapter)
     }
     #[doc = "\n @brief Get Linked Display Adapters\n\n @details\n     - To return list of Linked Display Adapters.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPrimaryAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pLdaArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\"\n     - ::CTL_RESULT_ERROR_ADAPTER_NOT_SUPPORTED_ON_LDA_SECONDARY - \"Unsupported (secondary) adapter handle passed\""]
     pub unsafe fn ctlGetLinkedDisplayAdapters(
@@ -6945,7 +7389,10 @@ impl ControlLib {
         hPrimaryAdapter: ctl_device_adapter_handle_t,
         pLdaArgs: *mut ctl_lda_args_t,
     ) -> ctl_result_t {
-        (self.ctlGetLinkedDisplayAdapters)(hPrimaryAdapter, pLdaArgs)
+        (self
+            .ctlGetLinkedDisplayAdapters
+            .as_ref()
+            .expect("Expected function, got error."))(hPrimaryAdapter, pLdaArgs)
     }
     #[doc = "\n @brief Get/Set Dynamic Contrast Enhancement\n\n @details\n     - To get the DCE feature status and, if feature is enabled, returns the\n       current histogram, or to set the brightness at the phase-in speed\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pDceArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_HANDLE - \"Invalid or Null handle passed\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid combination of parameters\""]
     pub unsafe fn ctlGetSetDynamicContrastEnhancement(
@@ -6953,7 +7400,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pDceArgs: *mut ctl_dce_args_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetDynamicContrastEnhancement)(hDisplayOutput, pDceArgs)
+        (self
+            .ctlGetSetDynamicContrastEnhancement
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pDceArgs)
     }
     #[doc = "\n @brief Get/Set Color Format and Color Depth\n\n @details\n     - Get and Set the Color Format and Color Depth of a target\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pGetSetWireFormatSetting`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid data passed as argument, WireFormat is not supported\"\n     - ::CTL_RESULT_ERROR_DISPLAY_NOT_ACTIVE - \"Display not active\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\""]
     pub unsafe fn ctlGetSetWireFormat(
@@ -6961,7 +7411,12 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pGetSetWireFormatSetting: *mut ctl_get_set_wire_format_config_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetWireFormat)(hDisplayOutput, pGetSetWireFormatSetting)
+        (self
+            .ctlGetSetWireFormat
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDisplayOutput, pGetSetWireFormatSetting
+        )
     }
     #[doc = "\n @brief Get/Set Display settings\n\n @details\n     - To get/set end display settings like low latency, HDR10+ signaling\n       etc. which are controlled via info-frames/secondary data packets\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pDisplaySettings`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernel mode driver call failure\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_HANDLE - \"Invalid or Null handle passed\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT - \"Invalid combination of parameters\""]
     pub unsafe fn ctlGetSetDisplaySettings(
@@ -6969,7 +7424,10 @@ impl ControlLib {
         hDisplayOutput: ctl_display_output_handle_t,
         pDisplaySettings: *mut ctl_display_settings_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetDisplaySettings)(hDisplayOutput, pDisplaySettings)
+        (self
+            .ctlGetSetDisplaySettings
+            .as_ref()
+            .expect("Expected function, got error."))(hDisplayOutput, pDisplaySettings)
     }
     #[doc = "\n @brief Get handle of engine groups\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumEngineGroups(
@@ -6978,7 +7436,10 @@ impl ControlLib {
         pCount: *mut u32,
         phEngine: *mut ctl_engine_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumEngineGroups)(hDAhandle, pCount, phEngine)
+        (self
+            .ctlEnumEngineGroups
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phEngine)
     }
     #[doc = "\n @brief Get engine group properties\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hEngine`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlEngineGetProperties(
@@ -6986,7 +7447,10 @@ impl ControlLib {
         hEngine: ctl_engine_handle_t,
         pProperties: *mut ctl_engine_properties_t,
     ) -> ctl_result_t {
-        (self.ctlEngineGetProperties)(hEngine, pProperties)
+        (self
+            .ctlEngineGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hEngine, pProperties)
     }
     #[doc = "\n @brief Get the activity stats for an engine group\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hEngine`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pStats`"]
     pub unsafe fn ctlEngineGetActivity(
@@ -6994,7 +7458,10 @@ impl ControlLib {
         hEngine: ctl_engine_handle_t,
         pStats: *mut ctl_engine_stats_t,
     ) -> ctl_result_t {
-        (self.ctlEngineGetActivity)(hEngine, pStats)
+        (self
+            .ctlEngineGetActivity
+            .as_ref()
+            .expect("Expected function, got error."))(hEngine, pStats)
     }
     #[doc = "\n @brief Get handle of fans\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumFans(
@@ -7003,7 +7470,10 @@ impl ControlLib {
         pCount: *mut u32,
         phFan: *mut ctl_fan_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumFans)(hDAhandle, pCount, phFan)
+        (self
+            .ctlEnumFans
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phFan)
     }
     #[doc = "\n @brief Get fan properties\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFan`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlFanGetProperties(
@@ -7011,7 +7481,10 @@ impl ControlLib {
         hFan: ctl_fan_handle_t,
         pProperties: *mut ctl_fan_properties_t,
     ) -> ctl_result_t {
-        (self.ctlFanGetProperties)(hFan, pProperties)
+        (self
+            .ctlFanGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hFan, pProperties)
     }
     #[doc = "\n @brief Get fan configurations and the current fan speed mode (default, fixed,\n        temp-speed table)\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFan`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pConfig`"]
     pub unsafe fn ctlFanGetConfig(
@@ -7019,11 +7492,17 @@ impl ControlLib {
         hFan: ctl_fan_handle_t,
         pConfig: *mut ctl_fan_config_t,
     ) -> ctl_result_t {
-        (self.ctlFanGetConfig)(hFan, pConfig)
+        (self
+            .ctlFanGetConfig
+            .as_ref()
+            .expect("Expected function, got error."))(hFan, pConfig)
     }
     #[doc = "\n @brief Configure the fan to run with hardware factory settings (set mode to\n        ::CTL_FAN_SPEED_MODE_DEFAULT)\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFan`\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS\n         + User does not have permissions to make these modifications."]
     pub unsafe fn ctlFanSetDefaultMode(&self, hFan: ctl_fan_handle_t) -> ctl_result_t {
-        (self.ctlFanSetDefaultMode)(hFan)
+        (self
+            .ctlFanSetDefaultMode
+            .as_ref()
+            .expect("Expected function, got error."))(hFan)
     }
     #[doc = "\n @brief Configure the fan to rotate at a fixed speed (set mode to\n        ::CTL_FAN_SPEED_MODE_FIXED)\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFan`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == speed`\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS\n         + User does not have permissions to make these modifications.\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_FEATURE\n         + Fixing the fan speed not supported by the hardware or the fan speed units are not supported. See ::ctl_fan_properties_t.supportedModes and ::ctl_fan_properties_t.supportedUnits."]
     pub unsafe fn ctlFanSetFixedSpeedMode(
@@ -7031,7 +7510,10 @@ impl ControlLib {
         hFan: ctl_fan_handle_t,
         speed: *const ctl_fan_speed_t,
     ) -> ctl_result_t {
-        (self.ctlFanSetFixedSpeedMode)(hFan, speed)
+        (self
+            .ctlFanSetFixedSpeedMode
+            .as_ref()
+            .expect("Expected function, got error."))(hFan, speed)
     }
     #[doc = "\n @brief Configure the fan to adjust speed based on a temperature/speed table\n        (set mode to ::CTL_FAN_SPEED_MODE_TABLE)\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFan`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == speedTable`\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS\n         + User does not have permissions to make these modifications.\n     - ::CTL_RESULT_ERROR_INVALID_ARGUMENT\n         + The temperature/speed pairs in the array are not sorted on temperature from lowest to highest.\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_FEATURE\n         + Fan speed table not supported by the hardware or the fan speed units are not supported. See ::ctl_fan_properties_t.supportedModes and ::ctl_fan_properties_t.supportedUnits."]
     pub unsafe fn ctlFanSetSpeedTableMode(
@@ -7039,7 +7521,10 @@ impl ControlLib {
         hFan: ctl_fan_handle_t,
         speedTable: *const ctl_fan_speed_table_t,
     ) -> ctl_result_t {
-        (self.ctlFanSetSpeedTableMode)(hFan, speedTable)
+        (self
+            .ctlFanSetSpeedTableMode
+            .as_ref()
+            .expect("Expected function, got error."))(hFan, speedTable)
     }
     #[doc = "\n @brief Get current state of a fan - current mode and speed\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFan`\n     - CTL_RESULT_ERROR_INVALID_ENUMERATION\n         + `::CTL_FAN_SPEED_UNITS_PERCENT < units`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSpeed`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_FEATURE\n         + The requested fan speed units are not supported. See ::ctl_fan_properties_t.supportedUnits."]
     pub unsafe fn ctlFanGetState(
@@ -7048,7 +7533,10 @@ impl ControlLib {
         units: ctl_fan_speed_units_t,
         pSpeed: *mut i32,
     ) -> ctl_result_t {
-        (self.ctlFanGetState)(hFan, units, pSpeed)
+        (self
+            .ctlFanGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hFan, units, pSpeed)
     }
     #[doc = "\n @brief Get handle of frequency domains\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumFrequencyDomains(
@@ -7057,7 +7545,10 @@ impl ControlLib {
         pCount: *mut u32,
         phFrequency: *mut ctl_freq_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumFrequencyDomains)(hDAhandle, pCount, phFrequency)
+        (self
+            .ctlEnumFrequencyDomains
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phFrequency)
     }
     #[doc = "\n @brief Get frequency properties - available frequencies\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFrequency`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlFrequencyGetProperties(
@@ -7065,7 +7556,10 @@ impl ControlLib {
         hFrequency: ctl_freq_handle_t,
         pProperties: *mut ctl_freq_properties_t,
     ) -> ctl_result_t {
-        (self.ctlFrequencyGetProperties)(hFrequency, pProperties)
+        (self
+            .ctlFrequencyGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hFrequency, pProperties)
     }
     #[doc = "\n @brief Get available non-overclocked hardware clock frequencies for the\n        frequency domain\n\n @details\n     - The list of available frequencies is returned in order of slowest to\n       fastest.\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFrequency`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlFrequencyGetAvailableClocks(
@@ -7074,7 +7568,10 @@ impl ControlLib {
         pCount: *mut u32,
         phFrequency: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlFrequencyGetAvailableClocks)(hFrequency, pCount, phFrequency)
+        (self
+            .ctlFrequencyGetAvailableClocks
+            .as_ref()
+            .expect("Expected function, got error."))(hFrequency, pCount, phFrequency)
     }
     #[doc = "\n @brief Get current frequency limits\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFrequency`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pLimits`"]
     pub unsafe fn ctlFrequencyGetRange(
@@ -7082,7 +7579,10 @@ impl ControlLib {
         hFrequency: ctl_freq_handle_t,
         pLimits: *mut ctl_freq_range_t,
     ) -> ctl_result_t {
-        (self.ctlFrequencyGetRange)(hFrequency, pLimits)
+        (self
+            .ctlFrequencyGetRange
+            .as_ref()
+            .expect("Expected function, got error."))(hFrequency, pLimits)
     }
     #[doc = "\n @brief Set frequency range between which the hardware can operate.\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFrequency`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pLimits`\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS\n         + User does not have permissions to make these modifications."]
     pub unsafe fn ctlFrequencySetRange(
@@ -7090,7 +7590,10 @@ impl ControlLib {
         hFrequency: ctl_freq_handle_t,
         pLimits: *const ctl_freq_range_t,
     ) -> ctl_result_t {
-        (self.ctlFrequencySetRange)(hFrequency, pLimits)
+        (self
+            .ctlFrequencySetRange
+            .as_ref()
+            .expect("Expected function, got error."))(hFrequency, pLimits)
     }
     #[doc = "\n @brief Get current frequency state - frequency request, actual frequency, TDP\n        limits\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFrequency`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pState`"]
     pub unsafe fn ctlFrequencyGetState(
@@ -7098,7 +7601,10 @@ impl ControlLib {
         hFrequency: ctl_freq_handle_t,
         pState: *mut ctl_freq_state_t,
     ) -> ctl_result_t {
-        (self.ctlFrequencyGetState)(hFrequency, pState)
+        (self
+            .ctlFrequencyGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hFrequency, pState)
     }
     #[doc = "\n @brief Get frequency throttle time\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFrequency`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pThrottleTime`"]
     pub unsafe fn ctlFrequencyGetThrottleTime(
@@ -7106,7 +7612,10 @@ impl ControlLib {
         hFrequency: ctl_freq_handle_t,
         pThrottleTime: *mut ctl_freq_throttle_time_t,
     ) -> ctl_result_t {
-        (self.ctlFrequencyGetThrottleTime)(hFrequency, pThrottleTime)
+        (self
+            .ctlFrequencyGetThrottleTime
+            .as_ref()
+            .expect("Expected function, got error."))(hFrequency, pThrottleTime)
     }
     #[doc = "\n @brief Get Video Processing capabilities\n\n @details\n     - The application gets Video Processing properties\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pFeatureCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSupportedVideoProcessingCapabilities(
@@ -7114,7 +7623,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pFeatureCaps: *mut ctl_video_processing_feature_caps_t,
     ) -> ctl_result_t {
-        (self.ctlGetSupportedVideoProcessingCapabilities)(hDAhandle, pFeatureCaps)
+        (self
+            .ctlGetSupportedVideoProcessingCapabilities
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pFeatureCaps)
     }
     #[doc = "\n @brief Get/Set Video Processing feature details\n\n @details\n     - Video Processing feature details\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pFeature`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSetVideoProcessingFeature(
@@ -7122,7 +7634,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pFeature: *mut ctl_video_processing_feature_getset_t,
     ) -> ctl_result_t {
-        (self.ctlGetSetVideoProcessingFeature)(hDAhandle, pFeature)
+        (self
+            .ctlGetSetVideoProcessingFeature
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pFeature)
     }
     #[doc = "\n @brief Get handle of memory modules\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumMemoryModules(
@@ -7131,7 +7646,10 @@ impl ControlLib {
         pCount: *mut u32,
         phMemory: *mut ctl_mem_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumMemoryModules)(hDAhandle, pCount, phMemory)
+        (self
+            .ctlEnumMemoryModules
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phMemory)
     }
     #[doc = "\n @brief Get memory properties\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMemory`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlMemoryGetProperties(
@@ -7139,7 +7657,10 @@ impl ControlLib {
         hMemory: ctl_mem_handle_t,
         pProperties: *mut ctl_mem_properties_t,
     ) -> ctl_result_t {
-        (self.ctlMemoryGetProperties)(hMemory, pProperties)
+        (self
+            .ctlMemoryGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hMemory, pProperties)
     }
     #[doc = "\n @brief Get memory state - health, allocated\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMemory`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pState`"]
     pub unsafe fn ctlMemoryGetState(
@@ -7147,7 +7668,10 @@ impl ControlLib {
         hMemory: ctl_mem_handle_t,
         pState: *mut ctl_mem_state_t,
     ) -> ctl_result_t {
-        (self.ctlMemoryGetState)(hMemory, pState)
+        (self
+            .ctlMemoryGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hMemory, pState)
     }
     #[doc = "\n @brief Get memory bandwidth\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMemory`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pBandwidth`\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS\n         + User does not have permissions to query this telemetry."]
     pub unsafe fn ctlMemoryGetBandwidth(
@@ -7155,7 +7679,10 @@ impl ControlLib {
         hMemory: ctl_mem_handle_t,
         pBandwidth: *mut ctl_mem_bandwidth_t,
     ) -> ctl_result_t {
-        (self.ctlMemoryGetBandwidth)(hMemory, pBandwidth)
+        (self
+            .ctlMemoryGetBandwidth
+            .as_ref()
+            .expect("Expected function, got error."))(hMemory, pBandwidth)
     }
     #[doc = "\n @brief Get overclock properties - available properties.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcProperties`"]
     pub unsafe fn ctlOverclockGetProperties(
@@ -7163,14 +7690,20 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pOcProperties: *mut ctl_oc_properties_t,
     ) -> ctl_result_t {
-        (self.ctlOverclockGetProperties)(hDeviceHandle, pOcProperties)
+        (self
+            .ctlOverclockGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcProperties)
     }
     #[doc = "\n @brief Overclock Waiver - Warranty Waiver.\n\n @details\n     - Most of the overclock functions will return an error if the waiver is\n       not set. This is because most overclock settings will increase the\n       electric/thermal stress on the part and thus reduce its lifetime.\n     - By setting the waiver, the user is indicate that they are accepting a\n       reduction in the lifetime of the part.\n     - It is the responsibility of overclock applications to notify each user\n       at least once with a popup of the dangers and requiring acceptance.\n     - Only once the user has accepted should this function be called by the\n       application.\n     - It is acceptable for the application to cache the user choice and call\n       this function on future executions without issuing the popup.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockWaiverSet(
         &self,
         hDeviceHandle: ctl_device_adapter_handle_t,
     ) -> ctl_result_t {
-        (self.ctlOverclockWaiverSet)(hDeviceHandle)
+        (self
+            .ctlOverclockWaiverSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle)
     }
     #[doc = "\n @brief Get the Overclock Frequency Offset for the GPU in MHz.\n\n @details\n     - Determine the current frequency offset in effect (refer to\n       ::ctlOverclockGpuFrequencyOffsetSet() for details).\n     - The value returned may be different from the value that was previously\n       set by the application depending on hardware limitations or if the\n       function ::ctlOverclockGpuFrequencyOffsetSet() has been called or\n       another application that has changed the value.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcFrequencyOffset`"]
     pub unsafe fn ctlOverclockGpuFrequencyOffsetGet(
@@ -7178,7 +7711,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pOcFrequencyOffset: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockGpuFrequencyOffsetGet)(hDeviceHandle, pOcFrequencyOffset)
+        (self
+            .ctlOverclockGpuFrequencyOffsetGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcFrequencyOffset)
     }
     #[doc = "\n @brief Set the Overclock Frequency Offset for the GPU in MHZ.\n\n @details\n     - The purpose of this function is to increase/decrease the frequency at\n       which typical workloads will run within the same thermal budget.\n     - The frequency offset is expressed in units of ±1MHz.\n     - The actual operating frequency for each workload is not guaranteed to\n       change exactly by the specified offset.\n     - For positive frequency offsets, the factory maximum frequency may\n       increase by up to the specified amount.\n     - For negative frequency offsets, the overclock waiver must have been\n       set since this can result in running the part at voltages beyond the\n       part warrantee limits. An error is returned if the waiver has not been\n       set.\n     - Specifying large values for the frequency offset can lead to\n       instability. It is recommended that changes are made in small\n       increments and stability/performance measured running intense GPU\n       workloads before increasing further.\n     - This setting is not persistent through system reboots or driver\n       resets/hangs. It is up to the overclock application to reapply the\n       settings in those cases.\n     - This setting can cause system/device instability. It is up to the\n       overclock application to detect if the system has rebooted\n       unexpectedly or the device was restarted. When this occurs, the\n       application should not reapply the overclock settings automatically\n       but instead return to previously known good settings or notify the\n       user that the settings are not being applied.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockGpuFrequencyOffsetSet(
@@ -7186,7 +7722,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         ocFrequencyOffset: f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockGpuFrequencyOffsetSet)(hDeviceHandle, ocFrequencyOffset)
+        (self
+            .ctlOverclockGpuFrequencyOffsetSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, ocFrequencyOffset)
     }
     #[doc = "\n @brief Get the Overclock Gpu Voltage Offset in mV.\n\n @details\n     - Determine the current voltage offset in effect on the hardware (refer\n       to ::ctlOverclockGpuVoltageOffsetSet for details).\n     - The value returned may be different from the value that was previously\n       set by the application depending on hardware limitations or if the\n       function ::ctlOverclockGpuVoltageOffsetSet has been called or another\n       application that has changed the value.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcVoltageOffset`"]
     pub unsafe fn ctlOverclockGpuVoltageOffsetGet(
@@ -7194,7 +7733,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pOcVoltageOffset: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockGpuVoltageOffsetGet)(hDeviceHandle, pOcVoltageOffset)
+        (self
+            .ctlOverclockGpuVoltageOffsetGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcVoltageOffset)
     }
     #[doc = "\n @brief Set the Overclock Gpu Voltage Offset in mV.\n\n @details\n     - The purpose of this function is to attempt to run the GPU up to higher\n       voltages beyond the part warrantee limits. This can permit running at\n       even higher frequencies than can be obtained using the frequency\n       offset setting, but at the risk of reducing the lifetime of the part.\n     - The voltage offset is expressed in units of ±millivolts with values\n       permitted down to a resolution of 1 millivolt.\n     - The overclock waiver must be set before calling this function\n       otherwise and error will be returned.\n     - There is no guarantee that a workload can operate at the higher\n       frequencies permitted by this setting. Significantly more heat will be\n       generated at these high frequencies/voltages which will necessitate a\n       good cooling solution.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockGpuVoltageOffsetSet(
@@ -7202,7 +7744,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         ocVoltageOffset: f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockGpuVoltageOffsetSet)(hDeviceHandle, ocVoltageOffset)
+        (self
+            .ctlOverclockGpuVoltageOffsetSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, ocVoltageOffset)
     }
     #[doc = "\n @brief Gets the Locked GPU Voltage for Overclocking in mV.\n\n @details\n     - The purpose of this function is to determine if the current values of\n       the frequency/voltage lock.\n     - If the lock is not currently active, will return 0 for frequency and\n       voltage.\n     - Note that the operating frequency/voltage may be lower than these\n       settings if power/thermal limits are exceeded.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pVfPair`"]
     pub unsafe fn ctlOverclockGpuLockGet(
@@ -7210,7 +7755,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pVfPair: *mut ctl_oc_vf_pair_t,
     ) -> ctl_result_t {
-        (self.ctlOverclockGpuLockGet)(hDeviceHandle, pVfPair)
+        (self
+            .ctlOverclockGpuLockGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pVfPair)
     }
     #[doc = "\n @brief Locks the GPU voltage for Overclocking in mV.\n\n @details\n     - The purpose of this function is to provide an interface for scanners\n       to lock the frequency and voltage to fixed values.\n     - The frequency is expressed in units of MHz with a resolution of 1MHz.\n     - The voltage is expressed in units of ±millivolts with values\n       permitted down to a resolution of 1 millivolt.\n     - The overclock waiver must be set since fixing the voltage at a high\n       value puts unnecessary stress on the part.\n     - The actual frequency may reduce depending on power/thermal\n       limitations.\n     - Requesting a frequency and/or voltage of 0 will return the hardware to\n       dynamic frequency/voltage management with any previous frequency\n       offset or voltage offset settings reapplied.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockGpuLockSet(
@@ -7218,7 +7766,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         vFPair: ctl_oc_vf_pair_t,
     ) -> ctl_result_t {
-        (self.ctlOverclockGpuLockSet)(hDeviceHandle, vFPair)
+        (self
+            .ctlOverclockGpuLockSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, vFPair)
     }
     #[doc = "\n @brief Get the current Vram Frequency Offset in GT/s.\n\n @details\n     - The purpose of this function is to return the current VRAM frequency\n       offset in units of GT/s.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcFrequencyOffset`"]
     pub unsafe fn ctlOverclockVramFrequencyOffsetGet(
@@ -7226,7 +7777,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pOcFrequencyOffset: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockVramFrequencyOffsetGet)(hDeviceHandle, pOcFrequencyOffset)
+        (self
+            .ctlOverclockVramFrequencyOffsetGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcFrequencyOffset)
     }
     #[doc = "\n @brief Set the desired Vram frquency Offset in GT/s\n\n @details\n     - The purpose of this function is to increase/decrease the frequency of\n       VRAM.\n     - The frequency offset is expressed in units of GT/s with a minimum step\n       size given by ::ctlOverclockGetProperties.\n     - The actual operating frequency for each workload is not guaranteed to\n       change exactly by the specified offset.\n     - The waiver must be set using clibOverclockWaiverSet() before this\n       function can be called.\n     - This setting is not persistent through system reboots or driver\n       resets/hangs. It is up to the overclock application to reapply the\n       settings in those cases.\n     - This setting can cause system/device instability. It is up to the\n       overclock application to detect if the system has rebooted\n       unexpectedly or the device was restarted. When this occurs, the\n       application should not reapply the overclock settings automatically\n       but instead return to previously known good settings or notify the\n       user that the settings are not being applied.\n     - If the memory controller doesn't support changes to frequency on the\n       fly, one of the following return codes will be given:\n     - ::CTL_RESULT_ERROR_RESET_DEVICE_REQUIRED: The requested memory\n       overclock will be applied when the device is reset or the system is\n       rebooted. In this case, the overclock software should check if the\n       overclock request was applied after the reset/reboot. If it was and\n       when the overclock application shuts down gracefully and if the\n       overclock application wants the setting to be persistent, the\n       application should request the same overclock settings again so that\n       they will be applied on the next reset/reboot. If this is not done,\n       then every time the device is reset and overclock is requested, the\n       device needs to be reset a second time.\n     - ::CTL_RESULT_ERROR_FULL_REBOOT_REQUIRED: The requested memory\n       overclock will be applied when the system is rebooted. In this case,\n       the overclock software should check if the overclock request was\n       applied after the reboot. If it was and when the overclock application\n       shuts down gracefully and if the overclock application wants the\n       setting to be persistent, the application should request the same\n       overclock settings again so that they will be applied on the next\n       reset/reboot. If this is not done and the overclock setting is\n       requested after the reboot has occurred, a second reboot will be\n       required.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockVramFrequencyOffsetSet(
@@ -7234,7 +7788,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         ocFrequencyOffset: f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockVramFrequencyOffsetSet)(hDeviceHandle, ocFrequencyOffset)
+        (self
+            .ctlOverclockVramFrequencyOffsetSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, ocFrequencyOffset)
     }
     #[doc = "\n @brief Get the Overclock Vram Voltage Offset in mV.\n\n @details\n     - The purpose of this function is to increase/decrease the voltage of\n       VRAM.\n     - The voltage offset is expressed in units of millivolts with a minimum\n       step size given by ::ctlOverclockGetProperties.\n     - The waiver must be set using ::ctlOverclockWaiverSet before this\n       function can be called.\n     - This setting is not persistent through system reboots or driver\n       resets/hangs. It is up to the overclock application to reapply the\n       settings in those cases.\n     - This setting can cause system/device instability. It is up to the\n       overclock application to detect if the system has rebooted\n       unexpectedly or the device was restarted. When this occurs, the\n       application should not reapply the overclock settings automatically\n       but instead return to previously known good settings or notify the\n       user that the settings are not being applied.\n     - If the memory controller doesn't support changes to voltage on the\n       fly, one of the following return codes will be given:\n     - ::CTL_RESULT_ERROR_RESET_DEVICE_REQUIRED: The requested memory\n       overclock will be applied when the device is reset or the system is\n       rebooted. In this case, the overclock software should check if the\n       overclock request was applied after the reset/reboot. If it was and\n       when the overclock application shuts down gracefully and if the\n       overclock application wants the setting to be persistent, the\n       application should request the same overclock settings again so that\n       they will be applied on the next reset/reboot. If this is not done,\n       then every time the device is reset and overclock is requested, the\n       device needs to be reset a second time.\n     - ::CTL_RESULT_ERROR_FULL_REBOOT_REQUIRED: The requested memory\n       overclock will be applied when the system is rebooted. In this case,\n       the overclock software should check if the overclock request was\n       applied after the reboot. If it was and when the overclock application\n       shuts down gracefully and if the overclock application wants the\n       setting to be persistent, the application should request the same\n       overclock settings again so that they will be applied on the next\n       reset/reboot. If this is not done and the overclock setting is\n       requested after the reboot has occurred, a second reboot will be\n       required.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pVoltage`"]
     pub unsafe fn ctlOverclockVramVoltageOffsetGet(
@@ -7242,7 +7799,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pVoltage: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockVramVoltageOffsetGet)(hDeviceHandle, pVoltage)
+        (self
+            .ctlOverclockVramVoltageOffsetGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pVoltage)
     }
     #[doc = "\n @brief Set the Overclock Vram Voltage Offset in mV.\n\n @details\n     - The purpose of this function is to set the maximum sustained power\n       limit. If the average GPU power averaged over a few seconds exceeds\n       this value, the frequency of the GPU will be throttled.\n     - Set a value of 0 to disable this power limit. In this case, the GPU\n       frequency will not throttle due to average power but may hit other\n       limits.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockVramVoltageOffsetSet(
@@ -7250,7 +7810,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         voltage: f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockVramVoltageOffsetSet)(hDeviceHandle, voltage)
+        (self
+            .ctlOverclockVramVoltageOffsetSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, voltage)
     }
     #[doc = "\n @brief Get the sustained power limit in mW.\n\n @details\n     - The purpose of this function is to read the current sustained power\n       limit.\n     - A value of 0 means that the limit is disabled - the GPU frequency can\n       run as high as possible until other limits are hit.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSustainedPowerLimit`"]
     pub unsafe fn ctlOverclockPowerLimitGet(
@@ -7258,7 +7821,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pSustainedPowerLimit: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockPowerLimitGet)(hDeviceHandle, pSustainedPowerLimit)
+        (self
+            .ctlOverclockPowerLimitGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pSustainedPowerLimit)
     }
     #[doc = "\n @brief Set the sustained power limit in mW.\n\n @details\n     - The purpose of this function is to set the maximum sustained power\n       limit. If the average GPU power averaged over a few seconds exceeds\n       this value, the frequency of the GPU will be throttled.\n     - Set a value of 0 to disable this power limit. In this case, the GPU\n       frequency will not throttle due to average power but may hit other\n       limits.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockPowerLimitSet(
@@ -7266,7 +7832,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         sustainedPowerLimit: f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockPowerLimitSet)(hDeviceHandle, sustainedPowerLimit)
+        (self
+            .ctlOverclockPowerLimitSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, sustainedPowerLimit)
     }
     #[doc = "\n @brief Get the current temperature limit in Celsius.\n\n @details\n     - The purpose of this function is to read the current thermal limit.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pTemperatureLimit`"]
     pub unsafe fn ctlOverclockTemperatureLimitGet(
@@ -7274,7 +7843,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pTemperatureLimit: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockTemperatureLimitGet)(hDeviceHandle, pTemperatureLimit)
+        (self
+            .ctlOverclockTemperatureLimitGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pTemperatureLimit)
     }
     #[doc = "\n @brief Set the temperature limit in Celsius.\n\n @details\n     - The purpose of this function is to change the maximum thermal limit.\n       When the GPU temperature exceeds this value, the GPU frequency will be\n       throttled.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockTemperatureLimitSet(
@@ -7282,7 +7854,10 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         temperatureLimit: f64,
     ) -> ctl_result_t {
-        (self.ctlOverclockTemperatureLimitSet)(hDeviceHandle, temperatureLimit)
+        (self
+            .ctlOverclockTemperatureLimitSet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, temperatureLimit)
     }
     #[doc = "\n @brief Get Power Telemetry.\n\n @details\n     - Limited rate of 50 ms, any call under 50 ms will return the same\n       information.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pTelemetryInfo`"]
     pub unsafe fn ctlPowerTelemetryGet(
@@ -7290,14 +7865,20 @@ impl ControlLib {
         hDeviceHandle: ctl_device_adapter_handle_t,
         pTelemetryInfo: *mut ctl_power_telemetry_t,
     ) -> ctl_result_t {
-        (self.ctlPowerTelemetryGet)(hDeviceHandle, pTelemetryInfo)
+        (self
+            .ctlPowerTelemetryGet
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pTelemetryInfo)
     }
     #[doc = "\n @brief Reset all Overclock Settings to stock\n\n @details\n     - Reset all Overclock setting to default using single API call\n     - This request resets any changes made to GpuFrequencyOffset,\n       GpuVoltageOffset, PowerLimit, TemperatureLimit, GpuLock\n     - This Doesn't reset any Fan Curve Changes. It can be reset using\n       ctlFanSetDefaultMode\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
     pub unsafe fn ctlOverclockResetToDefault(
         &self,
         hDeviceHandle: ctl_device_adapter_handle_t,
     ) -> ctl_result_t {
-        (self.ctlOverclockResetToDefault)(hDeviceHandle)
+        (self
+            .ctlOverclockResetToDefault
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle)
     }
     #[doc = "\n @brief Get PCI properties - address, max speed\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlPciGetProperties(
@@ -7305,7 +7886,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pProperties: *mut ctl_pci_properties_t,
     ) -> ctl_result_t {
-        (self.ctlPciGetProperties)(hDAhandle, pProperties)
+        (self
+            .ctlPciGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pProperties)
     }
     #[doc = "\n @brief Get current PCI state - current speed\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pState`"]
     pub unsafe fn ctlPciGetState(
@@ -7313,7 +7897,10 @@ impl ControlLib {
         hDAhandle: ctl_device_adapter_handle_t,
         pState: *mut ctl_pci_state_t,
     ) -> ctl_result_t {
-        (self.ctlPciGetState)(hDAhandle, pState)
+        (self
+            .ctlPciGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pState)
     }
     #[doc = "\n @brief Get handle of power domains\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumPowerDomains(
@@ -7322,7 +7909,10 @@ impl ControlLib {
         pCount: *mut u32,
         phPower: *mut ctl_pwr_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumPowerDomains)(hDAhandle, pCount, phPower)
+        (self
+            .ctlEnumPowerDomains
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phPower)
     }
     #[doc = "\n @brief Get properties related to a power domain\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPower`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlPowerGetProperties(
@@ -7330,7 +7920,10 @@ impl ControlLib {
         hPower: ctl_pwr_handle_t,
         pProperties: *mut ctl_power_properties_t,
     ) -> ctl_result_t {
-        (self.ctlPowerGetProperties)(hPower, pProperties)
+        (self
+            .ctlPowerGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hPower, pProperties)
     }
     #[doc = "\n @brief Get energy counter\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPower`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pEnergy`"]
     pub unsafe fn ctlPowerGetEnergyCounter(
@@ -7338,7 +7931,10 @@ impl ControlLib {
         hPower: ctl_pwr_handle_t,
         pEnergy: *mut ctl_power_energy_counter_t,
     ) -> ctl_result_t {
-        (self.ctlPowerGetEnergyCounter)(hPower, pEnergy)
+        (self
+            .ctlPowerGetEnergyCounter
+            .as_ref()
+            .expect("Expected function, got error."))(hPower, pEnergy)
     }
     #[doc = "\n @brief Get power limits\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPower`"]
     pub unsafe fn ctlPowerGetLimits(
@@ -7346,7 +7942,10 @@ impl ControlLib {
         hPower: ctl_pwr_handle_t,
         pPowerLimits: *mut ctl_power_limits_t,
     ) -> ctl_result_t {
-        (self.ctlPowerGetLimits)(hPower, pPowerLimits)
+        (self
+            .ctlPowerGetLimits
+            .as_ref()
+            .expect("Expected function, got error."))(hPower, pPowerLimits)
     }
     #[doc = "\n @brief Set power limits\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hPower`\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS\n         + User does not have permissions to make these modifications.\n     - ::CTL_RESULT_ERROR_NOT_AVAILABLE\n         + The device is in use, meaning that the GPU is under Over clocking, applying power limits under overclocking is not supported."]
     pub unsafe fn ctlPowerSetLimits(
@@ -7354,7 +7953,10 @@ impl ControlLib {
         hPower: ctl_pwr_handle_t,
         pPowerLimits: *const ctl_power_limits_t,
     ) -> ctl_result_t {
-        (self.ctlPowerSetLimits)(hPower, pPowerLimits)
+        (self
+            .ctlPowerSetLimits
+            .as_ref()
+            .expect("Expected function, got error."))(hPower, pPowerLimits)
     }
     #[doc = "\n @brief Get handle of temperature sensors\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumTemperatureSensors(
@@ -7363,7 +7965,10 @@ impl ControlLib {
         pCount: *mut u32,
         phTemperature: *mut ctl_temp_handle_t,
     ) -> ctl_result_t {
-        (self.ctlEnumTemperatureSensors)(hDAhandle, pCount, phTemperature)
+        (self
+            .ctlEnumTemperatureSensors
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phTemperature)
     }
     #[doc = "\n @brief Get temperature sensor properties\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hTemperature`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlTemperatureGetProperties(
@@ -7371,7 +7976,10 @@ impl ControlLib {
         hTemperature: ctl_temp_handle_t,
         pProperties: *mut ctl_temp_properties_t,
     ) -> ctl_result_t {
-        (self.ctlTemperatureGetProperties)(hTemperature, pProperties)
+        (self
+            .ctlTemperatureGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hTemperature, pProperties)
     }
     #[doc = "\n @brief Get the temperature from a specified sensor\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hTemperature`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pTemperature`"]
     pub unsafe fn ctlTemperatureGetState(
@@ -7379,6 +7987,9 @@ impl ControlLib {
         hTemperature: ctl_temp_handle_t,
         pTemperature: *mut f64,
     ) -> ctl_result_t {
-        (self.ctlTemperatureGetState)(hTemperature, pTemperature)
+        (self
+            .ctlTemperatureGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hTemperature, pTemperature)
     }
 }
