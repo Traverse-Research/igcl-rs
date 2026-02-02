@@ -281,6 +281,67 @@ impl DeviceAdapter {
 
         Error::from_result(result)?;
 
+        // dbg!(&telemetry);
+
+        let mut c = 0;
+        unsafe {
+            self.control_lib.ctlEnumPowerDomains(
+                self.device_adapter_handle,
+                &mut c,
+                std::ptr::null_mut(),
+            )
+        };
+        dbg!(c);
+        // let mut pds = Vec::with_capacity(c as usize);
+        // unsafe {
+        //     self.control_lib.ctlEnumPowerDomains(
+        //         self.device_adapter_handle,
+        //         &mut c,
+        //         pds.as_mut_ptr(),
+        //     )
+        // };
+        // assert!(c as usize <= pds.capacity());
+        // unsafe {
+        //     pds.set_len(c as usize);
+        // }
+        // dbg!(&pds);
+        // let mut energy = Default::default();
+        // for pd in pds {
+        //     unsafe { self.control_lib.ctlPowerGetEnergyCounter(pd, &mut energy) };
+        //     dbg!(energy);
+        // }
+
+        unsafe {
+            self.control_lib.ctlEnumTemperatureSensors(
+                self.device_adapter_handle,
+                &mut c,
+                std::ptr::null_mut(),
+            )
+        };
+        dbg!(c);
+        unsafe {
+            self.control_lib
+                .ctlEnumFans(self.device_adapter_handle, &mut c, std::ptr::null_mut())
+        };
+        dbg!(c);
+        unsafe {
+            self.control_lib.ctlEnumFrequencyDomains(
+                self.device_adapter_handle,
+                &mut c,
+                std::ptr::null_mut(),
+            )
+        };
+        dbg!(c);
+
+        dbg!(telemetry.gpuEnergyCounter.bSupported);
+        dbg!(telemetry.totalCardEnergyCounter.bSupported);
+        dbg!(telemetry.vramEnergyCounter.bSupported);
+        dbg!(telemetry.vramCurrentClockFrequency.bSupported);
+        dbg!(telemetry.vramCurrentEffectiveFrequency.bSupported);
+        for p in telemetry.psu {
+            dbg!(p.bSupported);
+        }
+
         Ok(Telemetry {
             time_stamp: telemetry.timeStamp.into(),
             gpu_energy_counter: telemetry.gpuEnergyCounter.into(),

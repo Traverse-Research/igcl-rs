@@ -1,4 +1,5 @@
 use anyhow::Result;
+use igcl::device_adapter::DriverSettingScope;
 
 fn main() -> Result<()> {
     let igcl = igcl::Igcl::new()?;
@@ -12,6 +13,22 @@ fn main() -> Result<()> {
         println!("\tPCI subsys: {:#x}", d.pci_subsys_id());
         println!("\tPCI subsys vendor: {:#x}", d.pci_subsys_vendor_id());
         println!("\tDevice type: {:?}", d.device_type());
+        println!(
+            "\tfeature_flip_mode: {:?}",
+            d.feature_flip_mode(DriverSettingScope::Global)
+        );
+        println!(
+            "\tfeature_endurance_gaming: {:?}",
+            d.feature_endurance_gaming(DriverSettingScope::Global)
+        );
+        println!(
+            "\tfeature_frame_limit: {:?}",
+            d.feature_frame_limit(DriverSettingScope::Global)
+        );
+
+        dbg!(d.power_telemetry());
+
+        // d.device_adapter_handle()
     }
 
     Ok(())
