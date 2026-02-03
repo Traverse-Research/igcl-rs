@@ -14,14 +14,14 @@ pub const CTL_PSU_COUNT: u32 = 5;
 pub const CTL_FAN_COUNT: u32 = 5;
 #[doc = "\n @brief Supported initialization flags"]
 pub type ctl_init_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_init_flag_t {
+impl _ctl_init_flag_t {
     #[doc = "< Use Level0 or not. This is usually required for telemetry,\n< performance, frequency related APIs"]
-    CTL_INIT_FLAG_USE_LEVEL_ZERO = 1,
-    CTL_INIT_FLAG_MAX = -2147483648,
+    pub const CTL_INIT_FLAG_USE_LEVEL_ZERO: _ctl_init_flag_t = _ctl_init_flag_t(1);
+    pub const CTL_INIT_FLAG_MAX: _ctl_init_flag_t = _ctl_init_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_init_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_init_flag_t as ctl_init_flag_t;
 #[doc = "\n @brief Version information"]
 pub type ctl_version_info_t = u32;
@@ -92,25 +92,32 @@ pub struct _ctl_base_interface_t {
 }
 #[doc = "\n @brief Base for all properties types"]
 pub type ctl_base_interface_t = _ctl_base_interface_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_property_value_type_t {
+    #[doc = "< Boolean"]
+    pub const CTL_PROPERTY_VALUE_TYPE_BOOL: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(0);
+    #[doc = "< Float"]
+    pub const CTL_PROPERTY_VALUE_TYPE_FLOAT: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(1);
+    #[doc = "< Int32"]
+    pub const CTL_PROPERTY_VALUE_TYPE_INT32: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(2);
+    #[doc = "< Unsigned Int32"]
+    pub const CTL_PROPERTY_VALUE_TYPE_UINT32: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(3);
+    #[doc = "< Enum"]
+    pub const CTL_PROPERTY_VALUE_TYPE_ENUM: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(4);
+    #[doc = "< Custom argument"]
+    pub const CTL_PROPERTY_VALUE_TYPE_CUSTOM: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(5);
+    pub const CTL_PROPERTY_VALUE_TYPE_MAX: _ctl_property_value_type_t =
+        _ctl_property_value_type_t(6);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Value type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_property_value_type_t {
-    #[doc = "< Boolean"]
-    CTL_PROPERTY_VALUE_TYPE_BOOL = 0,
-    #[doc = "< Float"]
-    CTL_PROPERTY_VALUE_TYPE_FLOAT = 1,
-    #[doc = "< Int32"]
-    CTL_PROPERTY_VALUE_TYPE_INT32 = 2,
-    #[doc = "< Unsigned Int32"]
-    CTL_PROPERTY_VALUE_TYPE_UINT32 = 3,
-    #[doc = "< Enum"]
-    CTL_PROPERTY_VALUE_TYPE_ENUM = 4,
-    #[doc = "< Custom argument"]
-    CTL_PROPERTY_VALUE_TYPE_CUSTOM = 5,
-    CTL_PROPERTY_VALUE_TYPE_MAX = 6,
-}
+pub struct _ctl_property_value_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Value type"]
 pub use self::_ctl_property_value_type_t as ctl_property_value_type_t;
 #[doc = "\n @brief Property range details, a generic struct to hold min/max/step size\n        information of various feature properties"]
@@ -325,277 +332,301 @@ impl ::std::fmt::Debug for _ctl_property_t {
 #[doc = "\n @brief Feature element details, union of bool/float/enum property structs.\n        Used for get/set calls"]
 pub type ctl_property_t = _ctl_property_t;
 impl _ctl_result_t {
-    pub const CTL_RESULT_ERROR_GENERIC_END: _ctl_result_t = _ctl_result_t::CTL_RESULT_ERROR_UNKNOWN;
+    #[doc = "< success"]
+    pub const CTL_RESULT_SUCCESS: _ctl_result_t = _ctl_result_t(0);
+    #[doc = "< success but still open by another caller"]
+    pub const CTL_RESULT_SUCCESS_STILL_OPEN_BY_ANOTHER_CALLER: _ctl_result_t = _ctl_result_t(1);
+    #[doc = "< \"Success group error code end value, not to be used\n< \""]
+    pub const CTL_RESULT_ERROR_SUCCESS_END: _ctl_result_t = _ctl_result_t(65535);
+    #[doc = "< Generic error code starting value, not to be used"]
+    pub const CTL_RESULT_ERROR_GENERIC_START: _ctl_result_t = _ctl_result_t(1073741824);
+    #[doc = "< Result not initialized"]
+    pub const CTL_RESULT_ERROR_NOT_INITIALIZED: _ctl_result_t = _ctl_result_t(1073741825);
+    #[doc = "< Already initialized"]
+    pub const CTL_RESULT_ERROR_ALREADY_INITIALIZED: _ctl_result_t = _ctl_result_t(1073741826);
+    #[doc = "< Device hung, reset, was removed, or driver update occurred"]
+    pub const CTL_RESULT_ERROR_DEVICE_LOST: _ctl_result_t = _ctl_result_t(1073741827);
+    #[doc = "< Insufficient host memory to satisfy call"]
+    pub const CTL_RESULT_ERROR_OUT_OF_HOST_MEMORY: _ctl_result_t = _ctl_result_t(1073741828);
+    #[doc = "< Insufficient device memory to satisfy call"]
+    pub const CTL_RESULT_ERROR_OUT_OF_DEVICE_MEMORY: _ctl_result_t = _ctl_result_t(1073741829);
+    #[doc = "< Access denied due to permission level"]
+    pub const CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS: _ctl_result_t = _ctl_result_t(1073741830);
+    #[doc = "< Resource was removed"]
+    pub const CTL_RESULT_ERROR_NOT_AVAILABLE: _ctl_result_t = _ctl_result_t(1073741831);
+    #[doc = "< Library not initialized"]
+    pub const CTL_RESULT_ERROR_UNINITIALIZED: _ctl_result_t = _ctl_result_t(1073741832);
+    #[doc = "< Generic error code for unsupported versions"]
+    pub const CTL_RESULT_ERROR_UNSUPPORTED_VERSION: _ctl_result_t = _ctl_result_t(1073741833);
+    #[doc = "< Generic error code for unsupported features"]
+    pub const CTL_RESULT_ERROR_UNSUPPORTED_FEATURE: _ctl_result_t = _ctl_result_t(1073741834);
+    #[doc = "< Generic error code for invalid arguments"]
+    pub const CTL_RESULT_ERROR_INVALID_ARGUMENT: _ctl_result_t = _ctl_result_t(1073741835);
+    #[doc = "< API handle in invalid"]
+    pub const CTL_RESULT_ERROR_INVALID_API_HANDLE: _ctl_result_t = _ctl_result_t(1073741836);
+    #[doc = "< Handle argument is not valid"]
+    pub const CTL_RESULT_ERROR_INVALID_NULL_HANDLE: _ctl_result_t = _ctl_result_t(1073741837);
+    #[doc = "< Pointer argument may not be nullptr"]
+    pub const CTL_RESULT_ERROR_INVALID_NULL_POINTER: _ctl_result_t = _ctl_result_t(1073741838);
+    #[doc = "< Size argument is invalid (e.g., must not be zero)"]
+    pub const CTL_RESULT_ERROR_INVALID_SIZE: _ctl_result_t = _ctl_result_t(1073741839);
+    #[doc = "< Size argument is not supported by the device (e.g., too large)"]
+    pub const CTL_RESULT_ERROR_UNSUPPORTED_SIZE: _ctl_result_t = _ctl_result_t(1073741840);
+    #[doc = "< Image format is not supported by the device"]
+    pub const CTL_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT: _ctl_result_t = _ctl_result_t(1073741841);
+    #[doc = "< Data read error"]
+    pub const CTL_RESULT_ERROR_DATA_READ: _ctl_result_t = _ctl_result_t(1073741842);
+    #[doc = "< Data write error"]
+    pub const CTL_RESULT_ERROR_DATA_WRITE: _ctl_result_t = _ctl_result_t(1073741843);
+    #[doc = "< Data not found error"]
+    pub const CTL_RESULT_ERROR_DATA_NOT_FOUND: _ctl_result_t = _ctl_result_t(1073741844);
+    #[doc = "< Function not implemented"]
+    pub const CTL_RESULT_ERROR_NOT_IMPLEMENTED: _ctl_result_t = _ctl_result_t(1073741845);
+    #[doc = "< Operating system call failure"]
+    pub const CTL_RESULT_ERROR_OS_CALL: _ctl_result_t = _ctl_result_t(1073741846);
+    #[doc = "< Kernel mode driver call failure"]
+    pub const CTL_RESULT_ERROR_KMD_CALL: _ctl_result_t = _ctl_result_t(1073741847);
+    #[doc = "< Library unload failure"]
+    pub const CTL_RESULT_ERROR_UNLOAD: _ctl_result_t = _ctl_result_t(1073741848);
+    #[doc = "< Level0 loader not found"]
+    pub const CTL_RESULT_ERROR_ZE_LOADER: _ctl_result_t = _ctl_result_t(1073741849);
+    #[doc = "< Invalid operation type"]
+    pub const CTL_RESULT_ERROR_INVALID_OPERATION_TYPE: _ctl_result_t = _ctl_result_t(1073741850);
+    #[doc = "< Null OS interface"]
+    pub const CTL_RESULT_ERROR_NULL_OS_INTERFACE: _ctl_result_t = _ctl_result_t(1073741851);
+    #[doc = "< Null OS adapter handle"]
+    pub const CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE: _ctl_result_t = _ctl_result_t(1073741852);
+    #[doc = "< Null display output handle"]
+    pub const CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE: _ctl_result_t =
+        _ctl_result_t(1073741853);
+    #[doc = "< Timeout in Wait function"]
+    pub const CTL_RESULT_ERROR_WAIT_TIMEOUT: _ctl_result_t = _ctl_result_t(1073741854);
+    #[doc = "< Persistance not supported"]
+    pub const CTL_RESULT_ERROR_PERSISTANCE_NOT_SUPPORTED: _ctl_result_t = _ctl_result_t(1073741855);
+    #[doc = "< Platform not supported"]
+    pub const CTL_RESULT_ERROR_PLATFORM_NOT_SUPPORTED: _ctl_result_t = _ctl_result_t(1073741856);
+    #[doc = "< Unknown Appplicaion UID in Initialization call"]
+    pub const CTL_RESULT_ERROR_UNKNOWN_APPLICATION_UID: _ctl_result_t = _ctl_result_t(1073741857);
+    #[doc = "< The enum is not valid"]
+    pub const CTL_RESULT_ERROR_INVALID_ENUMERATION: _ctl_result_t = _ctl_result_t(1073741858);
+    #[doc = "< Error in file delete operation"]
+    pub const CTL_RESULT_ERROR_FILE_DELETE: _ctl_result_t = _ctl_result_t(1073741859);
+    #[doc = "< The device requires a reset."]
+    pub const CTL_RESULT_ERROR_RESET_DEVICE_REQUIRED: _ctl_result_t = _ctl_result_t(1073741860);
+    #[doc = "< The device requires a full reboot."]
+    pub const CTL_RESULT_ERROR_FULL_REBOOT_REQUIRED: _ctl_result_t = _ctl_result_t(1073741861);
+    #[doc = "< Library load failure"]
+    pub const CTL_RESULT_ERROR_LOAD: _ctl_result_t = _ctl_result_t(1073741862);
+    #[doc = "< Unknown or internal error"]
+    pub const CTL_RESULT_ERROR_UNKNOWN: _ctl_result_t = _ctl_result_t(1073807359);
+    #[doc = "< Operation failed, retry previous operation again"]
+    pub const CTL_RESULT_ERROR_RETRY_OPERATION: _ctl_result_t = _ctl_result_t(1073807360);
+    #[doc = "< \"Generic error code end value, not to be used\n< \""]
+    pub const CTL_RESULT_ERROR_GENERIC_END: _ctl_result_t = _ctl_result_t(1073807359);
+    #[doc = "< Core error code starting value, not to be used"]
+    pub const CTL_RESULT_ERROR_CORE_START: _ctl_result_t = _ctl_result_t(1140850688);
+    #[doc = "< The Overclock is not supported."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_NOT_SUPPORTED: _ctl_result_t =
+        _ctl_result_t(1140850689);
+    #[doc = "< The Voltage exceeds the acceptable min/max."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_VOLTAGE_OUTSIDE_RANGE: _ctl_result_t =
+        _ctl_result_t(1140850690);
+    #[doc = "< The Frequency exceeds the acceptable min/max."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_FREQUENCY_OUTSIDE_RANGE: _ctl_result_t =
+        _ctl_result_t(1140850691);
+    #[doc = "< The Power exceeds the acceptable min/max."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_POWER_OUTSIDE_RANGE: _ctl_result_t =
+        _ctl_result_t(1140850692);
+    #[doc = "< The Temperature exceeds the acceptable min/max."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_TEMPERATURE_OUTSIDE_RANGE: _ctl_result_t =
+        _ctl_result_t(1140850693);
+    #[doc = "< The Overclock is in voltage locked mode."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_IN_VOLTAGE_LOCKED_MODE: _ctl_result_t =
+        _ctl_result_t(1140850694);
+    #[doc = "< It indicates that the requested change will not be applied until the\n< device is reset."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_RESET_REQUIRED: _ctl_result_t =
+        _ctl_result_t(1140850695);
+    #[doc = "< The $OverclockWaiverSet function has not been called."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_WAIVER_NOT_SET: _ctl_result_t =
+        _ctl_result_t(1140850696);
+    #[doc = "< The error indicates to switch to newer API version if applicable."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_DEPRECATED_API: _ctl_result_t =
+        _ctl_result_t(1140850697);
+    #[doc = "< \"Core error code end value, not to be used\n< \""]
+    pub const CTL_RESULT_ERROR_CORE_END: _ctl_result_t = _ctl_result_t(71368703);
+    #[doc = "< 3D error code starting value, not to be used"]
+    pub const CTL_RESULT_ERROR_3D_START: _ctl_result_t = _ctl_result_t(1610612736);
+    #[doc = "< \"3D error code end value, not to be used\n< \""]
+    pub const CTL_RESULT_ERROR_3D_END: _ctl_result_t = _ctl_result_t(1610678271);
+    #[doc = "< Media error code starting value, not to be used"]
+    pub const CTL_RESULT_ERROR_MEDIA_START: _ctl_result_t = _ctl_result_t(1342177280);
+    #[doc = "< \"Media error code end value, not to be used\n< \""]
+    pub const CTL_RESULT_ERROR_MEDIA_END: _ctl_result_t = _ctl_result_t(1342242815);
+    #[doc = "< Display error code starting value, not to be used"]
+    pub const CTL_RESULT_ERROR_DISPLAY_START: _ctl_result_t = _ctl_result_t(1207959552);
+    #[doc = "< Invalid flag for Aux access"]
+    pub const CTL_RESULT_ERROR_INVALID_AUX_ACCESS_FLAG: _ctl_result_t = _ctl_result_t(1207959553);
+    #[doc = "< Invalid flag for Sharpness"]
+    pub const CTL_RESULT_ERROR_INVALID_SHARPNESS_FILTER_FLAG: _ctl_result_t =
+        _ctl_result_t(1207959554);
+    #[doc = "< Error for Display not attached"]
+    pub const CTL_RESULT_ERROR_DISPLAY_NOT_ATTACHED: _ctl_result_t = _ctl_result_t(1207959555);
+    #[doc = "< Error for display attached but not active"]
+    pub const CTL_RESULT_ERROR_DISPLAY_NOT_ACTIVE: _ctl_result_t = _ctl_result_t(1207959556);
+    #[doc = "< Error for invalid power optimization flag"]
+    pub const CTL_RESULT_ERROR_INVALID_POWERFEATURE_OPTIMIZATION_FLAG: _ctl_result_t =
+        _ctl_result_t(1207959557);
+    #[doc = "< DPST is supported only in DC Mode"]
+    pub const CTL_RESULT_ERROR_INVALID_POWERSOURCE_TYPE_FOR_DPST: _ctl_result_t =
+        _ctl_result_t(1207959558);
+    #[doc = "< Invalid query type for pixel transformation get configuration"]
+    pub const CTL_RESULT_ERROR_INVALID_PIXTX_GET_CONFIG_QUERY_TYPE: _ctl_result_t =
+        _ctl_result_t(1207959559);
+    #[doc = "< Invalid operation type for pixel transformation set configuration"]
+    pub const CTL_RESULT_ERROR_INVALID_PIXTX_SET_CONFIG_OPERATION_TYPE: _ctl_result_t =
+        _ctl_result_t(1207959560);
+    #[doc = "< Invalid number of samples for pixel transformation set configuration"]
+    pub const CTL_RESULT_ERROR_INVALID_SET_CONFIG_NUMBER_OF_SAMPLES: _ctl_result_t =
+        _ctl_result_t(1207959561);
+    #[doc = "< Invalid block id for pixel transformation"]
+    pub const CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_ID: _ctl_result_t = _ctl_result_t(1207959562);
+    #[doc = "< Invalid block type for pixel transformation"]
+    pub const CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_TYPE: _ctl_result_t = _ctl_result_t(1207959563);
+    #[doc = "< Invalid block number for pixel transformation"]
+    pub const CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_NUMBER: _ctl_result_t =
+        _ctl_result_t(1207959564);
+    #[doc = "< Insufficient memery allocated for BlockConfigs"]
+    pub const CTL_RESULT_ERROR_INSUFFICIENT_PIXTX_BLOCK_CONFIG_MEMORY: _ctl_result_t =
+        _ctl_result_t(1207959565);
+    #[doc = "< Invalid pipe for 3dlut"]
+    pub const CTL_RESULT_ERROR_3DLUT_INVALID_PIPE: _ctl_result_t = _ctl_result_t(1207959566);
+    #[doc = "< Invalid 3dlut data"]
+    pub const CTL_RESULT_ERROR_3DLUT_INVALID_DATA: _ctl_result_t = _ctl_result_t(1207959567);
+    #[doc = "< 3dlut not supported in HDR"]
+    pub const CTL_RESULT_ERROR_3DLUT_NOT_SUPPORTED_IN_HDR: _ctl_result_t =
+        _ctl_result_t(1207959568);
+    #[doc = "< Invalid 3dlut operation"]
+    pub const CTL_RESULT_ERROR_3DLUT_INVALID_OPERATION: _ctl_result_t = _ctl_result_t(1207959569);
+    #[doc = "< 3dlut call unsuccessful"]
+    pub const CTL_RESULT_ERROR_3DLUT_UNSUCCESSFUL: _ctl_result_t = _ctl_result_t(1207959570);
+    #[doc = "< AUX defer failure"]
+    pub const CTL_RESULT_ERROR_AUX_DEFER: _ctl_result_t = _ctl_result_t(1207959571);
+    #[doc = "< AUX timeout failure"]
+    pub const CTL_RESULT_ERROR_AUX_TIMEOUT: _ctl_result_t = _ctl_result_t(1207959572);
+    #[doc = "< AUX incomplete write failure"]
+    pub const CTL_RESULT_ERROR_AUX_INCOMPLETE_WRITE: _ctl_result_t = _ctl_result_t(1207959573);
+    #[doc = "< I2C/AUX unkonown failure"]
+    pub const CTL_RESULT_ERROR_I2C_AUX_STATUS_UNKNOWN: _ctl_result_t = _ctl_result_t(1207959574);
+    #[doc = "< I2C/AUX unsuccessful"]
+    pub const CTL_RESULT_ERROR_I2C_AUX_UNSUCCESSFUL: _ctl_result_t = _ctl_result_t(1207959575);
+    #[doc = "< Lace Incorrrect AggressivePercent data or LuxVsAggressive Map data\n< passed by user"]
+    pub const CTL_RESULT_ERROR_LACE_INVALID_DATA_ARGUMENT_PASSED: _ctl_result_t =
+        _ctl_result_t(1207959576);
+    #[doc = "< External Display is Attached hence fail the Display Switch"]
+    pub const CTL_RESULT_ERROR_EXTERNAL_DISPLAY_ATTACHED: _ctl_result_t = _ctl_result_t(1207959577);
+    #[doc = "< Standard custom mode exists"]
+    pub const CTL_RESULT_ERROR_CUSTOM_MODE_STANDARD_CUSTOM_MODE_EXISTS: _ctl_result_t =
+        _ctl_result_t(1207959578);
+    #[doc = "< Non custom matching mode exists"]
+    pub const CTL_RESULT_ERROR_CUSTOM_MODE_NON_CUSTOM_MATCHING_MODE_EXISTS: _ctl_result_t =
+        _ctl_result_t(1207959579);
+    #[doc = "< Custom mode insufficent memory"]
+    pub const CTL_RESULT_ERROR_CUSTOM_MODE_INSUFFICIENT_MEMORY: _ctl_result_t =
+        _ctl_result_t(1207959580);
+    #[doc = "< Adapter is already linked"]
+    pub const CTL_RESULT_ERROR_ADAPTER_ALREADY_LINKED: _ctl_result_t = _ctl_result_t(1207959581);
+    #[doc = "< Adapter is not identical for linking"]
+    pub const CTL_RESULT_ERROR_ADAPTER_NOT_IDENTICAL: _ctl_result_t = _ctl_result_t(1207959582);
+    #[doc = "< Adapter is LDA Secondary, so not supporting requested operation"]
+    pub const CTL_RESULT_ERROR_ADAPTER_NOT_SUPPORTED_ON_LDA_SECONDARY: _ctl_result_t =
+        _ctl_result_t(1207959583);
+    #[doc = "< Set FBC Feature not supported"]
+    pub const CTL_RESULT_ERROR_SET_FBC_FEATURE_NOT_SUPPORTED: _ctl_result_t =
+        _ctl_result_t(1207959584);
+    #[doc = "< \"Display error code end value, not to be used\n< \""]
+    pub const CTL_RESULT_ERROR_DISPLAY_END: _ctl_result_t = _ctl_result_t(1208025087);
+    pub const CTL_RESULT_MAX: _ctl_result_t = _ctl_result_t(1208025088);
 }
-#[repr(i32)]
-#[non_exhaustive]
+#[repr(transparent)]
 #[doc = "\n @brief Defines Return/Error codes.\n        All generic error (bit30) codes are between 0x40000000-0x4000FFFF.\n        All 3D (bit 29) specific error codes are between 0x60000000-0x6000FFFF.\n        All media (bit 28) specific error codes are between 0x50000000-0x5000FFFF.\n        All display (bit 27) specific error codes are between 0x48000000-0x4800FFFF\n        All core (bit 26) specific error codes are between 0x44000000-0x4400FFFF\n        Success result code with additional info are between 0x00000001-0x0000FFFF."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_result_t {
-    #[doc = "< success"]
-    CTL_RESULT_SUCCESS = 0,
-    #[doc = "< success but still open by another caller"]
-    CTL_RESULT_SUCCESS_STILL_OPEN_BY_ANOTHER_CALLER = 1,
-    #[doc = "< \"Success group error code end value, not to be used\n< \""]
-    CTL_RESULT_ERROR_SUCCESS_END = 65535,
-    #[doc = "< Generic error code starting value, not to be used"]
-    CTL_RESULT_ERROR_GENERIC_START = 1073741824,
-    #[doc = "< Result not initialized"]
-    CTL_RESULT_ERROR_NOT_INITIALIZED = 1073741825,
-    #[doc = "< Already initialized"]
-    CTL_RESULT_ERROR_ALREADY_INITIALIZED = 1073741826,
-    #[doc = "< Device hung, reset, was removed, or driver update occurred"]
-    CTL_RESULT_ERROR_DEVICE_LOST = 1073741827,
-    #[doc = "< Insufficient host memory to satisfy call"]
-    CTL_RESULT_ERROR_OUT_OF_HOST_MEMORY = 1073741828,
-    #[doc = "< Insufficient device memory to satisfy call"]
-    CTL_RESULT_ERROR_OUT_OF_DEVICE_MEMORY = 1073741829,
-    #[doc = "< Access denied due to permission level"]
-    CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS = 1073741830,
-    #[doc = "< Resource was removed"]
-    CTL_RESULT_ERROR_NOT_AVAILABLE = 1073741831,
-    #[doc = "< Library not initialized"]
-    CTL_RESULT_ERROR_UNINITIALIZED = 1073741832,
-    #[doc = "< Generic error code for unsupported versions"]
-    CTL_RESULT_ERROR_UNSUPPORTED_VERSION = 1073741833,
-    #[doc = "< Generic error code for unsupported features"]
-    CTL_RESULT_ERROR_UNSUPPORTED_FEATURE = 1073741834,
-    #[doc = "< Generic error code for invalid arguments"]
-    CTL_RESULT_ERROR_INVALID_ARGUMENT = 1073741835,
-    #[doc = "< API handle in invalid"]
-    CTL_RESULT_ERROR_INVALID_API_HANDLE = 1073741836,
-    #[doc = "< Handle argument is not valid"]
-    CTL_RESULT_ERROR_INVALID_NULL_HANDLE = 1073741837,
-    #[doc = "< Pointer argument may not be nullptr"]
-    CTL_RESULT_ERROR_INVALID_NULL_POINTER = 1073741838,
-    #[doc = "< Size argument is invalid (e.g., must not be zero)"]
-    CTL_RESULT_ERROR_INVALID_SIZE = 1073741839,
-    #[doc = "< Size argument is not supported by the device (e.g., too large)"]
-    CTL_RESULT_ERROR_UNSUPPORTED_SIZE = 1073741840,
-    #[doc = "< Image format is not supported by the device"]
-    CTL_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT = 1073741841,
-    #[doc = "< Data read error"]
-    CTL_RESULT_ERROR_DATA_READ = 1073741842,
-    #[doc = "< Data write error"]
-    CTL_RESULT_ERROR_DATA_WRITE = 1073741843,
-    #[doc = "< Data not found error"]
-    CTL_RESULT_ERROR_DATA_NOT_FOUND = 1073741844,
-    #[doc = "< Function not implemented"]
-    CTL_RESULT_ERROR_NOT_IMPLEMENTED = 1073741845,
-    #[doc = "< Operating system call failure"]
-    CTL_RESULT_ERROR_OS_CALL = 1073741846,
-    #[doc = "< Kernel mode driver call failure"]
-    CTL_RESULT_ERROR_KMD_CALL = 1073741847,
-    #[doc = "< Library unload failure"]
-    CTL_RESULT_ERROR_UNLOAD = 1073741848,
-    #[doc = "< Level0 loader not found"]
-    CTL_RESULT_ERROR_ZE_LOADER = 1073741849,
-    #[doc = "< Invalid operation type"]
-    CTL_RESULT_ERROR_INVALID_OPERATION_TYPE = 1073741850,
-    #[doc = "< Null OS interface"]
-    CTL_RESULT_ERROR_NULL_OS_INTERFACE = 1073741851,
-    #[doc = "< Null OS adapter handle"]
-    CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE = 1073741852,
-    #[doc = "< Null display output handle"]
-    CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE = 1073741853,
-    #[doc = "< Timeout in Wait function"]
-    CTL_RESULT_ERROR_WAIT_TIMEOUT = 1073741854,
-    #[doc = "< Persistance not supported"]
-    CTL_RESULT_ERROR_PERSISTANCE_NOT_SUPPORTED = 1073741855,
-    #[doc = "< Platform not supported"]
-    CTL_RESULT_ERROR_PLATFORM_NOT_SUPPORTED = 1073741856,
-    #[doc = "< Unknown Appplicaion UID in Initialization call"]
-    CTL_RESULT_ERROR_UNKNOWN_APPLICATION_UID = 1073741857,
-    #[doc = "< The enum is not valid"]
-    CTL_RESULT_ERROR_INVALID_ENUMERATION = 1073741858,
-    #[doc = "< Error in file delete operation"]
-    CTL_RESULT_ERROR_FILE_DELETE = 1073741859,
-    #[doc = "< The device requires a reset."]
-    CTL_RESULT_ERROR_RESET_DEVICE_REQUIRED = 1073741860,
-    #[doc = "< The device requires a full reboot."]
-    CTL_RESULT_ERROR_FULL_REBOOT_REQUIRED = 1073741861,
-    #[doc = "< Library load failure"]
-    CTL_RESULT_ERROR_LOAD = 1073741862,
-    #[doc = "< Unknown or internal error"]
-    CTL_RESULT_ERROR_UNKNOWN = 1073807359,
-    #[doc = "< Operation failed, retry previous operation again"]
-    CTL_RESULT_ERROR_RETRY_OPERATION = 1073807360,
-    #[doc = "< Core error code starting value, not to be used"]
-    CTL_RESULT_ERROR_CORE_START = 1140850688,
-    #[doc = "< The Overclock is not supported."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_NOT_SUPPORTED = 1140850689,
-    #[doc = "< The Voltage exceeds the acceptable min/max."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_VOLTAGE_OUTSIDE_RANGE = 1140850690,
-    #[doc = "< The Frequency exceeds the acceptable min/max."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_FREQUENCY_OUTSIDE_RANGE = 1140850691,
-    #[doc = "< The Power exceeds the acceptable min/max."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_POWER_OUTSIDE_RANGE = 1140850692,
-    #[doc = "< The Temperature exceeds the acceptable min/max."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_TEMPERATURE_OUTSIDE_RANGE = 1140850693,
-    #[doc = "< The Overclock is in voltage locked mode."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_IN_VOLTAGE_LOCKED_MODE = 1140850694,
-    #[doc = "< It indicates that the requested change will not be applied until the\n< device is reset."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_RESET_REQUIRED = 1140850695,
-    #[doc = "< The $OverclockWaiverSet function has not been called."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_WAIVER_NOT_SET = 1140850696,
-    #[doc = "< The error indicates to switch to newer API version if applicable."]
-    CTL_RESULT_ERROR_CORE_OVERCLOCK_DEPRECATED_API = 1140850697,
-    #[doc = "< \"Core error code end value, not to be used\n< \""]
-    CTL_RESULT_ERROR_CORE_END = 71368703,
-    #[doc = "< 3D error code starting value, not to be used"]
-    CTL_RESULT_ERROR_3D_START = 1610612736,
-    #[doc = "< \"3D error code end value, not to be used\n< \""]
-    CTL_RESULT_ERROR_3D_END = 1610678271,
-    #[doc = "< Media error code starting value, not to be used"]
-    CTL_RESULT_ERROR_MEDIA_START = 1342177280,
-    #[doc = "< \"Media error code end value, not to be used\n< \""]
-    CTL_RESULT_ERROR_MEDIA_END = 1342242815,
-    #[doc = "< Display error code starting value, not to be used"]
-    CTL_RESULT_ERROR_DISPLAY_START = 1207959552,
-    #[doc = "< Invalid flag for Aux access"]
-    CTL_RESULT_ERROR_INVALID_AUX_ACCESS_FLAG = 1207959553,
-    #[doc = "< Invalid flag for Sharpness"]
-    CTL_RESULT_ERROR_INVALID_SHARPNESS_FILTER_FLAG = 1207959554,
-    #[doc = "< Error for Display not attached"]
-    CTL_RESULT_ERROR_DISPLAY_NOT_ATTACHED = 1207959555,
-    #[doc = "< Error for display attached but not active"]
-    CTL_RESULT_ERROR_DISPLAY_NOT_ACTIVE = 1207959556,
-    #[doc = "< Error for invalid power optimization flag"]
-    CTL_RESULT_ERROR_INVALID_POWERFEATURE_OPTIMIZATION_FLAG = 1207959557,
-    #[doc = "< DPST is supported only in DC Mode"]
-    CTL_RESULT_ERROR_INVALID_POWERSOURCE_TYPE_FOR_DPST = 1207959558,
-    #[doc = "< Invalid query type for pixel transformation get configuration"]
-    CTL_RESULT_ERROR_INVALID_PIXTX_GET_CONFIG_QUERY_TYPE = 1207959559,
-    #[doc = "< Invalid operation type for pixel transformation set configuration"]
-    CTL_RESULT_ERROR_INVALID_PIXTX_SET_CONFIG_OPERATION_TYPE = 1207959560,
-    #[doc = "< Invalid number of samples for pixel transformation set configuration"]
-    CTL_RESULT_ERROR_INVALID_SET_CONFIG_NUMBER_OF_SAMPLES = 1207959561,
-    #[doc = "< Invalid block id for pixel transformation"]
-    CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_ID = 1207959562,
-    #[doc = "< Invalid block type for pixel transformation"]
-    CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_TYPE = 1207959563,
-    #[doc = "< Invalid block number for pixel transformation"]
-    CTL_RESULT_ERROR_INVALID_PIXTX_BLOCK_NUMBER = 1207959564,
-    #[doc = "< Insufficient memery allocated for BlockConfigs"]
-    CTL_RESULT_ERROR_INSUFFICIENT_PIXTX_BLOCK_CONFIG_MEMORY = 1207959565,
-    #[doc = "< Invalid pipe for 3dlut"]
-    CTL_RESULT_ERROR_3DLUT_INVALID_PIPE = 1207959566,
-    #[doc = "< Invalid 3dlut data"]
-    CTL_RESULT_ERROR_3DLUT_INVALID_DATA = 1207959567,
-    #[doc = "< 3dlut not supported in HDR"]
-    CTL_RESULT_ERROR_3DLUT_NOT_SUPPORTED_IN_HDR = 1207959568,
-    #[doc = "< Invalid 3dlut operation"]
-    CTL_RESULT_ERROR_3DLUT_INVALID_OPERATION = 1207959569,
-    #[doc = "< 3dlut call unsuccessful"]
-    CTL_RESULT_ERROR_3DLUT_UNSUCCESSFUL = 1207959570,
-    #[doc = "< AUX defer failure"]
-    CTL_RESULT_ERROR_AUX_DEFER = 1207959571,
-    #[doc = "< AUX timeout failure"]
-    CTL_RESULT_ERROR_AUX_TIMEOUT = 1207959572,
-    #[doc = "< AUX incomplete write failure"]
-    CTL_RESULT_ERROR_AUX_INCOMPLETE_WRITE = 1207959573,
-    #[doc = "< I2C/AUX unkonown failure"]
-    CTL_RESULT_ERROR_I2C_AUX_STATUS_UNKNOWN = 1207959574,
-    #[doc = "< I2C/AUX unsuccessful"]
-    CTL_RESULT_ERROR_I2C_AUX_UNSUCCESSFUL = 1207959575,
-    #[doc = "< Lace Incorrrect AggressivePercent data or LuxVsAggressive Map data\n< passed by user"]
-    CTL_RESULT_ERROR_LACE_INVALID_DATA_ARGUMENT_PASSED = 1207959576,
-    #[doc = "< External Display is Attached hence fail the Display Switch"]
-    CTL_RESULT_ERROR_EXTERNAL_DISPLAY_ATTACHED = 1207959577,
-    #[doc = "< Standard custom mode exists"]
-    CTL_RESULT_ERROR_CUSTOM_MODE_STANDARD_CUSTOM_MODE_EXISTS = 1207959578,
-    #[doc = "< Non custom matching mode exists"]
-    CTL_RESULT_ERROR_CUSTOM_MODE_NON_CUSTOM_MATCHING_MODE_EXISTS = 1207959579,
-    #[doc = "< Custom mode insufficent memory"]
-    CTL_RESULT_ERROR_CUSTOM_MODE_INSUFFICIENT_MEMORY = 1207959580,
-    #[doc = "< Adapter is already linked"]
-    CTL_RESULT_ERROR_ADAPTER_ALREADY_LINKED = 1207959581,
-    #[doc = "< Adapter is not identical for linking"]
-    CTL_RESULT_ERROR_ADAPTER_NOT_IDENTICAL = 1207959582,
-    #[doc = "< Adapter is LDA Secondary, so not supporting requested operation"]
-    CTL_RESULT_ERROR_ADAPTER_NOT_SUPPORTED_ON_LDA_SECONDARY = 1207959583,
-    #[doc = "< Set FBC Feature not supported"]
-    CTL_RESULT_ERROR_SET_FBC_FEATURE_NOT_SUPPORTED = 1207959584,
-    #[doc = "< \"Display error code end value, not to be used\n< \""]
-    CTL_RESULT_ERROR_DISPLAY_END = 1208025087,
-    CTL_RESULT_MAX = 1208025088,
-}
+pub struct _ctl_result_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Defines Return/Error codes.\n        All generic error (bit30) codes are between 0x40000000-0x4000FFFF.\n        All 3D (bit 29) specific error codes are between 0x60000000-0x6000FFFF.\n        All media (bit 28) specific error codes are between 0x50000000-0x5000FFFF.\n        All display (bit 27) specific error codes are between 0x48000000-0x4800FFFF\n        All core (bit 26) specific error codes are between 0x44000000-0x4400FFFF\n        Success result code with additional info are between 0x00000001-0x0000FFFF."]
 pub use self::_ctl_result_t as ctl_result_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_units_t {
+    #[doc = "< Type is Frequency with units in MHz."]
+    pub const CTL_UNITS_FREQUENCY_MHZ: _ctl_units_t = _ctl_units_t(0);
+    #[doc = "< Type is Frequency with units in GT/s (gigatransfers per second)."]
+    pub const CTL_UNITS_OPERATIONS_GTS: _ctl_units_t = _ctl_units_t(1);
+    #[doc = "< Type is Frequency with units in MT/s (megatransfers per second)."]
+    pub const CTL_UNITS_OPERATIONS_MTS: _ctl_units_t = _ctl_units_t(2);
+    #[doc = "< Type is Voltage with units in Volts."]
+    pub const CTL_UNITS_VOLTAGE_VOLTS: _ctl_units_t = _ctl_units_t(3);
+    #[doc = "< Type is Power with units in Watts."]
+    pub const CTL_UNITS_POWER_WATTS: _ctl_units_t = _ctl_units_t(4);
+    #[doc = "< Type is Temperature with units in Celsius."]
+    pub const CTL_UNITS_TEMPERATURE_CELSIUS: _ctl_units_t = _ctl_units_t(5);
+    #[doc = "< Type is Energy with units in Joules."]
+    pub const CTL_UNITS_ENERGY_JOULES: _ctl_units_t = _ctl_units_t(6);
+    #[doc = "< Type is Time with units in Seconds."]
+    pub const CTL_UNITS_TIME_SECONDS: _ctl_units_t = _ctl_units_t(7);
+    #[doc = "< Type is Memory with units in Bytes."]
+    pub const CTL_UNITS_MEMORY_BYTES: _ctl_units_t = _ctl_units_t(8);
+    #[doc = "< Type is Angular Speed with units in Revolutions per Minute."]
+    pub const CTL_UNITS_ANGULAR_SPEED_RPM: _ctl_units_t = _ctl_units_t(9);
+    #[doc = "< Type is Power with units in MilliWatts."]
+    pub const CTL_UNITS_POWER_MILLIWATTS: _ctl_units_t = _ctl_units_t(10);
+    #[doc = "< Type is Percentage."]
+    pub const CTL_UNITS_PERCENT: _ctl_units_t = _ctl_units_t(11);
+    #[doc = "< Type is Memory Speed in Gigabyte per Seconds (Gbps)"]
+    pub const CTL_UNITS_MEM_SPEED_GBPS: _ctl_units_t = _ctl_units_t(12);
+    #[doc = "< Type is Voltage with units in milliVolts."]
+    pub const CTL_UNITS_VOLTAGE_MILLIVOLTS: _ctl_units_t = _ctl_units_t(13);
+    #[doc = "< Type of units unknown."]
+    pub const CTL_UNITS_UNKNOWN: _ctl_units_t = _ctl_units_t(1208025087);
+    pub const CTL_UNITS_MAX: _ctl_units_t = _ctl_units_t(1208025088);
+}
+#[repr(transparent)]
 #[doc = "\n @brief General Physical Units."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_units_t {
-    #[doc = "< Type is Frequency with units in MHz."]
-    CTL_UNITS_FREQUENCY_MHZ = 0,
-    #[doc = "< Type is Frequency with units in GT/s (gigatransfers per second)."]
-    CTL_UNITS_OPERATIONS_GTS = 1,
-    #[doc = "< Type is Frequency with units in MT/s (megatransfers per second)."]
-    CTL_UNITS_OPERATIONS_MTS = 2,
-    #[doc = "< Type is Voltage with units in Volts."]
-    CTL_UNITS_VOLTAGE_VOLTS = 3,
-    #[doc = "< Type is Power with units in Watts."]
-    CTL_UNITS_POWER_WATTS = 4,
-    #[doc = "< Type is Temperature with units in Celsius."]
-    CTL_UNITS_TEMPERATURE_CELSIUS = 5,
-    #[doc = "< Type is Energy with units in Joules."]
-    CTL_UNITS_ENERGY_JOULES = 6,
-    #[doc = "< Type is Time with units in Seconds."]
-    CTL_UNITS_TIME_SECONDS = 7,
-    #[doc = "< Type is Memory with units in Bytes."]
-    CTL_UNITS_MEMORY_BYTES = 8,
-    #[doc = "< Type is Angular Speed with units in Revolutions per Minute."]
-    CTL_UNITS_ANGULAR_SPEED_RPM = 9,
-    #[doc = "< Type is Power with units in MilliWatts."]
-    CTL_UNITS_POWER_MILLIWATTS = 10,
-    #[doc = "< Type is Percentage."]
-    CTL_UNITS_PERCENT = 11,
-    #[doc = "< Type is Memory Speed in Gigabyte per Seconds (Gbps)"]
-    CTL_UNITS_MEM_SPEED_GBPS = 12,
-    #[doc = "< Type is Voltage with units in milliVolts."]
-    CTL_UNITS_VOLTAGE_MILLIVOLTS = 13,
-    #[doc = "< Type of units unknown."]
-    CTL_UNITS_UNKNOWN = 1208025087,
-    CTL_UNITS_MAX = 1208025088,
-}
+pub struct _ctl_units_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief General Physical Units."]
 pub use self::_ctl_units_t as ctl_units_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_data_type_t {
+    #[doc = "< The data type is 8 bit signed integer."]
+    pub const CTL_DATA_TYPE_INT8: _ctl_data_type_t = _ctl_data_type_t(0);
+    #[doc = "< The data type is 8 bit unsigned integer."]
+    pub const CTL_DATA_TYPE_UINT8: _ctl_data_type_t = _ctl_data_type_t(1);
+    #[doc = "< The data type is 16 bit signed integer."]
+    pub const CTL_DATA_TYPE_INT16: _ctl_data_type_t = _ctl_data_type_t(2);
+    #[doc = "< The data type is 16 bit unsigned integer."]
+    pub const CTL_DATA_TYPE_UINT16: _ctl_data_type_t = _ctl_data_type_t(3);
+    #[doc = "< The data type is 32 bit signed integer."]
+    pub const CTL_DATA_TYPE_INT32: _ctl_data_type_t = _ctl_data_type_t(4);
+    #[doc = "< The data type is 32 bit unsigned integer."]
+    pub const CTL_DATA_TYPE_UINT32: _ctl_data_type_t = _ctl_data_type_t(5);
+    #[doc = "< The data type is 64 bit signed integer."]
+    pub const CTL_DATA_TYPE_INT64: _ctl_data_type_t = _ctl_data_type_t(6);
+    #[doc = "< The data type is 64 bit unsigned integer."]
+    pub const CTL_DATA_TYPE_UINT64: _ctl_data_type_t = _ctl_data_type_t(7);
+    #[doc = "< The data type is 32 bit floating point."]
+    pub const CTL_DATA_TYPE_FLOAT: _ctl_data_type_t = _ctl_data_type_t(8);
+    #[doc = "< The data type is 64 bit floating point."]
+    pub const CTL_DATA_TYPE_DOUBLE: _ctl_data_type_t = _ctl_data_type_t(9);
+    #[doc = "< The data type is an array of 8 bit unsigned integers."]
+    pub const CTL_DATA_TYPE_STRING_ASCII: _ctl_data_type_t = _ctl_data_type_t(10);
+    #[doc = "< The data type is an array of 16 bit unsigned integers."]
+    pub const CTL_DATA_TYPE_STRING_UTF16: _ctl_data_type_t = _ctl_data_type_t(11);
+    #[doc = "< The data type is an array of 32 bit unsigned integers."]
+    pub const CTL_DATA_TYPE_STRING_UTF132: _ctl_data_type_t = _ctl_data_type_t(12);
+    #[doc = "< The data type is unknown."]
+    pub const CTL_DATA_TYPE_UNKNOWN: _ctl_data_type_t = _ctl_data_type_t(1208025087);
+    pub const CTL_DATA_TYPE_MAX: _ctl_data_type_t = _ctl_data_type_t(1208025088);
+}
+#[repr(transparent)]
 #[doc = "\n @brief General Data Types."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_data_type_t {
-    #[doc = "< The data type is 8 bit signed integer."]
-    CTL_DATA_TYPE_INT8 = 0,
-    #[doc = "< The data type is 8 bit unsigned integer."]
-    CTL_DATA_TYPE_UINT8 = 1,
-    #[doc = "< The data type is 16 bit signed integer."]
-    CTL_DATA_TYPE_INT16 = 2,
-    #[doc = "< The data type is 16 bit unsigned integer."]
-    CTL_DATA_TYPE_UINT16 = 3,
-    #[doc = "< The data type is 32 bit signed integer."]
-    CTL_DATA_TYPE_INT32 = 4,
-    #[doc = "< The data type is 32 bit unsigned integer."]
-    CTL_DATA_TYPE_UINT32 = 5,
-    #[doc = "< The data type is 64 bit signed integer."]
-    CTL_DATA_TYPE_INT64 = 6,
-    #[doc = "< The data type is 64 bit unsigned integer."]
-    CTL_DATA_TYPE_UINT64 = 7,
-    #[doc = "< The data type is 32 bit floating point."]
-    CTL_DATA_TYPE_FLOAT = 8,
-    #[doc = "< The data type is 64 bit floating point."]
-    CTL_DATA_TYPE_DOUBLE = 9,
-    #[doc = "< The data type is an array of 8 bit unsigned integers."]
-    CTL_DATA_TYPE_STRING_ASCII = 10,
-    #[doc = "< The data type is an array of 16 bit unsigned integers."]
-    CTL_DATA_TYPE_STRING_UTF16 = 11,
-    #[doc = "< The data type is an array of 32 bit unsigned integers."]
-    CTL_DATA_TYPE_STRING_UTF132 = 12,
-    #[doc = "< The data type is unknown."]
-    CTL_DATA_TYPE_UNKNOWN = 1208025087,
-    CTL_DATA_TYPE_MAX = 1208025088,
-}
+pub struct _ctl_data_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief General Data Types."]
 pub use self::_ctl_data_type_t as ctl_data_type_t;
 #[doc = "\n @brief Union for Generic Data.\n\n @details\n     - The telemetry data items could be of different types.\n     - Refer to ::ctl_data_type_t to find the current type."]
@@ -758,18 +789,22 @@ impl Default for _ctl_runtime_path_args_t {
 pub type ctl_runtime_path_args_t = _ctl_runtime_path_args_t;
 #[doc = "\n @brief Supported Functions"]
 pub type ctl_supported_functions_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_supported_functions_flag_t {
+impl _ctl_supported_functions_flag_t {
     #[doc = "< [out] Is Display supported"]
-    CTL_SUPPORTED_FUNCTIONS_FLAG_DISPLAY = 1,
+    pub const CTL_SUPPORTED_FUNCTIONS_FLAG_DISPLAY: _ctl_supported_functions_flag_t =
+        _ctl_supported_functions_flag_t(1);
     #[doc = "< [out] Is 3D supported"]
-    CTL_SUPPORTED_FUNCTIONS_FLAG_3D = 2,
+    pub const CTL_SUPPORTED_FUNCTIONS_FLAG_3D: _ctl_supported_functions_flag_t =
+        _ctl_supported_functions_flag_t(2);
     #[doc = "< [out] Is Media supported"]
-    CTL_SUPPORTED_FUNCTIONS_FLAG_MEDIA = 4,
-    CTL_SUPPORTED_FUNCTIONS_FLAG_MAX = -2147483648,
+    pub const CTL_SUPPORTED_FUNCTIONS_FLAG_MEDIA: _ctl_supported_functions_flag_t =
+        _ctl_supported_functions_flag_t(4);
+    pub const CTL_SUPPORTED_FUNCTIONS_FLAG_MAX: _ctl_supported_functions_flag_t =
+        _ctl_supported_functions_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_supported_functions_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_supported_functions_flag_t as ctl_supported_functions_flag_t;
 #[doc = "\n @brief Firmware version"]
 #[repr(C)]
@@ -784,33 +819,37 @@ pub struct _ctl_firmware_version_t {
 }
 #[doc = "\n @brief Firmware version"]
 pub type ctl_firmware_version_t = _ctl_firmware_version_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_device_type_t {
+    #[doc = "< Graphics Device type"]
+    pub const CTL_DEVICE_TYPE_GRAPHICS: _ctl_device_type_t = _ctl_device_type_t(1);
+    #[doc = "< System Device type"]
+    pub const CTL_DEVICE_TYPE_SYSTEM: _ctl_device_type_t = _ctl_device_type_t(2);
+    pub const CTL_DEVICE_TYPE_MAX: _ctl_device_type_t = _ctl_device_type_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief DeviceType"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_device_type_t {
-    #[doc = "< Graphics Device type"]
-    CTL_DEVICE_TYPE_GRAPHICS = 1,
-    #[doc = "< System Device type"]
-    CTL_DEVICE_TYPE_SYSTEM = 2,
-    CTL_DEVICE_TYPE_MAX = 3,
-}
+pub struct _ctl_device_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief DeviceType"]
 pub use self::_ctl_device_type_t as ctl_device_type_t;
 #[doc = "\n @brief Adapter Properties"]
 pub type ctl_adapter_properties_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_adapter_properties_flag_t {
+impl _ctl_adapter_properties_flag_t {
     #[doc = "< [out] Is Integrated Graphics adapter"]
-    CTL_ADAPTER_PROPERTIES_FLAG_INTEGRATED = 1,
+    pub const CTL_ADAPTER_PROPERTIES_FLAG_INTEGRATED: _ctl_adapter_properties_flag_t =
+        _ctl_adapter_properties_flag_t(1);
     #[doc = "< [out] Is Primary (Lead) adapter in a Linked Display Adapter (LDA)\n< chain"]
-    CTL_ADAPTER_PROPERTIES_FLAG_LDA_PRIMARY = 2,
+    pub const CTL_ADAPTER_PROPERTIES_FLAG_LDA_PRIMARY: _ctl_adapter_properties_flag_t =
+        _ctl_adapter_properties_flag_t(2);
     #[doc = "< [out] Is Secondary (Linked) adapter in a Linked Display Adapter (LDA)\n< chain"]
-    CTL_ADAPTER_PROPERTIES_FLAG_LDA_SECONDARY = 4,
-    CTL_ADAPTER_PROPERTIES_FLAG_MAX = -2147483648,
+    pub const CTL_ADAPTER_PROPERTIES_FLAG_LDA_SECONDARY: _ctl_adapter_properties_flag_t =
+        _ctl_adapter_properties_flag_t(4);
+    pub const CTL_ADAPTER_PROPERTIES_FLAG_MAX: _ctl_adapter_properties_flag_t =
+        _ctl_adapter_properties_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_adapter_properties_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_adapter_properties_flag_t as ctl_adapter_properties_flag_t;
 #[doc = "\n @brief Adapter Pci Bus, Device, Function"]
 #[repr(C)]
@@ -883,17 +922,17 @@ impl Default for _ctl_device_adapter_properties_t {
 }
 #[doc = "\n @brief Device Adapter properties"]
 pub type ctl_device_adapter_properties_t = _ctl_device_adapter_properties_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_operation_type_t {
+    #[doc = "< Read operation"]
+    pub const CTL_OPERATION_TYPE_READ: _ctl_operation_type_t = _ctl_operation_type_t(1);
+    #[doc = "< Write operation"]
+    pub const CTL_OPERATION_TYPE_WRITE: _ctl_operation_type_t = _ctl_operation_type_t(2);
+    pub const CTL_OPERATION_TYPE_MAX: _ctl_operation_type_t = _ctl_operation_type_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief OperationType"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_operation_type_t {
-    #[doc = "< Read operation"]
-    CTL_OPERATION_TYPE_READ = 1,
-    #[doc = "< Write operation"]
-    CTL_OPERATION_TYPE_WRITE = 2,
-    CTL_OPERATION_TYPE_MAX = 3,
-}
+pub struct _ctl_operation_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief OperationType"]
 pub use self::_ctl_operation_type_t as ctl_operation_type_t;
 #[doc = "\n @brief Generic Structure for Void* datatypes"]
@@ -931,20 +970,23 @@ pub struct _ctl_revision_datatype_t {
 pub type ctl_revision_datatype_t = _ctl_revision_datatype_t;
 #[doc = "\n @brief Property Type flags"]
 pub type ctl_property_type_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_property_type_flag_t {
+impl _ctl_property_type_flag_t {
     #[doc = "< Display type. Supported scenarios: Sharpness/gamma/CSC"]
-    CTL_PROPERTY_TYPE_FLAG_DISPLAY = 1,
+    pub const CTL_PROPERTY_TYPE_FLAG_DISPLAY: _ctl_property_type_flag_t =
+        _ctl_property_type_flag_t(1);
     #[doc = "< 3D type. Supported scenarios: All set calls via IGCL's 3D APIs"]
-    CTL_PROPERTY_TYPE_FLAG_3D = 2,
+    pub const CTL_PROPERTY_TYPE_FLAG_3D: _ctl_property_type_flag_t = _ctl_property_type_flag_t(2);
     #[doc = "< Media type. Supported scenarios: All set calls via IGCL's media APIs"]
-    CTL_PROPERTY_TYPE_FLAG_MEDIA = 4,
+    pub const CTL_PROPERTY_TYPE_FLAG_MEDIA: _ctl_property_type_flag_t =
+        _ctl_property_type_flag_t(4);
     #[doc = "< For future: Core graphic event types like clocking, frequency etc."]
-    CTL_PROPERTY_TYPE_FLAG_CORE = 8,
-    CTL_PROPERTY_TYPE_FLAG_MAX = -2147483648,
+    pub const CTL_PROPERTY_TYPE_FLAG_CORE: _ctl_property_type_flag_t = _ctl_property_type_flag_t(8);
+    pub const CTL_PROPERTY_TYPE_FLAG_MAX: _ctl_property_type_flag_t =
+        _ctl_property_type_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_property_type_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_property_type_flag_t as ctl_property_type_flag_t;
 #[doc = "\n @brief Arguments related to wait for a property change function"]
 #[repr(C)]
@@ -976,21 +1018,25 @@ impl Default for _ctl_wait_property_change_args_t {
 }
 #[doc = "\n @brief Arguments related to wait for a property change function"]
 pub type ctl_wait_property_change_args_t = _ctl_wait_property_change_args_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_orientation_t {
+    #[doc = "< 0 Degree"]
+    pub const CTL_DISPLAY_ORIENTATION_0: _ctl_display_orientation_t = _ctl_display_orientation_t(0);
+    #[doc = "< 90 Degree"]
+    pub const CTL_DISPLAY_ORIENTATION_90: _ctl_display_orientation_t =
+        _ctl_display_orientation_t(1);
+    #[doc = "< 180 Degree"]
+    pub const CTL_DISPLAY_ORIENTATION_180: _ctl_display_orientation_t =
+        _ctl_display_orientation_t(2);
+    #[doc = "< 270 Degree"]
+    pub const CTL_DISPLAY_ORIENTATION_270: _ctl_display_orientation_t =
+        _ctl_display_orientation_t(3);
+    pub const CTL_DISPLAY_ORIENTATION_MAX: _ctl_display_orientation_t =
+        _ctl_display_orientation_t(4);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Display orientation (rotation)"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_orientation_t {
-    #[doc = "< 0 Degree"]
-    CTL_DISPLAY_ORIENTATION_0 = 0,
-    #[doc = "< 90 Degree"]
-    CTL_DISPLAY_ORIENTATION_90 = 1,
-    #[doc = "< 180 Degree"]
-    CTL_DISPLAY_ORIENTATION_180 = 2,
-    #[doc = "< 270 Degree"]
-    CTL_DISPLAY_ORIENTATION_270 = 3,
-    CTL_DISPLAY_ORIENTATION_MAX = 4,
-}
+pub struct _ctl_display_orientation_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Display orientation (rotation)"]
 pub use self::_ctl_display_orientation_t as ctl_display_orientation_t;
 #[doc = "\n @brief Rectangle"]
@@ -1235,227 +1281,269 @@ pub type ctl_power_limits_t = _ctl_power_limits_t;
 pub type ctl_energy_threshold_t = _ctl_energy_threshold_t;
 #[doc = "\n @brief Forward-declare ctl_temp_properties_t"]
 pub type ctl_temp_properties_t = _ctl_temp_properties_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_feature_t {
+    #[doc = "< Frame pacing. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_FRAME_PACING: _ctl_3d_feature_t = _ctl_3d_feature_t(0);
+    #[doc = "< Endurance gaming. Contains generic integer type fields. Value will be\n< interpreted as the max FPS to be used when in DC mode globally or per\n< application"]
+    pub const CTL_3D_FEATURE_ENDURANCE_GAMING: _ctl_3d_feature_t = _ctl_3d_feature_t(1);
+    #[doc = "< Frame limit for games. Contains generic integer type fields. Value\n< will be interpreted as the max FPS to be used independent of system\n< power state"]
+    pub const CTL_3D_FEATURE_FRAME_LIMIT: _ctl_3d_feature_t = _ctl_3d_feature_t(2);
+    #[doc = "< ANISOTROPIC. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_ANISOTROPIC: _ctl_3d_feature_t = _ctl_3d_feature_t(3);
+    #[doc = "< CMAA. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_CMAA: _ctl_3d_feature_t = _ctl_3d_feature_t(4);
+    #[doc = "< Texture filtering quality. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_TEXTURE_FILTERING_QUALITY: _ctl_3d_feature_t = _ctl_3d_feature_t(5);
+    #[doc = "< Adaptive tessellation quality. Contains generic integer type fields"]
+    pub const CTL_3D_FEATURE_ADAPTIVE_TESSELLATION: _ctl_3d_feature_t = _ctl_3d_feature_t(6);
+    #[doc = "< Sharpening Filter. Contains generic integer type fields"]
+    pub const CTL_3D_FEATURE_SHARPENING_FILTER: _ctl_3d_feature_t = _ctl_3d_feature_t(7);
+    #[doc = "< Msaa. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_MSAA: _ctl_3d_feature_t = _ctl_3d_feature_t(8);
+    #[doc = "< Various Gaming flip modes like speed frame, smooth sync & force async\n< flip. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_GAMING_FLIP_MODES: _ctl_3d_feature_t = _ctl_3d_feature_t(9);
+    #[doc = "< Adaptive sync plus. Refer custom field ::ctl_adaptivesync_caps_t &\n< ::ctl_adaptivesync_getset_t"]
+    pub const CTL_3D_FEATURE_ADAPTIVE_SYNC_PLUS: _ctl_3d_feature_t = _ctl_3d_feature_t(10);
+    #[doc = "< Game Compatibility & Performance Profiles. Refer custom field\n< ::ctl_3d_app_profiles_caps_t & ::ctl_3d_app_profiles_t"]
+    pub const CTL_3D_FEATURE_APP_PROFILES: _ctl_3d_feature_t = _ctl_3d_feature_t(11);
+    #[doc = "< Game Profile Customization. Refer custom field ::ctl_3d_tier_details_t"]
+    pub const CTL_3D_FEATURE_APP_PROFILE_DETAILS: _ctl_3d_feature_t = _ctl_3d_feature_t(12);
+    #[doc = "< Emulated Typed 64bit Atomics support in DG2"]
+    pub const CTL_3D_FEATURE_EMULATED_TYPED_64BIT_ATOMICS: _ctl_3d_feature_t =
+        _ctl_3d_feature_t(13);
+    #[doc = "< VRR windowed blt. Control VRR for windowed mode game"]
+    pub const CTL_3D_FEATURE_VRR_WINDOWED_BLT: _ctl_3d_feature_t = _ctl_3d_feature_t(14);
+    #[doc = "< Set global settings or per application settings"]
+    pub const CTL_3D_FEATURE_GLOBAL_OR_PER_APP: _ctl_3d_feature_t = _ctl_3d_feature_t(15);
+    pub const CTL_3D_FEATURE_MAX: _ctl_3d_feature_t = _ctl_3d_feature_t(16);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Feature type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_feature_t {
-    #[doc = "< Frame pacing. Contains generic enum type fields"]
-    CTL_3D_FEATURE_FRAME_PACING = 0,
-    #[doc = "< Endurance gaming. Contains generic integer type fields. Value will be\n< interpreted as the max FPS to be used when in DC mode globally or per\n< application"]
-    CTL_3D_FEATURE_ENDURANCE_GAMING = 1,
-    #[doc = "< Frame limit for games. Contains generic integer type fields. Value\n< will be interpreted as the max FPS to be used independent of system\n< power state"]
-    CTL_3D_FEATURE_FRAME_LIMIT = 2,
-    #[doc = "< ANISOTROPIC. Contains generic enum type fields"]
-    CTL_3D_FEATURE_ANISOTROPIC = 3,
-    #[doc = "< CMAA. Contains generic enum type fields"]
-    CTL_3D_FEATURE_CMAA = 4,
-    #[doc = "< Texture filtering quality. Contains generic enum type fields"]
-    CTL_3D_FEATURE_TEXTURE_FILTERING_QUALITY = 5,
-    #[doc = "< Adaptive tessellation quality. Contains generic integer type fields"]
-    CTL_3D_FEATURE_ADAPTIVE_TESSELLATION = 6,
-    #[doc = "< Sharpening Filter. Contains generic integer type fields"]
-    CTL_3D_FEATURE_SHARPENING_FILTER = 7,
-    #[doc = "< Msaa. Contains generic enum type fields"]
-    CTL_3D_FEATURE_MSAA = 8,
-    #[doc = "< Various Gaming flip modes like speed frame, smooth sync & force async\n< flip. Contains generic enum type fields"]
-    CTL_3D_FEATURE_GAMING_FLIP_MODES = 9,
-    #[doc = "< Adaptive sync plus. Refer custom field ::ctl_adaptivesync_caps_t &\n< ::ctl_adaptivesync_getset_t"]
-    CTL_3D_FEATURE_ADAPTIVE_SYNC_PLUS = 10,
-    #[doc = "< Game Compatibility & Performance Profiles. Refer custom field\n< ::ctl_3d_app_profiles_caps_t & ::ctl_3d_app_profiles_t"]
-    CTL_3D_FEATURE_APP_PROFILES = 11,
-    #[doc = "< Game Profile Customization. Refer custom field ::ctl_3d_tier_details_t"]
-    CTL_3D_FEATURE_APP_PROFILE_DETAILS = 12,
-    #[doc = "< Emulated Typed 64bit Atomics support in DG2"]
-    CTL_3D_FEATURE_EMULATED_TYPED_64BIT_ATOMICS = 13,
-    #[doc = "< VRR windowed blt. Control VRR for windowed mode game"]
-    CTL_3D_FEATURE_VRR_WINDOWED_BLT = 14,
-    #[doc = "< Set global settings or per application settings"]
-    CTL_3D_FEATURE_GLOBAL_OR_PER_APP = 15,
-    CTL_3D_FEATURE_MAX = 16,
-}
+pub struct _ctl_3d_feature_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Feature type"]
 pub use self::_ctl_3d_feature_t as ctl_3d_feature_t;
 #[doc = "\n @brief 3D feature misc flags"]
 pub type ctl_3d_feature_misc_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_feature_misc_flag_t {
+impl _ctl_3d_feature_misc_flag_t {
     #[doc = "< Feature supported on DX11"]
-    CTL_3D_FEATURE_MISC_FLAG_DX11 = 1,
+    pub const CTL_3D_FEATURE_MISC_FLAG_DX11: _ctl_3d_feature_misc_flag_t =
+        _ctl_3d_feature_misc_flag_t(1);
     #[doc = "< Feature supported on DX12"]
-    CTL_3D_FEATURE_MISC_FLAG_DX12 = 2,
+    pub const CTL_3D_FEATURE_MISC_FLAG_DX12: _ctl_3d_feature_misc_flag_t =
+        _ctl_3d_feature_misc_flag_t(2);
     #[doc = "< Feature supported on VULKAN"]
-    CTL_3D_FEATURE_MISC_FLAG_VULKAN = 4,
+    pub const CTL_3D_FEATURE_MISC_FLAG_VULKAN: _ctl_3d_feature_misc_flag_t =
+        _ctl_3d_feature_misc_flag_t(4);
     #[doc = "< User can change feature live without restarting the game"]
-    CTL_3D_FEATURE_MISC_FLAG_LIVE_CHANGE = 8,
-    CTL_3D_FEATURE_MISC_FLAG_MAX = -2147483648,
+    pub const CTL_3D_FEATURE_MISC_FLAG_LIVE_CHANGE: _ctl_3d_feature_misc_flag_t =
+        _ctl_3d_feature_misc_flag_t(8);
+    pub const CTL_3D_FEATURE_MISC_FLAG_MAX: _ctl_3d_feature_misc_flag_t =
+        _ctl_3d_feature_misc_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_3d_feature_misc_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_3d_feature_misc_flag_t as ctl_3d_feature_misc_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_anisotropic_types_t {
+    #[doc = "< Application choice"]
+    pub const CTL_3D_ANISOTROPIC_TYPES_APP_CHOICE: _ctl_3d_anisotropic_types_t =
+        _ctl_3d_anisotropic_types_t(0);
+    #[doc = "< 2X"]
+    pub const CTL_3D_ANISOTROPIC_TYPES_2X: _ctl_3d_anisotropic_types_t =
+        _ctl_3d_anisotropic_types_t(2);
+    #[doc = "< 4X"]
+    pub const CTL_3D_ANISOTROPIC_TYPES_4X: _ctl_3d_anisotropic_types_t =
+        _ctl_3d_anisotropic_types_t(4);
+    #[doc = "< 8X"]
+    pub const CTL_3D_ANISOTROPIC_TYPES_8X: _ctl_3d_anisotropic_types_t =
+        _ctl_3d_anisotropic_types_t(8);
+    #[doc = "< 16X"]
+    pub const CTL_3D_ANISOTROPIC_TYPES_16X: _ctl_3d_anisotropic_types_t =
+        _ctl_3d_anisotropic_types_t(16);
+    pub const CTL_3D_ANISOTROPIC_TYPES_MAX: _ctl_3d_anisotropic_types_t =
+        _ctl_3d_anisotropic_types_t(17);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Anisotropic values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_anisotropic_types_t {
-    #[doc = "< Application choice"]
-    CTL_3D_ANISOTROPIC_TYPES_APP_CHOICE = 0,
-    #[doc = "< 2X"]
-    CTL_3D_ANISOTROPIC_TYPES_2X = 2,
-    #[doc = "< 4X"]
-    CTL_3D_ANISOTROPIC_TYPES_4X = 4,
-    #[doc = "< 8X"]
-    CTL_3D_ANISOTROPIC_TYPES_8X = 8,
-    #[doc = "< 16X"]
-    CTL_3D_ANISOTROPIC_TYPES_16X = 16,
-    CTL_3D_ANISOTROPIC_TYPES_MAX = 17,
-}
+pub struct _ctl_3d_anisotropic_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Anisotropic values possible"]
 pub use self::_ctl_3d_anisotropic_types_t as ctl_3d_anisotropic_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_texture_filtering_quality_types_t {
+    #[doc = "< Performance"]
+    pub const CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_PERFORMANCE:
+        _ctl_3d_texture_filtering_quality_types_t = _ctl_3d_texture_filtering_quality_types_t(0);
+    #[doc = "< Balanced"]
+    pub const CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_BALANCED:
+        _ctl_3d_texture_filtering_quality_types_t = _ctl_3d_texture_filtering_quality_types_t(1);
+    #[doc = "< Quality"]
+    pub const CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_QUALITY:
+        _ctl_3d_texture_filtering_quality_types_t = _ctl_3d_texture_filtering_quality_types_t(2);
+    pub const CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_MAX:
+        _ctl_3d_texture_filtering_quality_types_t = _ctl_3d_texture_filtering_quality_types_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Texture filtering values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_texture_filtering_quality_types_t {
-    #[doc = "< Performance"]
-    CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_PERFORMANCE = 0,
-    #[doc = "< Balanced"]
-    CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_BALANCED = 1,
-    #[doc = "< Quality"]
-    CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_QUALITY = 2,
-    CTL_3D_TEXTURE_FILTERING_QUALITY_TYPES_MAX = 3,
-}
+pub struct _ctl_3d_texture_filtering_quality_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Texture filtering values possible"]
 pub use self::_ctl_3d_texture_filtering_quality_types_t as ctl_3d_texture_filtering_quality_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_frame_pacing_types_t {
+    #[doc = "< Disable"]
+    pub const CTL_3D_FRAME_PACING_TYPES_DISABLE: _ctl_3d_frame_pacing_types_t =
+        _ctl_3d_frame_pacing_types_t(0);
+    #[doc = "< Enable with scheduler without any frame smoothening"]
+    pub const CTL_3D_FRAME_PACING_TYPES_ENABLE_MODE_FRAME_NO_SMOOTHENING:
+        _ctl_3d_frame_pacing_types_t = _ctl_3d_frame_pacing_types_t(1);
+    #[doc = "< Enable with scheduler with maximum smoothness"]
+    pub const CTL_3D_FRAME_PACING_TYPES_ENABLE_MODE_FRAME_MAX_SMOOTHENING:
+        _ctl_3d_frame_pacing_types_t = _ctl_3d_frame_pacing_types_t(2);
+    #[doc = "< Enable with scheduler in competitive gaming mode"]
+    pub const CTL_3D_FRAME_PACING_TYPES_ENABLE_MODE_COMPETITIVE_GAMING:
+        _ctl_3d_frame_pacing_types_t = _ctl_3d_frame_pacing_types_t(3);
+    pub const CTL_3D_FRAME_PACING_TYPES_MAX: _ctl_3d_frame_pacing_types_t =
+        _ctl_3d_frame_pacing_types_t(4);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Frame pacing values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_frame_pacing_types_t {
-    #[doc = "< Disable"]
-    CTL_3D_FRAME_PACING_TYPES_DISABLE = 0,
-    #[doc = "< Enable with scheduler without any frame smoothening"]
-    CTL_3D_FRAME_PACING_TYPES_ENABLE_MODE_FRAME_NO_SMOOTHENING = 1,
-    #[doc = "< Enable with scheduler with maximum smoothness"]
-    CTL_3D_FRAME_PACING_TYPES_ENABLE_MODE_FRAME_MAX_SMOOTHENING = 2,
-    #[doc = "< Enable with scheduler in competitive gaming mode"]
-    CTL_3D_FRAME_PACING_TYPES_ENABLE_MODE_COMPETITIVE_GAMING = 3,
-    CTL_3D_FRAME_PACING_TYPES_MAX = 4,
-}
+pub struct _ctl_3d_frame_pacing_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Frame pacing values possible"]
 pub use self::_ctl_3d_frame_pacing_types_t as ctl_3d_frame_pacing_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_endurance_gaming_control_t {
+    #[doc = "< Endurance Gaming disable"]
+    pub const CTL_3D_ENDURANCE_GAMING_CONTROL_TURN_OFF: _ctl_3d_endurance_gaming_control_t =
+        _ctl_3d_endurance_gaming_control_t(0);
+    #[doc = "< Endurance Gaming enable"]
+    pub const CTL_3D_ENDURANCE_GAMING_CONTROL_TURN_ON: _ctl_3d_endurance_gaming_control_t =
+        _ctl_3d_endurance_gaming_control_t(1);
+    #[doc = "< Endurance Gaming auto"]
+    pub const CTL_3D_ENDURANCE_GAMING_CONTROL_AUTO: _ctl_3d_endurance_gaming_control_t =
+        _ctl_3d_endurance_gaming_control_t(2);
+    pub const CTL_3D_ENDURANCE_GAMING_CONTROL_MAX: _ctl_3d_endurance_gaming_control_t =
+        _ctl_3d_endurance_gaming_control_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Endurance Gaming control possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_endurance_gaming_control_t {
-    #[doc = "< Endurance Gaming disable"]
-    CTL_3D_ENDURANCE_GAMING_CONTROL_TURN_OFF = 0,
-    #[doc = "< Endurance Gaming enable"]
-    CTL_3D_ENDURANCE_GAMING_CONTROL_TURN_ON = 1,
-    #[doc = "< Endurance Gaming auto"]
-    CTL_3D_ENDURANCE_GAMING_CONTROL_AUTO = 2,
-    CTL_3D_ENDURANCE_GAMING_CONTROL_MAX = 3,
-}
+pub struct _ctl_3d_endurance_gaming_control_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Endurance Gaming control possible"]
 pub use self::_ctl_3d_endurance_gaming_control_t as ctl_3d_endurance_gaming_control_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_endurance_gaming_mode_t {
+    #[doc = "< Endurance Gaming better performance mode"]
+    pub const CTL_3D_ENDURANCE_GAMING_MODE_BETTER_PERFORMANCE: _ctl_3d_endurance_gaming_mode_t =
+        _ctl_3d_endurance_gaming_mode_t(0);
+    #[doc = "< Endurance Gaming balanced mode"]
+    pub const CTL_3D_ENDURANCE_GAMING_MODE_BALANCED: _ctl_3d_endurance_gaming_mode_t =
+        _ctl_3d_endurance_gaming_mode_t(1);
+    #[doc = "< Endurance Gaming maximum battery mode"]
+    pub const CTL_3D_ENDURANCE_GAMING_MODE_MAXIMUM_BATTERY: _ctl_3d_endurance_gaming_mode_t =
+        _ctl_3d_endurance_gaming_mode_t(2);
+    pub const CTL_3D_ENDURANCE_GAMING_MODE_MAX: _ctl_3d_endurance_gaming_mode_t =
+        _ctl_3d_endurance_gaming_mode_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Endurance Gaming modes possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_endurance_gaming_mode_t {
-    #[doc = "< Endurance Gaming better performance mode"]
-    CTL_3D_ENDURANCE_GAMING_MODE_BETTER_PERFORMANCE = 0,
-    #[doc = "< Endurance Gaming balanced mode"]
-    CTL_3D_ENDURANCE_GAMING_MODE_BALANCED = 1,
-    #[doc = "< Endurance Gaming maximum battery mode"]
-    CTL_3D_ENDURANCE_GAMING_MODE_MAXIMUM_BATTERY = 2,
-    CTL_3D_ENDURANCE_GAMING_MODE_MAX = 3,
-}
+pub struct _ctl_3d_endurance_gaming_mode_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Endurance Gaming modes possible"]
 pub use self::_ctl_3d_endurance_gaming_mode_t as ctl_3d_endurance_gaming_mode_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_cmaa_types_t {
+    #[doc = "< Turn off"]
+    pub const CTL_3D_CMAA_TYPES_TURN_OFF: _ctl_3d_cmaa_types_t = _ctl_3d_cmaa_types_t(0);
+    #[doc = "< Override MSAA"]
+    pub const CTL_3D_CMAA_TYPES_OVERRIDE_MSAA: _ctl_3d_cmaa_types_t = _ctl_3d_cmaa_types_t(1);
+    #[doc = "< Enhance Application"]
+    pub const CTL_3D_CMAA_TYPES_ENHANCE_APPLICATION: _ctl_3d_cmaa_types_t = _ctl_3d_cmaa_types_t(2);
+    pub const CTL_3D_CMAA_TYPES_MAX: _ctl_3d_cmaa_types_t = _ctl_3d_cmaa_types_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Cmaa values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_cmaa_types_t {
-    #[doc = "< Turn off"]
-    CTL_3D_CMAA_TYPES_TURN_OFF = 0,
-    #[doc = "< Override MSAA"]
-    CTL_3D_CMAA_TYPES_OVERRIDE_MSAA = 1,
-    #[doc = "< Enhance Application"]
-    CTL_3D_CMAA_TYPES_ENHANCE_APPLICATION = 2,
-    CTL_3D_CMAA_TYPES_MAX = 3,
-}
+pub struct _ctl_3d_cmaa_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Cmaa values possible"]
 pub use self::_ctl_3d_cmaa_types_t as ctl_3d_cmaa_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_adaptive_tessellation_types_t {
+    #[doc = "< Turn off"]
+    pub const CTL_3D_ADAPTIVE_TESSELLATION_TYPES_TURN_OFF: _ctl_3d_adaptive_tessellation_types_t =
+        _ctl_3d_adaptive_tessellation_types_t(0);
+    #[doc = "< Turn on"]
+    pub const CTL_3D_ADAPTIVE_TESSELLATION_TYPES_TURN_ON: _ctl_3d_adaptive_tessellation_types_t =
+        _ctl_3d_adaptive_tessellation_types_t(1);
+    pub const CTL_3D_ADAPTIVE_TESSELLATION_TYPES_MAX: _ctl_3d_adaptive_tessellation_types_t =
+        _ctl_3d_adaptive_tessellation_types_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Adaptive Tessellation"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_adaptive_tessellation_types_t {
-    #[doc = "< Turn off"]
-    CTL_3D_ADAPTIVE_TESSELLATION_TYPES_TURN_OFF = 0,
-    #[doc = "< Turn on"]
-    CTL_3D_ADAPTIVE_TESSELLATION_TYPES_TURN_ON = 1,
-    CTL_3D_ADAPTIVE_TESSELLATION_TYPES_MAX = 2,
-}
+pub struct _ctl_3d_adaptive_tessellation_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Adaptive Tessellation"]
 pub use self::_ctl_3d_adaptive_tessellation_types_t as ctl_3d_adaptive_tessellation_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_sharpening_filter_types_t {
+    #[doc = "< Turn off"]
+    pub const CTL_3D_SHARPENING_FILTER_TYPES_TURN_OFF: _ctl_3d_sharpening_filter_types_t =
+        _ctl_3d_sharpening_filter_types_t(0);
+    #[doc = "< Turn on"]
+    pub const CTL_3D_SHARPENING_FILTER_TYPES_TURN_ON: _ctl_3d_sharpening_filter_types_t =
+        _ctl_3d_sharpening_filter_types_t(1);
+    pub const CTL_3D_SHARPENING_FILTER_TYPES_MAX: _ctl_3d_sharpening_filter_types_t =
+        _ctl_3d_sharpening_filter_types_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Sharpening filter values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_sharpening_filter_types_t {
-    #[doc = "< Turn off"]
-    CTL_3D_SHARPENING_FILTER_TYPES_TURN_OFF = 0,
-    #[doc = "< Turn on"]
-    CTL_3D_SHARPENING_FILTER_TYPES_TURN_ON = 1,
-    CTL_3D_SHARPENING_FILTER_TYPES_MAX = 2,
-}
+pub struct _ctl_3d_sharpening_filter_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Sharpening filter values possible"]
 pub use self::_ctl_3d_sharpening_filter_types_t as ctl_3d_sharpening_filter_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_msaa_types_t {
+    #[doc = "< Application choice"]
+    pub const CTL_3D_MSAA_TYPES_APP_CHOICE: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(0);
+    #[doc = "< Disabled. MSAA count 1"]
+    pub const CTL_3D_MSAA_TYPES_DISABLED: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(1);
+    #[doc = "< 2X"]
+    pub const CTL_3D_MSAA_TYPES_2X: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(2);
+    #[doc = "< 4X"]
+    pub const CTL_3D_MSAA_TYPES_4X: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(4);
+    #[doc = "< 8X"]
+    pub const CTL_3D_MSAA_TYPES_8X: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(8);
+    #[doc = "< 16X"]
+    pub const CTL_3D_MSAA_TYPES_16X: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(16);
+    pub const CTL_3D_MSAA_TYPES_MAX: _ctl_3d_msaa_types_t = _ctl_3d_msaa_types_t(17);
+}
+#[repr(transparent)]
 #[doc = "\n @brief MSAA values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_msaa_types_t {
-    #[doc = "< Application choice"]
-    CTL_3D_MSAA_TYPES_APP_CHOICE = 0,
-    #[doc = "< Disabled. MSAA count 1"]
-    CTL_3D_MSAA_TYPES_DISABLED = 1,
-    #[doc = "< 2X"]
-    CTL_3D_MSAA_TYPES_2X = 2,
-    #[doc = "< 4X"]
-    CTL_3D_MSAA_TYPES_4X = 4,
-    #[doc = "< 8X"]
-    CTL_3D_MSAA_TYPES_8X = 8,
-    #[doc = "< 16X"]
-    CTL_3D_MSAA_TYPES_16X = 16,
-    CTL_3D_MSAA_TYPES_MAX = 17,
-}
+pub struct _ctl_3d_msaa_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief MSAA values possible"]
 pub use self::_ctl_3d_msaa_types_t as ctl_3d_msaa_types_t;
 #[doc = "\n @brief Gaming flip modes"]
 pub type ctl_gaming_flip_mode_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_gaming_flip_mode_flag_t {
+impl _ctl_gaming_flip_mode_flag_t {
     #[doc = "< Application Default"]
-    CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT = 1,
+    pub const CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(1);
     #[doc = "< Convert all sync flips to async on the next possible scanline."]
-    CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF = 2,
+    pub const CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(2);
     #[doc = "< Convert all async flips to sync flips."]
-    CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON = 4,
+    pub const CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(4);
     #[doc = "< Reduce tearing effect with async flips"]
-    CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC = 8,
+    pub const CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(8);
     #[doc = "< Application unaware triple buffering"]
-    CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME = 16,
+    pub const CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(16);
     #[doc = "< Limit the game FPS to panel RR"]
-    CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS = 32,
-    CTL_GAMING_FLIP_MODE_FLAG_MAX = -2147483648,
+    pub const CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(32);
+    pub const CTL_GAMING_FLIP_MODE_FLAG_MAX: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_gaming_flip_mode_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_gaming_flip_mode_flag_t as ctl_gaming_flip_mode_flag_t;
 #[doc = "\n @brief Endurance Gaming caps"]
 #[repr(C)]
@@ -1534,31 +1622,38 @@ pub struct _ctl_adaptivesync_getset_t {
 }
 #[doc = "\n @brief Game tier types"]
 pub type ctl_3d_tier_type_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_tier_type_flag_t {
+impl _ctl_3d_tier_type_flag_t {
     #[doc = "< Compatibility Tier"]
-    CTL_3D_TIER_TYPE_FLAG_COMPATIBILITY = 1,
+    pub const CTL_3D_TIER_TYPE_FLAG_COMPATIBILITY: _ctl_3d_tier_type_flag_t =
+        _ctl_3d_tier_type_flag_t(1);
     #[doc = "< Performance Tier"]
-    CTL_3D_TIER_TYPE_FLAG_PERFORMANCE = 2,
-    CTL_3D_TIER_TYPE_FLAG_MAX = -2147483648,
+    pub const CTL_3D_TIER_TYPE_FLAG_PERFORMANCE: _ctl_3d_tier_type_flag_t =
+        _ctl_3d_tier_type_flag_t(2);
+    pub const CTL_3D_TIER_TYPE_FLAG_MAX: _ctl_3d_tier_type_flag_t =
+        _ctl_3d_tier_type_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_3d_tier_type_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_3d_tier_type_flag_t as ctl_3d_tier_type_flag_t;
 #[doc = "\n @brief Game tiers"]
 pub type ctl_3d_tier_profile_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_tier_profile_flag_t {
+impl _ctl_3d_tier_profile_flag_t {
     #[doc = "< Tier 1 Profile"]
-    CTL_3D_TIER_PROFILE_FLAG_TIER_1 = 1,
+    pub const CTL_3D_TIER_PROFILE_FLAG_TIER_1: _ctl_3d_tier_profile_flag_t =
+        _ctl_3d_tier_profile_flag_t(1);
     #[doc = "< Tier 2 Profile"]
-    CTL_3D_TIER_PROFILE_FLAG_TIER_2 = 2,
+    pub const CTL_3D_TIER_PROFILE_FLAG_TIER_2: _ctl_3d_tier_profile_flag_t =
+        _ctl_3d_tier_profile_flag_t(2);
     #[doc = "< Recommended Tier Profile. If set other tier values shouldn't be set"]
-    CTL_3D_TIER_PROFILE_FLAG_TIER_RECOMMENDED = 1073741824,
-    CTL_3D_TIER_PROFILE_FLAG_MAX = -2147483648,
+    pub const CTL_3D_TIER_PROFILE_FLAG_TIER_RECOMMENDED: _ctl_3d_tier_profile_flag_t =
+        _ctl_3d_tier_profile_flag_t(1073741824);
+    pub const CTL_3D_TIER_PROFILE_FLAG_MAX: _ctl_3d_tier_profile_flag_t =
+        _ctl_3d_tier_profile_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_3d_tier_profile_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_3d_tier_profile_flag_t as ctl_3d_tier_profile_flag_t;
 #[doc = "\n @brief Game Profile Capabilities. Typically these remain the same across\n        games."]
 #[repr(C)]
@@ -1617,49 +1712,61 @@ impl Default for _ctl_3d_tier_details_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_emulated_typed_64bit_atomics_types_t {
+    #[doc = "< Default settings is based on workload/driver decision."]
+    pub const CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_DEFAULT:
+        _ctl_emulated_typed_64bit_atomics_types_t = _ctl_emulated_typed_64bit_atomics_types_t(0);
+    #[doc = "< Force Turn on"]
+    pub const CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_TURN_ON:
+        _ctl_emulated_typed_64bit_atomics_types_t = _ctl_emulated_typed_64bit_atomics_types_t(1);
+    #[doc = "< Force Turn off"]
+    pub const CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_TURN_OFF:
+        _ctl_emulated_typed_64bit_atomics_types_t = _ctl_emulated_typed_64bit_atomics_types_t(2);
+    pub const CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_MAX:
+        _ctl_emulated_typed_64bit_atomics_types_t = _ctl_emulated_typed_64bit_atomics_types_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Emulated Typed 64bit Atomics"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_emulated_typed_64bit_atomics_types_t {
-    #[doc = "< Default settings is based on workload/driver decision."]
-    CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_DEFAULT = 0,
-    #[doc = "< Force Turn on"]
-    CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_TURN_ON = 1,
-    #[doc = "< Force Turn off"]
-    CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_TURN_OFF = 2,
-    CTL_EMULATED_TYPED_64BIT_ATOMICS_TYPES_MAX = 3,
-}
+pub struct _ctl_emulated_typed_64bit_atomics_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Emulated Typed 64bit Atomics"]
 pub use self::_ctl_emulated_typed_64bit_atomics_types_t as ctl_emulated_typed_64bit_atomics_types_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_vrr_windowed_blt_reserved_t {
+    #[doc = "< VRR windowed BLT auto"]
+    pub const CTL_3D_VRR_WINDOWED_BLT_RESERVED_AUTO: _ctl_3d_vrr_windowed_blt_reserved_t =
+        _ctl_3d_vrr_windowed_blt_reserved_t(0);
+    #[doc = "< VRR windowed BLT enable"]
+    pub const CTL_3D_VRR_WINDOWED_BLT_RESERVED_TURN_ON: _ctl_3d_vrr_windowed_blt_reserved_t =
+        _ctl_3d_vrr_windowed_blt_reserved_t(1);
+    #[doc = "< VRR windowed BLT disable"]
+    pub const CTL_3D_VRR_WINDOWED_BLT_RESERVED_TURN_OFF: _ctl_3d_vrr_windowed_blt_reserved_t =
+        _ctl_3d_vrr_windowed_blt_reserved_t(2);
+    pub const CTL_3D_VRR_WINDOWED_BLT_RESERVED_MAX: _ctl_3d_vrr_windowed_blt_reserved_t =
+        _ctl_3d_vrr_windowed_blt_reserved_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief VRR windowed BLT control possible. Reserved functionality"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_vrr_windowed_blt_reserved_t {
-    #[doc = "< VRR windowed BLT auto"]
-    CTL_3D_VRR_WINDOWED_BLT_RESERVED_AUTO = 0,
-    #[doc = "< VRR windowed BLT enable"]
-    CTL_3D_VRR_WINDOWED_BLT_RESERVED_TURN_ON = 1,
-    #[doc = "< VRR windowed BLT disable"]
-    CTL_3D_VRR_WINDOWED_BLT_RESERVED_TURN_OFF = 2,
-    CTL_3D_VRR_WINDOWED_BLT_RESERVED_MAX = 3,
-}
+pub struct _ctl_3d_vrr_windowed_blt_reserved_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief VRR windowed BLT control possible. Reserved functionality"]
 pub use self::_ctl_3d_vrr_windowed_blt_reserved_t as ctl_3d_vrr_windowed_blt_reserved_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_3d_global_or_per_app_types_t {
+    #[doc = "< none"]
+    pub const CTL_3D_GLOBAL_OR_PER_APP_TYPES_NONE: _ctl_3d_global_or_per_app_types_t =
+        _ctl_3d_global_or_per_app_types_t(0);
+    #[doc = "< Opt for per app settings"]
+    pub const CTL_3D_GLOBAL_OR_PER_APP_TYPES_PER_APP: _ctl_3d_global_or_per_app_types_t =
+        _ctl_3d_global_or_per_app_types_t(1);
+    #[doc = "< Opt for global settings"]
+    pub const CTL_3D_GLOBAL_OR_PER_APP_TYPES_GLOBAL: _ctl_3d_global_or_per_app_types_t =
+        _ctl_3d_global_or_per_app_types_t(2);
+    pub const CTL_3D_GLOBAL_OR_PER_APP_TYPES_MAX: _ctl_3d_global_or_per_app_types_t =
+        _ctl_3d_global_or_per_app_types_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Global or per app values possible"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_3d_global_or_per_app_types_t {
-    #[doc = "< none"]
-    CTL_3D_GLOBAL_OR_PER_APP_TYPES_NONE = 0,
-    #[doc = "< Opt for per app settings"]
-    CTL_3D_GLOBAL_OR_PER_APP_TYPES_PER_APP = 1,
-    #[doc = "< Opt for global settings"]
-    CTL_3D_GLOBAL_OR_PER_APP_TYPES_GLOBAL = 2,
-    CTL_3D_GLOBAL_OR_PER_APP_TYPES_MAX = 3,
-}
+pub struct _ctl_3d_global_or_per_app_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Global or per app values possible"]
 pub use self::_ctl_3d_global_or_per_app_types_t as ctl_3d_global_or_per_app_types_t;
 #[doc = "\n @brief 3D feature capability details which will have range/supported and\n        default values"]
@@ -1831,186 +1938,240 @@ impl ::std::fmt::Debug for _ctl_os_display_encoder_identifier_t {
 }
 #[doc = "\n @brief OS specific Display identifiers"]
 pub type ctl_os_display_encoder_identifier_t = _ctl_os_display_encoder_identifier_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_output_types_t {
+    #[doc = "< Invalid"]
+    pub const CTL_DISPLAY_OUTPUT_TYPES_INVALID: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(0);
+    #[doc = "< DisplayPort"]
+    pub const CTL_DISPLAY_OUTPUT_TYPES_DISPLAYPORT: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(1);
+    #[doc = "< HDMI"]
+    pub const CTL_DISPLAY_OUTPUT_TYPES_HDMI: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(2);
+    #[doc = "< DVI"]
+    pub const CTL_DISPLAY_OUTPUT_TYPES_DVI: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(3);
+    #[doc = "< MIPI"]
+    pub const CTL_DISPLAY_OUTPUT_TYPES_MIPI: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(4);
+    #[doc = "< CRT"]
+    pub const CTL_DISPLAY_OUTPUT_TYPES_CRT: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(5);
+    pub const CTL_DISPLAY_OUTPUT_TYPES_MAX: _ctl_display_output_types_t =
+        _ctl_display_output_types_t(6);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Various display types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_output_types_t {
-    #[doc = "< Invalid"]
-    CTL_DISPLAY_OUTPUT_TYPES_INVALID = 0,
-    #[doc = "< DisplayPort"]
-    CTL_DISPLAY_OUTPUT_TYPES_DISPLAYPORT = 1,
-    #[doc = "< HDMI"]
-    CTL_DISPLAY_OUTPUT_TYPES_HDMI = 2,
-    #[doc = "< DVI"]
-    CTL_DISPLAY_OUTPUT_TYPES_DVI = 3,
-    #[doc = "< MIPI"]
-    CTL_DISPLAY_OUTPUT_TYPES_MIPI = 4,
-    #[doc = "< CRT"]
-    CTL_DISPLAY_OUTPUT_TYPES_CRT = 5,
-    CTL_DISPLAY_OUTPUT_TYPES_MAX = 6,
-}
+pub struct _ctl_display_output_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Various display types"]
 pub use self::_ctl_display_output_types_t as ctl_display_output_types_t;
 #[doc = "\n @brief Supported output bits per color (bpc) bitmasks"]
 pub type ctl_output_bpc_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_output_bpc_flag_t {
+impl _ctl_output_bpc_flag_t {
     #[doc = "< [out] Is 6bpc supported"]
-    CTL_OUTPUT_BPC_FLAG_6BPC = 1,
+    pub const CTL_OUTPUT_BPC_FLAG_6BPC: _ctl_output_bpc_flag_t = _ctl_output_bpc_flag_t(1);
     #[doc = "< [out] Is 8bpc supported"]
-    CTL_OUTPUT_BPC_FLAG_8BPC = 2,
+    pub const CTL_OUTPUT_BPC_FLAG_8BPC: _ctl_output_bpc_flag_t = _ctl_output_bpc_flag_t(2);
     #[doc = "< [out] Is 10bpc supported"]
-    CTL_OUTPUT_BPC_FLAG_10BPC = 4,
+    pub const CTL_OUTPUT_BPC_FLAG_10BPC: _ctl_output_bpc_flag_t = _ctl_output_bpc_flag_t(4);
     #[doc = "< [out] Is 12bpc supported"]
-    CTL_OUTPUT_BPC_FLAG_12BPC = 8,
-    CTL_OUTPUT_BPC_FLAG_MAX = -2147483648,
+    pub const CTL_OUTPUT_BPC_FLAG_12BPC: _ctl_output_bpc_flag_t = _ctl_output_bpc_flag_t(8);
+    pub const CTL_OUTPUT_BPC_FLAG_MAX: _ctl_output_bpc_flag_t = _ctl_output_bpc_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_output_bpc_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_output_bpc_flag_t as ctl_output_bpc_flag_t;
 #[doc = "\n @brief Display output features. This will indicate only the high level\n        capabilities"]
 pub type ctl_std_display_feature_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_std_display_feature_flag_t {
+impl _ctl_std_display_feature_flag_t {
     #[doc = "< [out] Is HDCP supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_HDCP = 1,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_HDCP: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(1);
     #[doc = "< [out] Is HD Audio supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_HD_AUDIO = 2,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_HD_AUDIO: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(2);
     #[doc = "< [out] Is VESA PSR supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_PSR = 4,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_PSR: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(4);
     #[doc = "< [out] Is VESA Adaptive Sync or HDMI VRR supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_ADAPTIVESYNC_VRR = 8,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_ADAPTIVESYNC_VRR: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(8);
     #[doc = "< [out] Is display compression (VESA DSC) supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_VESA_COMPRESSION = 16,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_VESA_COMPRESSION: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(16);
     #[doc = "< [out] Is HDR supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_HDR = 32,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_HDR: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(32);
     #[doc = "< [out] Is HDMI QMS supported"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_HDMI_QMS = 64,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_HDMI_QMS: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(64);
     #[doc = "< [out] Is HDR10+ certified"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_HDR10_PLUS_CERTIFIED = 128,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_HDR10_PLUS_CERTIFIED: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(128);
     #[doc = "< [out] Is VESA HDR certified - for future use"]
-    CTL_STD_DISPLAY_FEATURE_FLAG_VESA_HDR_CERTIFIED = 256,
-    CTL_STD_DISPLAY_FEATURE_FLAG_MAX = -2147483648,
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_VESA_HDR_CERTIFIED: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(256);
+    pub const CTL_STD_DISPLAY_FEATURE_FLAG_MAX: _ctl_std_display_feature_flag_t =
+        _ctl_std_display_feature_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_std_display_feature_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_std_display_feature_flag_t as ctl_std_display_feature_flag_t;
 #[doc = "\n @brief Advanced Graphics Features provided by Intel Graphics Adapter. This\n        will indicate only the high level capabilities"]
 pub type ctl_intel_display_feature_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_intel_display_feature_flag_t {
+impl _ctl_intel_display_feature_flag_t {
     #[doc = "< [out] Is DPST supported"]
-    CTL_INTEL_DISPLAY_FEATURE_FLAG_DPST = 1,
+    pub const CTL_INTEL_DISPLAY_FEATURE_FLAG_DPST: _ctl_intel_display_feature_flag_t =
+        _ctl_intel_display_feature_flag_t(1);
     #[doc = "< [out] Is LACE supported"]
-    CTL_INTEL_DISPLAY_FEATURE_FLAG_LACE = 2,
+    pub const CTL_INTEL_DISPLAY_FEATURE_FLAG_LACE: _ctl_intel_display_feature_flag_t =
+        _ctl_intel_display_feature_flag_t(2);
     #[doc = "< [out] Is DRRS supported"]
-    CTL_INTEL_DISPLAY_FEATURE_FLAG_DRRS = 4,
+    pub const CTL_INTEL_DISPLAY_FEATURE_FLAG_DRRS: _ctl_intel_display_feature_flag_t =
+        _ctl_intel_display_feature_flag_t(4);
     #[doc = "< [out] Is Intel Arc certified adaptive sync display"]
-    CTL_INTEL_DISPLAY_FEATURE_FLAG_ARC_ADAPTIVE_SYNC_CERTIFIED = 8,
-    CTL_INTEL_DISPLAY_FEATURE_FLAG_MAX = -2147483648,
+    pub const CTL_INTEL_DISPLAY_FEATURE_FLAG_ARC_ADAPTIVE_SYNC_CERTIFIED:
+        _ctl_intel_display_feature_flag_t = _ctl_intel_display_feature_flag_t(8);
+    pub const CTL_INTEL_DISPLAY_FEATURE_FLAG_MAX: _ctl_intel_display_feature_flag_t =
+        _ctl_intel_display_feature_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_intel_display_feature_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_intel_display_feature_flag_t as ctl_intel_display_feature_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_attached_display_mux_type_t {
+    #[doc = "< [out] Native DP / HDMI"]
+    pub const CTL_ATTACHED_DISPLAY_MUX_TYPE_NATIVE: _ctl_attached_display_mux_type_t =
+        _ctl_attached_display_mux_type_t(0);
+    #[doc = "< [out] Thunderbolt"]
+    pub const CTL_ATTACHED_DISPLAY_MUX_TYPE_THUNDERBOLT: _ctl_attached_display_mux_type_t =
+        _ctl_attached_display_mux_type_t(1);
+    #[doc = "< [out] USB Type C"]
+    pub const CTL_ATTACHED_DISPLAY_MUX_TYPE_TYPE_C: _ctl_attached_display_mux_type_t =
+        _ctl_attached_display_mux_type_t(2);
+    #[doc = "< [out] USB4"]
+    pub const CTL_ATTACHED_DISPLAY_MUX_TYPE_USB4: _ctl_attached_display_mux_type_t =
+        _ctl_attached_display_mux_type_t(3);
+    pub const CTL_ATTACHED_DISPLAY_MUX_TYPE_MAX: _ctl_attached_display_mux_type_t =
+        _ctl_attached_display_mux_type_t(4);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Attached Display Mux Type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_attached_display_mux_type_t {
-    #[doc = "< [out] Native DP / HDMI"]
-    CTL_ATTACHED_DISPLAY_MUX_TYPE_NATIVE = 0,
-    #[doc = "< [out] Thunderbolt"]
-    CTL_ATTACHED_DISPLAY_MUX_TYPE_THUNDERBOLT = 1,
-    #[doc = "< [out] USB Type C"]
-    CTL_ATTACHED_DISPLAY_MUX_TYPE_TYPE_C = 2,
-    #[doc = "< [out] USB4"]
-    CTL_ATTACHED_DISPLAY_MUX_TYPE_USB4 = 3,
-    CTL_ATTACHED_DISPLAY_MUX_TYPE_MAX = 4,
-}
+pub struct _ctl_attached_display_mux_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Attached Display Mux Type"]
 pub use self::_ctl_attached_display_mux_type_t as ctl_attached_display_mux_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_signal_standard_type_t {
+    #[doc = "< [out] Unknown Signal Standard"]
+    pub const CTL_SIGNAL_STANDARD_TYPE_UNKNOWN: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(0);
+    #[doc = "< [out] Custom added timing"]
+    pub const CTL_SIGNAL_STANDARD_TYPE_CUSTOM: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(1);
+    #[doc = "< [out] DMT timing"]
+    pub const CTL_SIGNAL_STANDARD_TYPE_DMT: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(2);
+    #[doc = "< [out] GTF Timing"]
+    pub const CTL_SIGNAL_STANDARD_TYPE_GTF: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(3);
+    #[doc = "< [out] CVT Timing"]
+    pub const CTL_SIGNAL_STANDARD_TYPE_CVT: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(4);
+    #[doc = "< [out] CTA Timing"]
+    pub const CTL_SIGNAL_STANDARD_TYPE_CTA: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(5);
+    pub const CTL_SIGNAL_STANDARD_TYPE_MAX: _ctl_signal_standard_type_t =
+        _ctl_signal_standard_type_t(6);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Signal Standard"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_signal_standard_type_t {
-    #[doc = "< [out] Unknown Signal Standard"]
-    CTL_SIGNAL_STANDARD_TYPE_UNKNOWN = 0,
-    #[doc = "< [out] Custom added timing"]
-    CTL_SIGNAL_STANDARD_TYPE_CUSTOM = 1,
-    #[doc = "< [out] DMT timing"]
-    CTL_SIGNAL_STANDARD_TYPE_DMT = 2,
-    #[doc = "< [out] GTF Timing"]
-    CTL_SIGNAL_STANDARD_TYPE_GTF = 3,
-    #[doc = "< [out] CVT Timing"]
-    CTL_SIGNAL_STANDARD_TYPE_CVT = 4,
-    #[doc = "< [out] CTA Timing"]
-    CTL_SIGNAL_STANDARD_TYPE_CTA = 5,
-    CTL_SIGNAL_STANDARD_TYPE_MAX = 6,
-}
+pub struct _ctl_signal_standard_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Signal Standard"]
 pub use self::_ctl_signal_standard_type_t as ctl_signal_standard_type_t;
 #[doc = "\n @brief Protocol Converter Location"]
 pub type ctl_protocol_converter_location_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_protocol_converter_location_flag_t {
+impl _ctl_protocol_converter_location_flag_t {
     #[doc = "< [out] OnBoard Protocol Converter"]
-    CTL_PROTOCOL_CONVERTER_LOCATION_FLAG_ONBOARD = 1,
+    pub const CTL_PROTOCOL_CONVERTER_LOCATION_FLAG_ONBOARD:
+        _ctl_protocol_converter_location_flag_t = _ctl_protocol_converter_location_flag_t(1);
     #[doc = "< [out] External Dongle"]
-    CTL_PROTOCOL_CONVERTER_LOCATION_FLAG_EXTERNAL = 2,
-    CTL_PROTOCOL_CONVERTER_LOCATION_FLAG_MAX = -2147483648,
+    pub const CTL_PROTOCOL_CONVERTER_LOCATION_FLAG_EXTERNAL:
+        _ctl_protocol_converter_location_flag_t = _ctl_protocol_converter_location_flag_t(2);
+    pub const CTL_PROTOCOL_CONVERTER_LOCATION_FLAG_MAX: _ctl_protocol_converter_location_flag_t =
+        _ctl_protocol_converter_location_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_protocol_converter_location_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_protocol_converter_location_flag_t as ctl_protocol_converter_location_flag_t;
 #[doc = "\n @brief [out] Display Output configuration related flags which indicate how\n        the output pixel stream drive the panel"]
 pub type ctl_display_config_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_config_flag_t {
+impl _ctl_display_config_flag_t {
     #[doc = "< [out] DisplayActive 0: InActive 1: Active"]
-    CTL_DISPLAY_CONFIG_FLAG_DISPLAY_ACTIVE = 1,
+    pub const CTL_DISPLAY_CONFIG_FLAG_DISPLAY_ACTIVE: _ctl_display_config_flag_t =
+        _ctl_display_config_flag_t(1);
     #[doc = "< [out] DisplayAttached.This Bit indicates if any dongle/display/hub is\n< attached to the encoder. 0: Not Attached 1: Attached"]
-    CTL_DISPLAY_CONFIG_FLAG_DISPLAY_ATTACHED = 2,
+    pub const CTL_DISPLAY_CONFIG_FLAG_DISPLAY_ATTACHED: _ctl_display_config_flag_t =
+        _ctl_display_config_flag_t(2);
     #[doc = "< [out] This BIT will be set if a dongle/hub/onboard protocol converter\n< , is attached to the encoder"]
-    CTL_DISPLAY_CONFIG_FLAG_IS_DONGLE_CONNECTED_TO_ENCODER = 4,
+    pub const CTL_DISPLAY_CONFIG_FLAG_IS_DONGLE_CONNECTED_TO_ENCODER: _ctl_display_config_flag_t =
+        _ctl_display_config_flag_t(4);
     #[doc = "< [out] This BIT will be set if dithering is enabled on the encoder"]
-    CTL_DISPLAY_CONFIG_FLAG_DITHERING_ENABLED = 8,
-    CTL_DISPLAY_CONFIG_FLAG_MAX = -2147483648,
+    pub const CTL_DISPLAY_CONFIG_FLAG_DITHERING_ENABLED: _ctl_display_config_flag_t =
+        _ctl_display_config_flag_t(8);
+    pub const CTL_DISPLAY_CONFIG_FLAG_MAX: _ctl_display_config_flag_t =
+        _ctl_display_config_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_display_config_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_display_config_flag_t as ctl_display_config_flag_t;
 #[doc = "\n @brief [out] Encoder configuration related flags which indicate how the\n        output pixel stream drive the panel"]
 pub type ctl_encoder_config_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_encoder_config_flag_t {
+impl _ctl_encoder_config_flag_t {
     #[doc = "< [out] Internal connection or not"]
-    CTL_ENCODER_CONFIG_FLAG_INTERNAL_DISPLAY = 1,
+    pub const CTL_ENCODER_CONFIG_FLAG_INTERNAL_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(1);
     #[doc = "< [out] VESA DisplayID based tiled display which is driven by either\n< multiple physical connections (DisplayPort SST) or virtual streams\n< (DisplayPort MST)"]
-    CTL_ENCODER_CONFIG_FLAG_VESA_TILED_DISPLAY = 2,
+    pub const CTL_ENCODER_CONFIG_FLAG_VESA_TILED_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(2);
     #[doc = "< [out] This is set if encoder supports type c display"]
-    CTL_ENCODER_CONFIG_FLAG_TYPEC_CAPABLE = 4,
+    pub const CTL_ENCODER_CONFIG_FLAG_TYPEC_CAPABLE: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(4);
     #[doc = "< [out] This is set if encoder supports Thunderbolt display"]
-    CTL_ENCODER_CONFIG_FLAG_TBT_CAPABLE = 8,
+    pub const CTL_ENCODER_CONFIG_FLAG_TBT_CAPABLE: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(8);
     #[doc = "< [out] This BIT will be set if encoder supports dithering"]
-    CTL_ENCODER_CONFIG_FLAG_DITHERING_SUPPORTED = 16,
+    pub const CTL_ENCODER_CONFIG_FLAG_DITHERING_SUPPORTED: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(16);
     #[doc = "< [out] This BIT will be set if this is a virtual display.Hardware based\n< features will not be applicable to this display.For collage display\n< this will be set for the virtual output created by driver. For split\n< display this will be set for the virtual split displays created out of\n< one single physical display"]
-    CTL_ENCODER_CONFIG_FLAG_VIRTUAL_DISPLAY = 32,
+    pub const CTL_ENCODER_CONFIG_FLAG_VIRTUAL_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(32);
     #[doc = "< [out] This BIT will be set if display is hidden from OS"]
-    CTL_ENCODER_CONFIG_FLAG_HIDDEN_DISPLAY = 64,
+    pub const CTL_ENCODER_CONFIG_FLAG_HIDDEN_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(64);
     #[doc = "< [out] This BIT will be set if this is a collage display"]
-    CTL_ENCODER_CONFIG_FLAG_COLLAGE_DISPLAY = 128,
+    pub const CTL_ENCODER_CONFIG_FLAG_COLLAGE_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(128);
     #[doc = "< [out] This BIT will be set if this is a split display"]
-    CTL_ENCODER_CONFIG_FLAG_SPLIT_DISPLAY = 256,
+    pub const CTL_ENCODER_CONFIG_FLAG_SPLIT_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(256);
     #[doc = "< [out] This BIT will be set if this is a companion display"]
-    CTL_ENCODER_CONFIG_FLAG_COMPANION_DISPLAY = 512,
+    pub const CTL_ENCODER_CONFIG_FLAG_COMPANION_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(512);
     #[doc = "< [out] This BIT will be set if this is a Multi GPU collage display"]
-    CTL_ENCODER_CONFIG_FLAG_MGPU_COLLAGE_DISPLAY = 1024,
-    CTL_ENCODER_CONFIG_FLAG_MAX = -2147483648,
+    pub const CTL_ENCODER_CONFIG_FLAG_MGPU_COLLAGE_DISPLAY: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(1024);
+    pub const CTL_ENCODER_CONFIG_FLAG_MAX: _ctl_encoder_config_flag_t =
+        _ctl_encoder_config_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_encoder_config_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_encoder_config_flag_t as ctl_encoder_config_flag_t;
 #[doc = "\n @brief Display Timing"]
 #[repr(C)]
@@ -2148,16 +2309,19 @@ impl ::std::fmt::Debug for _ctl_adapter_display_encoder_properties_t {
 }
 #[doc = "\n @brief Various sharpness filter types"]
 pub type ctl_sharpness_filter_type_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_sharpness_filter_type_flag_t {
+impl _ctl_sharpness_filter_type_flag_t {
     #[doc = "< Non-adaptive sharpness"]
-    CTL_SHARPNESS_FILTER_TYPE_FLAG_NON_ADAPTIVE = 1,
+    pub const CTL_SHARPNESS_FILTER_TYPE_FLAG_NON_ADAPTIVE: _ctl_sharpness_filter_type_flag_t =
+        _ctl_sharpness_filter_type_flag_t(1);
     #[doc = "< Adaptive sharpness"]
-    CTL_SHARPNESS_FILTER_TYPE_FLAG_ADAPTIVE = 2,
-    CTL_SHARPNESS_FILTER_TYPE_FLAG_MAX = -2147483648,
+    pub const CTL_SHARPNESS_FILTER_TYPE_FLAG_ADAPTIVE: _ctl_sharpness_filter_type_flag_t =
+        _ctl_sharpness_filter_type_flag_t(2);
+    pub const CTL_SHARPNESS_FILTER_TYPE_FLAG_MAX: _ctl_sharpness_filter_type_flag_t =
+        _ctl_sharpness_filter_type_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_sharpness_filter_type_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_sharpness_filter_type_flag_t as ctl_sharpness_filter_type_flag_t;
 #[doc = "\n @brief Sharpness filter properties"]
 #[repr(C)]
@@ -2209,26 +2373,26 @@ pub struct _ctl_sharpness_settings_t {
 }
 #[doc = "\n @brief I2C Access Args input Flags bitmasks"]
 pub type ctl_i2c_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_i2c_flag_t {
+impl _ctl_i2c_flag_t {
     #[doc = "< Force Atomic I2C."]
-    CTL_I2C_FLAG_ATOMICI2C = 1,
+    pub const CTL_I2C_FLAG_ATOMICI2C: _ctl_i2c_flag_t = _ctl_i2c_flag_t(1);
     #[doc = "< 1-byte Indexed operation. If no Index Size flag set, decided based on\n< Offset Value."]
-    CTL_I2C_FLAG_1BYTE_INDEX = 2,
+    pub const CTL_I2C_FLAG_1BYTE_INDEX: _ctl_i2c_flag_t = _ctl_i2c_flag_t(2);
     #[doc = "< 2-byte Indexed operation. If no Index Size flag set, decided based on\n< Offset Value."]
-    CTL_I2C_FLAG_2BYTE_INDEX = 4,
+    pub const CTL_I2C_FLAG_2BYTE_INDEX: _ctl_i2c_flag_t = _ctl_i2c_flag_t(4);
     #[doc = "< 4-byte Indexed operation. If no Index Size flag set, decided based on\n< Offset Value."]
-    CTL_I2C_FLAG_4BYTE_INDEX = 8,
+    pub const CTL_I2C_FLAG_4BYTE_INDEX: _ctl_i2c_flag_t = _ctl_i2c_flag_t(8);
     #[doc = "< If no Speed Flag is set, defaults to Best Option possible."]
-    CTL_I2C_FLAG_SPEED_SLOW = 16,
+    pub const CTL_I2C_FLAG_SPEED_SLOW: _ctl_i2c_flag_t = _ctl_i2c_flag_t(16);
     #[doc = "< If no Speed Flag is set, defaults to Best Option possible."]
-    CTL_I2C_FLAG_SPEED_FAST = 32,
+    pub const CTL_I2C_FLAG_SPEED_FAST: _ctl_i2c_flag_t = _ctl_i2c_flag_t(32);
     #[doc = "< Uses Slower access using SW bit bashing method. If no Speed Flag is\n< set, defaults to Best Option possible."]
-    CTL_I2C_FLAG_SPEED_BIT_BASH = 64,
-    CTL_I2C_FLAG_MAX = -2147483648,
+    pub const CTL_I2C_FLAG_SPEED_BIT_BASH: _ctl_i2c_flag_t = _ctl_i2c_flag_t(64);
+    pub const CTL_I2C_FLAG_MAX: _ctl_i2c_flag_t = _ctl_i2c_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_i2c_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_i2c_flag_t as ctl_i2c_flag_t;
 #[doc = "\n @brief I2C access arguments"]
 #[repr(C)]
@@ -2264,26 +2428,33 @@ impl Default for _ctl_i2c_access_args_t {
 }
 #[doc = "\n @brief I2C Access on PinPair Args input Flags bitmasks"]
 pub type ctl_i2c_pinpair_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_i2c_pinpair_flag_t {
+impl _ctl_i2c_pinpair_flag_t {
     #[doc = "< Force Atomic I2C."]
-    CTL_I2C_PINPAIR_FLAG_ATOMICI2C = 1,
+    pub const CTL_I2C_PINPAIR_FLAG_ATOMICI2C: _ctl_i2c_pinpair_flag_t = _ctl_i2c_pinpair_flag_t(1);
     #[doc = "< 1-byte Indexed operation. If no Index Size flag set, decided based on\n< Offset Value."]
-    CTL_I2C_PINPAIR_FLAG_1BYTE_INDEX = 2,
+    pub const CTL_I2C_PINPAIR_FLAG_1BYTE_INDEX: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(2);
     #[doc = "< 2-byte Indexed operation. If no Index Size flag set, decided based on\n< Offset Value."]
-    CTL_I2C_PINPAIR_FLAG_2BYTE_INDEX = 4,
+    pub const CTL_I2C_PINPAIR_FLAG_2BYTE_INDEX: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(4);
     #[doc = "< 4-byte Indexed operation. If no Index Size flag set, decided based on\n< Offset Value."]
-    CTL_I2C_PINPAIR_FLAG_4BYTE_INDEX = 8,
+    pub const CTL_I2C_PINPAIR_FLAG_4BYTE_INDEX: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(8);
     #[doc = "< If no Speed Flag is set, defaults to Best Option possible."]
-    CTL_I2C_PINPAIR_FLAG_SPEED_SLOW = 16,
+    pub const CTL_I2C_PINPAIR_FLAG_SPEED_SLOW: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(16);
     #[doc = "< If no Speed Flag is set, defaults to Best Option possible."]
-    CTL_I2C_PINPAIR_FLAG_SPEED_FAST = 32,
+    pub const CTL_I2C_PINPAIR_FLAG_SPEED_FAST: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(32);
     #[doc = "< Uses Slower access using SW bit bashing method. If no Speed Flag is\n< set, defaults to Best Option possible."]
-    CTL_I2C_PINPAIR_FLAG_SPEED_BIT_BASH = 64,
-    CTL_I2C_PINPAIR_FLAG_MAX = -2147483648,
+    pub const CTL_I2C_PINPAIR_FLAG_SPEED_BIT_BASH: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(64);
+    pub const CTL_I2C_PINPAIR_FLAG_MAX: _ctl_i2c_pinpair_flag_t =
+        _ctl_i2c_pinpair_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_i2c_pinpair_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_i2c_pinpair_flag_t as ctl_i2c_pinpair_flag_t;
 #[doc = "\n @brief I2C access on Pin Pair arguments"]
 #[repr(C)]
@@ -2319,18 +2490,18 @@ impl Default for _ctl_i2c_access_pinpair_args_t {
 }
 #[doc = "\n @brief AUX Flags bitmasks"]
 pub type ctl_aux_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_aux_flag_t {
+impl _ctl_aux_flag_t {
     #[doc = "< For Native AUX operation"]
-    CTL_AUX_FLAG_NATIVE_AUX = 1,
+    pub const CTL_AUX_FLAG_NATIVE_AUX: _ctl_aux_flag_t = _ctl_aux_flag_t(1);
     #[doc = "< For I2C AUX operation"]
-    CTL_AUX_FLAG_I2C_AUX = 2,
+    pub const CTL_AUX_FLAG_I2C_AUX: _ctl_aux_flag_t = _ctl_aux_flag_t(2);
     #[doc = "< For I2C AUX MOT operation"]
-    CTL_AUX_FLAG_I2C_AUX_MOT = 4,
-    CTL_AUX_FLAG_MAX = -2147483648,
+    pub const CTL_AUX_FLAG_I2C_AUX_MOT: _ctl_aux_flag_t = _ctl_aux_flag_t(4);
+    pub const CTL_AUX_FLAG_MAX: _ctl_aux_flag_t = _ctl_aux_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_aux_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_aux_flag_t as ctl_aux_flag_t;
 #[doc = "\n @brief AUX access arguments"]
 #[repr(C)]
@@ -2366,94 +2537,119 @@ impl Default for _ctl_aux_access_args_t {
 }
 #[doc = "\n @brief Power saving features (Each individual feature's set & get call can be\n        called only once at a time)"]
 pub type ctl_power_optimization_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_power_optimization_flag_t {
+impl _ctl_power_optimization_flag_t {
     #[doc = "< Frame buffer compression"]
-    CTL_POWER_OPTIMIZATION_FLAG_FBC = 1,
+    pub const CTL_POWER_OPTIMIZATION_FLAG_FBC: _ctl_power_optimization_flag_t =
+        _ctl_power_optimization_flag_t(1);
     #[doc = "< Panel self refresh"]
-    CTL_POWER_OPTIMIZATION_FLAG_PSR = 2,
+    pub const CTL_POWER_OPTIMIZATION_FLAG_PSR: _ctl_power_optimization_flag_t =
+        _ctl_power_optimization_flag_t(2);
     #[doc = "< Display power saving technology (Panel technology dependent)"]
-    CTL_POWER_OPTIMIZATION_FLAG_DPST = 4,
+    pub const CTL_POWER_OPTIMIZATION_FLAG_DPST: _ctl_power_optimization_flag_t =
+        _ctl_power_optimization_flag_t(4);
     #[doc = "< Low refresh rate (LRR/ALRR/UBRR), UBRR is supported only for IGCC and\n< NDA clients. UBZRR and UBLRR both can not be enabled at the same time,\n< only one can be enabled at a given time"]
-    CTL_POWER_OPTIMIZATION_FLAG_LRR = 8,
+    pub const CTL_POWER_OPTIMIZATION_FLAG_LRR: _ctl_power_optimization_flag_t =
+        _ctl_power_optimization_flag_t(8);
     #[doc = "< Lighting Aware Contrast Enhancement"]
-    CTL_POWER_OPTIMIZATION_FLAG_LACE = 16,
-    CTL_POWER_OPTIMIZATION_FLAG_MAX = -2147483648,
+    pub const CTL_POWER_OPTIMIZATION_FLAG_LACE: _ctl_power_optimization_flag_t =
+        _ctl_power_optimization_flag_t(16);
+    pub const CTL_POWER_OPTIMIZATION_FLAG_MAX: _ctl_power_optimization_flag_t =
+        _ctl_power_optimization_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_power_optimization_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_power_optimization_flag_t as ctl_power_optimization_flag_t;
 #[doc = "\n @brief GPU/Panel/TCON dependent power optimization technology"]
 pub type ctl_power_optimization_dpst_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_power_optimization_dpst_flag_t {
+impl _ctl_power_optimization_dpst_flag_t {
     #[doc = "< Intel DPST with Backlight control"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_BKLT = 1,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_BKLT: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(1);
     #[doc = "< Panel TCON specific Content Adaptive Control mechanism"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_PANEL_CABC = 2,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_PANEL_CABC: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(2);
     #[doc = "< Intel OLED Power Saving Technology"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_OPST = 4,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_OPST: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(4);
     #[doc = "< TCON based Edge Luminance Profile"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_ELP = 8,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_ELP: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(8);
     #[doc = "< Extra power saving mode"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_EPSM = 16,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_EPSM: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(16);
     #[doc = "< Adaptive Pixel Dimming"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_APD = 32,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_APD: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(32);
     #[doc = "< TCON+ based DPST like solution"]
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_PIXOPTIX = 64,
-    CTL_POWER_OPTIMIZATION_DPST_FLAG_MAX = -2147483648,
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_PIXOPTIX: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(64);
+    pub const CTL_POWER_OPTIMIZATION_DPST_FLAG_MAX: _ctl_power_optimization_dpst_flag_t =
+        _ctl_power_optimization_dpst_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_power_optimization_dpst_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_power_optimization_dpst_flag_t as ctl_power_optimization_dpst_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_power_source_t {
+    #[doc = "< Power Source AC"]
+    pub const CTL_POWER_SOURCE_AC: _ctl_power_source_t = _ctl_power_source_t(0);
+    #[doc = "< Power Source DC"]
+    pub const CTL_POWER_SOURCE_DC: _ctl_power_source_t = _ctl_power_source_t(1);
+    pub const CTL_POWER_SOURCE_MAX: _ctl_power_source_t = _ctl_power_source_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Power Source"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_power_source_t {
-    #[doc = "< Power Source AC"]
-    CTL_POWER_SOURCE_AC = 0,
-    #[doc = "< Power Source DC"]
-    CTL_POWER_SOURCE_DC = 1,
-    CTL_POWER_SOURCE_MAX = 2,
-}
+pub struct _ctl_power_source_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Power Source"]
 pub use self::_ctl_power_source_t as ctl_power_source_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_power_optimization_plan_t {
+    #[doc = "< Balanced mode"]
+    pub const CTL_POWER_OPTIMIZATION_PLAN_BALANCED: _ctl_power_optimization_plan_t =
+        _ctl_power_optimization_plan_t(0);
+    #[doc = "< High Performance Mode"]
+    pub const CTL_POWER_OPTIMIZATION_PLAN_HIGH_PERFORMANCE: _ctl_power_optimization_plan_t =
+        _ctl_power_optimization_plan_t(1);
+    #[doc = "< Power Saver Mode"]
+    pub const CTL_POWER_OPTIMIZATION_PLAN_POWER_SAVER: _ctl_power_optimization_plan_t =
+        _ctl_power_optimization_plan_t(2);
+    pub const CTL_POWER_OPTIMIZATION_PLAN_MAX: _ctl_power_optimization_plan_t =
+        _ctl_power_optimization_plan_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Power Optimization Plan"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_power_optimization_plan_t {
-    #[doc = "< Balanced mode"]
-    CTL_POWER_OPTIMIZATION_PLAN_BALANCED = 0,
-    #[doc = "< High Performance Mode"]
-    CTL_POWER_OPTIMIZATION_PLAN_HIGH_PERFORMANCE = 1,
-    #[doc = "< Power Saver Mode"]
-    CTL_POWER_OPTIMIZATION_PLAN_POWER_SAVER = 2,
-    CTL_POWER_OPTIMIZATION_PLAN_MAX = 3,
-}
+pub struct _ctl_power_optimization_plan_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Power Optimization Plan"]
 pub use self::_ctl_power_optimization_plan_t as ctl_power_optimization_plan_t;
 #[doc = "\n @brief Type of low refresh rate feature"]
 pub type ctl_power_optimization_lrr_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_power_optimization_lrr_flag_t {
+impl _ctl_power_optimization_lrr_flag_t {
     #[doc = "< LRR 1.0"]
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_LRR10 = 1,
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_LRR10: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(1);
     #[doc = "< LRR 2.0"]
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_LRR20 = 2,
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_LRR20: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(2);
     #[doc = "< LRR 2.5"]
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_LRR25 = 4,
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_LRR25: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(4);
     #[doc = "< Autonomous LRR"]
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_ALRR = 8,
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_ALRR: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(8);
     #[doc = "< User based low refresh rate"]
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_UBLRR = 16,
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_UBLRR: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(16);
     #[doc = "< User based zero refresh rate"]
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_UBZRR = 32,
-    CTL_POWER_OPTIMIZATION_LRR_FLAG_MAX = -2147483648,
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_UBZRR: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(32);
+    pub const CTL_POWER_OPTIMIZATION_LRR_FLAG_MAX: _ctl_power_optimization_lrr_flag_t =
+        _ctl_power_optimization_lrr_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_power_optimization_lrr_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_power_optimization_lrr_flag_t as ctl_power_optimization_lrr_flag_t;
 #[doc = "\n @brief Power optimization caps"]
 #[repr(C)]
@@ -2611,136 +2807,162 @@ pub struct _ctl_get_brightness_t {
 }
 #[doc = "\n @brief Pixtx pipe set configuration flags bitmasks"]
 pub type ctl_pixtx_pipe_set_config_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_pipe_set_config_flag_t {
+impl _ctl_pixtx_pipe_set_config_flag_t {
     #[doc = "< For maintaining persistance across power events"]
-    CTL_PIXTX_PIPE_SET_CONFIG_FLAG_PERSIST_ACROSS_POWER_EVENTS = 1,
-    CTL_PIXTX_PIPE_SET_CONFIG_FLAG_MAX = -2147483648,
+    pub const CTL_PIXTX_PIPE_SET_CONFIG_FLAG_PERSIST_ACROSS_POWER_EVENTS:
+        _ctl_pixtx_pipe_set_config_flag_t = _ctl_pixtx_pipe_set_config_flag_t(1);
+    pub const CTL_PIXTX_PIPE_SET_CONFIG_FLAG_MAX: _ctl_pixtx_pipe_set_config_flag_t =
+        _ctl_pixtx_pipe_set_config_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_pixtx_pipe_set_config_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_pixtx_pipe_set_config_flag_t as ctl_pixtx_pipe_set_config_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_block_type_t {
+    #[doc = "< Block type 1D LUT"]
+    pub const CTL_PIXTX_BLOCK_TYPE_1D_LUT: _ctl_pixtx_block_type_t = _ctl_pixtx_block_type_t(1);
+    #[doc = "< Block type 3D LUT"]
+    pub const CTL_PIXTX_BLOCK_TYPE_3D_LUT: _ctl_pixtx_block_type_t = _ctl_pixtx_block_type_t(2);
+    #[doc = "< Block type 3x3 matrix"]
+    pub const CTL_PIXTX_BLOCK_TYPE_3X3_MATRIX: _ctl_pixtx_block_type_t = _ctl_pixtx_block_type_t(3);
+    #[doc = "< Block type 3x3 matrix and offsets"]
+    pub const CTL_PIXTX_BLOCK_TYPE_3X3_MATRIX_AND_OFFSETS: _ctl_pixtx_block_type_t =
+        _ctl_pixtx_block_type_t(4);
+    pub const CTL_PIXTX_BLOCK_TYPE_MAX: _ctl_pixtx_block_type_t = _ctl_pixtx_block_type_t(5);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Pixel transformation block types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_block_type_t {
-    #[doc = "< Block type 1D LUT"]
-    CTL_PIXTX_BLOCK_TYPE_1D_LUT = 1,
-    #[doc = "< Block type 3D LUT"]
-    CTL_PIXTX_BLOCK_TYPE_3D_LUT = 2,
-    #[doc = "< Block type 3x3 matrix"]
-    CTL_PIXTX_BLOCK_TYPE_3X3_MATRIX = 3,
-    #[doc = "< Block type 3x3 matrix and offsets"]
-    CTL_PIXTX_BLOCK_TYPE_3X3_MATRIX_AND_OFFSETS = 4,
-    CTL_PIXTX_BLOCK_TYPE_MAX = 5,
-}
+pub struct _ctl_pixtx_block_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Pixel transformation block types"]
 pub use self::_ctl_pixtx_block_type_t as ctl_pixtx_block_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_lut_sampling_type_t {
+    #[doc = "< Uniform LUT sampling"]
+    pub const CTL_PIXTX_LUT_SAMPLING_TYPE_UNIFORM: _ctl_pixtx_lut_sampling_type_t =
+        _ctl_pixtx_lut_sampling_type_t(0);
+    #[doc = "< Non uniform LUT sampling, Required mainly in HDR mode"]
+    pub const CTL_PIXTX_LUT_SAMPLING_TYPE_NONUNIFORM: _ctl_pixtx_lut_sampling_type_t =
+        _ctl_pixtx_lut_sampling_type_t(1);
+    pub const CTL_PIXTX_LUT_SAMPLING_TYPE_MAX: _ctl_pixtx_lut_sampling_type_t =
+        _ctl_pixtx_lut_sampling_type_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Pixel transformation LUT sampling types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_lut_sampling_type_t {
-    #[doc = "< Uniform LUT sampling"]
-    CTL_PIXTX_LUT_SAMPLING_TYPE_UNIFORM = 0,
-    #[doc = "< Non uniform LUT sampling, Required mainly in HDR mode"]
-    CTL_PIXTX_LUT_SAMPLING_TYPE_NONUNIFORM = 1,
-    CTL_PIXTX_LUT_SAMPLING_TYPE_MAX = 2,
-}
+pub struct _ctl_pixtx_lut_sampling_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Pixel transformation LUT sampling types"]
 pub use self::_ctl_pixtx_lut_sampling_type_t as ctl_pixtx_lut_sampling_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_config_query_type_t {
+    #[doc = "< Get complete pixel processing pipeline capability"]
+    pub const CTL_PIXTX_CONFIG_QUERY_TYPE_CAPABILITY: _ctl_pixtx_config_query_type_t =
+        _ctl_pixtx_config_query_type_t(0);
+    #[doc = "< Get the configuration set through last set call"]
+    pub const CTL_PIXTX_CONFIG_QUERY_TYPE_CURRENT: _ctl_pixtx_config_query_type_t =
+        _ctl_pixtx_config_query_type_t(1);
+    pub const CTL_PIXTX_CONFIG_QUERY_TYPE_MAX: _ctl_pixtx_config_query_type_t =
+        _ctl_pixtx_config_query_type_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Configuration query types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_config_query_type_t {
-    #[doc = "< Get complete pixel processing pipeline capability"]
-    CTL_PIXTX_CONFIG_QUERY_TYPE_CAPABILITY = 0,
-    #[doc = "< Get the configuration set through last set call"]
-    CTL_PIXTX_CONFIG_QUERY_TYPE_CURRENT = 1,
-    CTL_PIXTX_CONFIG_QUERY_TYPE_MAX = 2,
-}
+pub struct _ctl_pixtx_config_query_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Configuration query types"]
 pub use self::_ctl_pixtx_config_query_type_t as ctl_pixtx_config_query_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_config_opertaion_type_t {
+    #[doc = "< Restore block by block or entire pipe line. Use NumBlocks = 0 to\n< restore all."]
+    pub const CTL_PIXTX_CONFIG_OPERTAION_TYPE_RESTORE_DEFAULT: _ctl_pixtx_config_opertaion_type_t =
+        _ctl_pixtx_config_opertaion_type_t(1);
+    #[doc = "< Custom LUT or matrix can be set thorugh this option."]
+    pub const CTL_PIXTX_CONFIG_OPERTAION_TYPE_SET_CUSTOM: _ctl_pixtx_config_opertaion_type_t =
+        _ctl_pixtx_config_opertaion_type_t(2);
+    pub const CTL_PIXTX_CONFIG_OPERTAION_TYPE_MAX: _ctl_pixtx_config_opertaion_type_t =
+        _ctl_pixtx_config_opertaion_type_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Configuration operation types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_config_opertaion_type_t {
-    #[doc = "< Restore block by block or entire pipe line. Use NumBlocks = 0 to\n< restore all."]
-    CTL_PIXTX_CONFIG_OPERTAION_TYPE_RESTORE_DEFAULT = 1,
-    #[doc = "< Custom LUT or matrix can be set thorugh this option."]
-    CTL_PIXTX_CONFIG_OPERTAION_TYPE_SET_CUSTOM = 2,
-    CTL_PIXTX_CONFIG_OPERTAION_TYPE_MAX = 3,
-}
+pub struct _ctl_pixtx_config_opertaion_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Configuration operation types"]
 pub use self::_ctl_pixtx_config_opertaion_type_t as ctl_pixtx_config_opertaion_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_gamma_encoding_type_t {
+    #[doc = "< Gamma encoding SRGB"]
+    pub const CTL_PIXTX_GAMMA_ENCODING_TYPE_SRGB: _ctl_pixtx_gamma_encoding_type_t =
+        _ctl_pixtx_gamma_encoding_type_t(0);
+    #[doc = "< Gamma encoding REC709, Applicable for REC2020 as well"]
+    pub const CTL_PIXTX_GAMMA_ENCODING_TYPE_REC709: _ctl_pixtx_gamma_encoding_type_t =
+        _ctl_pixtx_gamma_encoding_type_t(1);
+    #[doc = "< Gamma encoding ST2084"]
+    pub const CTL_PIXTX_GAMMA_ENCODING_TYPE_ST2084: _ctl_pixtx_gamma_encoding_type_t =
+        _ctl_pixtx_gamma_encoding_type_t(2);
+    #[doc = "< Gamma encoding HLG"]
+    pub const CTL_PIXTX_GAMMA_ENCODING_TYPE_HLG: _ctl_pixtx_gamma_encoding_type_t =
+        _ctl_pixtx_gamma_encoding_type_t(3);
+    #[doc = "< Gamma encoding linear"]
+    pub const CTL_PIXTX_GAMMA_ENCODING_TYPE_LINEAR: _ctl_pixtx_gamma_encoding_type_t =
+        _ctl_pixtx_gamma_encoding_type_t(4);
+    pub const CTL_PIXTX_GAMMA_ENCODING_TYPE_MAX: _ctl_pixtx_gamma_encoding_type_t =
+        _ctl_pixtx_gamma_encoding_type_t(5);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Pixel transformation gamma encoding types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_gamma_encoding_type_t {
-    #[doc = "< Gamma encoding SRGB"]
-    CTL_PIXTX_GAMMA_ENCODING_TYPE_SRGB = 0,
-    #[doc = "< Gamma encoding REC709, Applicable for REC2020 as well"]
-    CTL_PIXTX_GAMMA_ENCODING_TYPE_REC709 = 1,
-    #[doc = "< Gamma encoding ST2084"]
-    CTL_PIXTX_GAMMA_ENCODING_TYPE_ST2084 = 2,
-    #[doc = "< Gamma encoding HLG"]
-    CTL_PIXTX_GAMMA_ENCODING_TYPE_HLG = 3,
-    #[doc = "< Gamma encoding linear"]
-    CTL_PIXTX_GAMMA_ENCODING_TYPE_LINEAR = 4,
-    CTL_PIXTX_GAMMA_ENCODING_TYPE_MAX = 5,
-}
+pub struct _ctl_pixtx_gamma_encoding_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Pixel transformation gamma encoding types"]
 pub use self::_ctl_pixtx_gamma_encoding_type_t as ctl_pixtx_gamma_encoding_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_color_space_t {
+    #[doc = "< Color space REC709"]
+    pub const CTL_PIXTX_COLOR_SPACE_REC709: _ctl_pixtx_color_space_t = _ctl_pixtx_color_space_t(0);
+    #[doc = "< Color space REC2020"]
+    pub const CTL_PIXTX_COLOR_SPACE_REC2020: _ctl_pixtx_color_space_t = _ctl_pixtx_color_space_t(1);
+    #[doc = "< Color space AdobeRGB"]
+    pub const CTL_PIXTX_COLOR_SPACE_ADOBE_RGB: _ctl_pixtx_color_space_t =
+        _ctl_pixtx_color_space_t(2);
+    #[doc = "< Color space P3_D65"]
+    pub const CTL_PIXTX_COLOR_SPACE_P3_D65: _ctl_pixtx_color_space_t = _ctl_pixtx_color_space_t(3);
+    #[doc = "< Color space P3_DCI"]
+    pub const CTL_PIXTX_COLOR_SPACE_P3_DCI: _ctl_pixtx_color_space_t = _ctl_pixtx_color_space_t(4);
+    #[doc = "< Color space P3_D60"]
+    pub const CTL_PIXTX_COLOR_SPACE_P3_D60: _ctl_pixtx_color_space_t = _ctl_pixtx_color_space_t(5);
+    #[doc = "< Color space custom, Refer ::ctl_pixtx_color_primaries_t for color\n< primary details"]
+    pub const CTL_PIXTX_COLOR_SPACE_CUSTOM: _ctl_pixtx_color_space_t =
+        _ctl_pixtx_color_space_t(65535);
+    pub const CTL_PIXTX_COLOR_SPACE_MAX: _ctl_pixtx_color_space_t = _ctl_pixtx_color_space_t(65536);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Pixel transformation color space types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_color_space_t {
-    #[doc = "< Color space REC709"]
-    CTL_PIXTX_COLOR_SPACE_REC709 = 0,
-    #[doc = "< Color space REC2020"]
-    CTL_PIXTX_COLOR_SPACE_REC2020 = 1,
-    #[doc = "< Color space AdobeRGB"]
-    CTL_PIXTX_COLOR_SPACE_ADOBE_RGB = 2,
-    #[doc = "< Color space P3_D65"]
-    CTL_PIXTX_COLOR_SPACE_P3_D65 = 3,
-    #[doc = "< Color space P3_DCI"]
-    CTL_PIXTX_COLOR_SPACE_P3_DCI = 4,
-    #[doc = "< Color space P3_D60"]
-    CTL_PIXTX_COLOR_SPACE_P3_D60 = 5,
-    #[doc = "< Color space custom, Refer ::ctl_pixtx_color_primaries_t for color\n< primary details"]
-    CTL_PIXTX_COLOR_SPACE_CUSTOM = 65535,
-    CTL_PIXTX_COLOR_SPACE_MAX = 65536,
-}
+pub struct _ctl_pixtx_color_space_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Pixel transformation color space types"]
 pub use self::_ctl_pixtx_color_space_t as ctl_pixtx_color_space_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_pixtx_color_model_t {
+    #[doc = "< Color model RGB full range"]
+    pub const CTL_PIXTX_COLOR_MODEL_RGB_FR: _ctl_pixtx_color_model_t = _ctl_pixtx_color_model_t(0);
+    #[doc = "< Color model RGB limited range"]
+    pub const CTL_PIXTX_COLOR_MODEL_RGB_LR: _ctl_pixtx_color_model_t = _ctl_pixtx_color_model_t(1);
+    #[doc = "< Color model YCBCR 422 full range"]
+    pub const CTL_PIXTX_COLOR_MODEL_YCBCR_422_FR: _ctl_pixtx_color_model_t =
+        _ctl_pixtx_color_model_t(2);
+    #[doc = "< Color model YCBCR 422 limited range"]
+    pub const CTL_PIXTX_COLOR_MODEL_YCBCR_422_LR: _ctl_pixtx_color_model_t =
+        _ctl_pixtx_color_model_t(3);
+    #[doc = "< Color model YCBCR 420 full range"]
+    pub const CTL_PIXTX_COLOR_MODEL_YCBCR_420_FR: _ctl_pixtx_color_model_t =
+        _ctl_pixtx_color_model_t(4);
+    #[doc = "< Color model YCBCR 420 limited range"]
+    pub const CTL_PIXTX_COLOR_MODEL_YCBCR_420_LR: _ctl_pixtx_color_model_t =
+        _ctl_pixtx_color_model_t(5);
+    #[doc = "< Color model YCBCR 444 full range"]
+    pub const CTL_PIXTX_COLOR_MODEL_YCBCR_444_FR: _ctl_pixtx_color_model_t =
+        _ctl_pixtx_color_model_t(6);
+    #[doc = "< Color model YCBCR 444 limited range"]
+    pub const CTL_PIXTX_COLOR_MODEL_YCBCR_444_LR: _ctl_pixtx_color_model_t =
+        _ctl_pixtx_color_model_t(7);
+    pub const CTL_PIXTX_COLOR_MODEL_MAX: _ctl_pixtx_color_model_t = _ctl_pixtx_color_model_t(8);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Pixel transformation color model types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_pixtx_color_model_t {
-    #[doc = "< Color model RGB full range"]
-    CTL_PIXTX_COLOR_MODEL_RGB_FR = 0,
-    #[doc = "< Color model RGB limited range"]
-    CTL_PIXTX_COLOR_MODEL_RGB_LR = 1,
-    #[doc = "< Color model YCBCR 422 full range"]
-    CTL_PIXTX_COLOR_MODEL_YCBCR_422_FR = 2,
-    #[doc = "< Color model YCBCR 422 limited range"]
-    CTL_PIXTX_COLOR_MODEL_YCBCR_422_LR = 3,
-    #[doc = "< Color model YCBCR 420 full range"]
-    CTL_PIXTX_COLOR_MODEL_YCBCR_420_FR = 4,
-    #[doc = "< Color model YCBCR 420 limited range"]
-    CTL_PIXTX_COLOR_MODEL_YCBCR_420_LR = 5,
-    #[doc = "< Color model YCBCR 444 full range"]
-    CTL_PIXTX_COLOR_MODEL_YCBCR_444_FR = 6,
-    #[doc = "< Color model YCBCR 444 limited range"]
-    CTL_PIXTX_COLOR_MODEL_YCBCR_444_LR = 7,
-    CTL_PIXTX_COLOR_MODEL_MAX = 8,
-}
+pub struct _ctl_pixtx_color_model_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Pixel transformation color model types"]
 pub use self::_ctl_pixtx_color_model_t as ctl_pixtx_color_model_t;
 #[doc = "\n @brief Pixel transformation color primaries"]
@@ -3020,16 +3242,19 @@ impl Default for _ctl_panel_descriptor_access_args_t {
 }
 #[doc = "\n @brief  Retro Scaling Types"]
 pub type ctl_retro_scaling_type_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_retro_scaling_type_flag_t {
+impl _ctl_retro_scaling_type_flag_t {
     #[doc = "< Integer Scaling"]
-    CTL_RETRO_SCALING_TYPE_FLAG_INTEGER = 1,
+    pub const CTL_RETRO_SCALING_TYPE_FLAG_INTEGER: _ctl_retro_scaling_type_flag_t =
+        _ctl_retro_scaling_type_flag_t(1);
     #[doc = "< Nearest Neighbour Scaling"]
-    CTL_RETRO_SCALING_TYPE_FLAG_NEAREST_NEIGHBOUR = 2,
-    CTL_RETRO_SCALING_TYPE_FLAG_MAX = -2147483648,
+    pub const CTL_RETRO_SCALING_TYPE_FLAG_NEAREST_NEIGHBOUR: _ctl_retro_scaling_type_flag_t =
+        _ctl_retro_scaling_type_flag_t(2);
+    pub const CTL_RETRO_SCALING_TYPE_FLAG_MAX: _ctl_retro_scaling_type_flag_t =
+        _ctl_retro_scaling_type_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_retro_scaling_type_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_retro_scaling_type_flag_t as ctl_retro_scaling_type_flag_t;
 #[doc = "\n @brief Set/Get Retro Scaling Type"]
 #[repr(C)]
@@ -3059,22 +3284,27 @@ pub struct _ctl_retro_scaling_caps_t {
 }
 #[doc = "\n @brief Scaling Types"]
 pub type ctl_scaling_type_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_scaling_type_flag_t {
+impl _ctl_scaling_type_flag_t {
     #[doc = "< No scaling is applied and display manages scaling itself when possible"]
-    CTL_SCALING_TYPE_FLAG_IDENTITY = 1,
+    pub const CTL_SCALING_TYPE_FLAG_IDENTITY: _ctl_scaling_type_flag_t =
+        _ctl_scaling_type_flag_t(1);
     #[doc = "< Source is not scaled but place in the center of the target display"]
-    CTL_SCALING_TYPE_FLAG_CENTERED = 2,
+    pub const CTL_SCALING_TYPE_FLAG_CENTERED: _ctl_scaling_type_flag_t =
+        _ctl_scaling_type_flag_t(2);
     #[doc = "< Source is stretched to fit the target size"]
-    CTL_SCALING_TYPE_FLAG_STRETCHED = 4,
+    pub const CTL_SCALING_TYPE_FLAG_STRETCHED: _ctl_scaling_type_flag_t =
+        _ctl_scaling_type_flag_t(4);
     #[doc = "< The aspect ratio is maintained with the source centered"]
-    CTL_SCALING_TYPE_FLAG_ASPECT_RATIO_CENTERED_MAX = 8,
+    pub const CTL_SCALING_TYPE_FLAG_ASPECT_RATIO_CENTERED_MAX: _ctl_scaling_type_flag_t =
+        _ctl_scaling_type_flag_t(8);
     #[doc = "< None of the standard types match this .Additional parameters are\n< required which should be set via a private driver interface"]
-    CTL_SCALING_TYPE_FLAG_CUSTOM = 16,
-    CTL_SCALING_TYPE_FLAG_MAX = -2147483648,
+    pub const CTL_SCALING_TYPE_FLAG_CUSTOM: _ctl_scaling_type_flag_t = _ctl_scaling_type_flag_t(16);
+    pub const CTL_SCALING_TYPE_FLAG_MAX: _ctl_scaling_type_flag_t =
+        _ctl_scaling_type_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_scaling_type_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_scaling_type_flag_t as ctl_scaling_type_flag_t;
 #[doc = "\n @brief Scaling caps"]
 #[repr(C)]
@@ -3164,44 +3394,51 @@ impl ::std::fmt::Debug for _ctl_lace_aggr_config_t {
 pub type ctl_lace_aggr_config_t = _ctl_lace_aggr_config_t;
 #[doc = "\n @brief Get Operations used for additional settings"]
 pub type ctl_get_operation_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_get_operation_flag_t {
+impl _ctl_get_operation_flag_t {
     #[doc = "< Get the details set through last set call"]
-    CTL_GET_OPERATION_FLAG_CURRENT = 1,
+    pub const CTL_GET_OPERATION_FLAG_CURRENT: _ctl_get_operation_flag_t =
+        _ctl_get_operation_flag_t(1);
     #[doc = "< Get the driver default values"]
-    CTL_GET_OPERATION_FLAG_DEFAULT = 2,
+    pub const CTL_GET_OPERATION_FLAG_DEFAULT: _ctl_get_operation_flag_t =
+        _ctl_get_operation_flag_t(2);
     #[doc = "< Get capability"]
-    CTL_GET_OPERATION_FLAG_CAPABILITY = 4,
-    CTL_GET_OPERATION_FLAG_MAX = -2147483648,
+    pub const CTL_GET_OPERATION_FLAG_CAPABILITY: _ctl_get_operation_flag_t =
+        _ctl_get_operation_flag_t(4);
+    pub const CTL_GET_OPERATION_FLAG_MAX: _ctl_get_operation_flag_t =
+        _ctl_get_operation_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_get_operation_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_get_operation_flag_t as ctl_get_operation_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_set_operation_t {
+    #[doc = "< Restore default values"]
+    pub const CTL_SET_OPERATION_RESTORE_DEFAULT: _ctl_set_operation_t = _ctl_set_operation_t(0);
+    #[doc = "< Set custom values"]
+    pub const CTL_SET_OPERATION_CUSTOM: _ctl_set_operation_t = _ctl_set_operation_t(1);
+    pub const CTL_SET_OPERATION_MAX: _ctl_set_operation_t = _ctl_set_operation_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Set Operations used for additional settings"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_set_operation_t {
-    #[doc = "< Restore default values"]
-    CTL_SET_OPERATION_RESTORE_DEFAULT = 0,
-    #[doc = "< Set custom values"]
-    CTL_SET_OPERATION_CUSTOM = 1,
-    CTL_SET_OPERATION_MAX = 2,
-}
+pub struct _ctl_set_operation_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Set Operations used for additional settings"]
 pub use self::_ctl_set_operation_t as ctl_set_operation_t;
 #[doc = "\n @brief  Lace Trigger Modes"]
 pub type ctl_lace_trigger_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_lace_trigger_flag_t {
+impl _ctl_lace_trigger_flag_t {
     #[doc = "< LACE enhancement depends on Ambient light"]
-    CTL_LACE_TRIGGER_FLAG_AMBIENT_LIGHT = 1,
+    pub const CTL_LACE_TRIGGER_FLAG_AMBIENT_LIGHT: _ctl_lace_trigger_flag_t =
+        _ctl_lace_trigger_flag_t(1);
     #[doc = "< LACE enhancement is as per given fixed aggressiveness level"]
-    CTL_LACE_TRIGGER_FLAG_FIXED_AGGRESSIVENESS = 2,
-    CTL_LACE_TRIGGER_FLAG_MAX = -2147483648,
+    pub const CTL_LACE_TRIGGER_FLAG_FIXED_AGGRESSIVENESS: _ctl_lace_trigger_flag_t =
+        _ctl_lace_trigger_flag_t(2);
+    pub const CTL_LACE_TRIGGER_FLAG_MAX: _ctl_lace_trigger_flag_t =
+        _ctl_lace_trigger_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_lace_trigger_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_lace_trigger_flag_t as ctl_lace_trigger_flag_t;
 #[doc = "\n @brief Set/Get LACE Config"]
 #[repr(C)]
@@ -3307,29 +3544,38 @@ impl Default for _ctl_mux_properties_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_intel_arc_sync_profile_t {
+    #[doc = "< Invalid profile"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_INVALID: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(0);
+    #[doc = "< Default. Selects appropriate profile based on the monitor. COMPATIBLE\n< profile is applied if profile is not available for the monitor"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_RECOMMENDED: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(1);
+    #[doc = "< Unconstrained. Full VRR range of the monitor can be used"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_EXCELLENT: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(2);
+    #[doc = "< Some minor range constraints, unlikely to effect user experience but\n< can reduce flicker on some monitors"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_GOOD: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(3);
+    #[doc = "< Significant constraints that will reduce flicker considerably but are\n< likely to cause some level of judder onscreen especially when refresh\n< rates are changing rapidly"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_COMPATIBLE: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(4);
+    #[doc = "< Disable Intel Arc Sync on this monitor. This disables variable rate\n< flips on this monitor. All sync flips will occur at the OS requested\n< refresh rate"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_OFF: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(5);
+    #[doc = "< Applies vesa specified constraints if the monitor has provided them,\n< COMPATIBLE profile if not"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_VESA: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(6);
+    #[doc = "< Unlocks controls to set a custom Intel Arc Sync profile"]
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_CUSTOM: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(7);
+    pub const CTL_INTEL_ARC_SYNC_PROFILE_MAX: _ctl_intel_arc_sync_profile_t =
+        _ctl_intel_arc_sync_profile_t(8);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Intel Arc Sync profile"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_intel_arc_sync_profile_t {
-    #[doc = "< Invalid profile"]
-    CTL_INTEL_ARC_SYNC_PROFILE_INVALID = 0,
-    #[doc = "< Default. Selects appropriate profile based on the monitor. COMPATIBLE\n< profile is applied if profile is not available for the monitor"]
-    CTL_INTEL_ARC_SYNC_PROFILE_RECOMMENDED = 1,
-    #[doc = "< Unconstrained. Full VRR range of the monitor can be used"]
-    CTL_INTEL_ARC_SYNC_PROFILE_EXCELLENT = 2,
-    #[doc = "< Some minor range constraints, unlikely to effect user experience but\n< can reduce flicker on some monitors"]
-    CTL_INTEL_ARC_SYNC_PROFILE_GOOD = 3,
-    #[doc = "< Significant constraints that will reduce flicker considerably but are\n< likely to cause some level of judder onscreen especially when refresh\n< rates are changing rapidly"]
-    CTL_INTEL_ARC_SYNC_PROFILE_COMPATIBLE = 4,
-    #[doc = "< Disable Intel Arc Sync on this monitor. This disables variable rate\n< flips on this monitor. All sync flips will occur at the OS requested\n< refresh rate"]
-    CTL_INTEL_ARC_SYNC_PROFILE_OFF = 5,
-    #[doc = "< Applies vesa specified constraints if the monitor has provided them,\n< COMPATIBLE profile if not"]
-    CTL_INTEL_ARC_SYNC_PROFILE_VESA = 6,
-    #[doc = "< Unlocks controls to set a custom Intel Arc Sync profile"]
-    CTL_INTEL_ARC_SYNC_PROFILE_CUSTOM = 7,
-    CTL_INTEL_ARC_SYNC_PROFILE_MAX = 8,
-}
+pub struct _ctl_intel_arc_sync_profile_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Intel Arc Sync profile"]
 pub use self::_ctl_intel_arc_sync_profile_t as ctl_intel_arc_sync_profile_t;
 #[doc = "\n @brief Intel Arc Sync Profile Params"]
@@ -3360,56 +3606,67 @@ impl Default for _ctl_intel_arc_sync_profile_params_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_edid_management_optype_t {
+    #[doc = "< This operation type is to read an output's EDID. Set edid_type input\n< arg to read MONITOR EDID or previously OVERRIDDEN EDID or CURRENT\n< active EDID. Read EDID is a 2 pass call. First call with size = 0,\n< pEdidBuf = nullptr to get the size, then call with allocated buffer to\n< get the EDID data. READ operation is applicable for any normal, edid\n< locked or edid overridden display output device."]
+    pub const CTL_EDID_MANAGEMENT_OPTYPE_READ_EDID: _ctl_edid_management_optype_t =
+        _ctl_edid_management_optype_t(1);
+    #[doc = "< To make an output always connected with OVERRIDE or MONITOR EDID\n< across reboots. When output isn't connected call with OVERRIDE EDID;\n< when connected, either set OVERRIDE and provide pEdidBuf or set\n< MONITOR and driver will use monitor's EDID. There is no change to EDID\n< stored in Monitor. Cannot be called when override is active. Any OS\n< EDID override will take precedence over IGCL override."]
+    pub const CTL_EDID_MANAGEMENT_OPTYPE_LOCK_EDID: _ctl_edid_management_optype_t =
+        _ctl_edid_management_optype_t(2);
+    #[doc = "< To undo lock EDID operation, i.e. it makes output as detached in\n< response to unplug. This operation removes past supplied EDID; output\n< status is reported to OS as it is; output restores back to monitor's\n< EDID when it is connected"]
+    pub const CTL_EDID_MANAGEMENT_OPTYPE_UNLOCK_EDID: _ctl_edid_management_optype_t =
+        _ctl_edid_management_optype_t(3);
+    #[doc = "< To replace an output's EDID with supplied one (pEdidBuf) only when\n< physical display is connected. There is no change to EDID stored in\n< Monitor. Cannot apply this operation on locked output. When no output\n< device attached, the supplied EDID will be persisted in driver for\n< future use. Any OS EDID override will take precedence over IGCL\n< override."]
+    pub const CTL_EDID_MANAGEMENT_OPTYPE_OVERRIDE_EDID: _ctl_edid_management_optype_t =
+        _ctl_edid_management_optype_t(4);
+    #[doc = "< To undo override EDID operation, that is remove previously overridden\n< EDID on an output. Output restores back to monitor's EDID when it is\n< connected"]
+    pub const CTL_EDID_MANAGEMENT_OPTYPE_UNDO_OVERRIDE_EDID: _ctl_edid_management_optype_t =
+        _ctl_edid_management_optype_t(5);
+    pub const CTL_EDID_MANAGEMENT_OPTYPE_MAX: _ctl_edid_management_optype_t =
+        _ctl_edid_management_optype_t(6);
+}
+#[repr(transparent)]
 #[doc = "\n @brief EDID Management operation type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_edid_management_optype_t {
-    #[doc = "< This operation type is to read an output's EDID. Set edid_type input\n< arg to read MONITOR EDID or previously OVERRIDDEN EDID or CURRENT\n< active EDID. Read EDID is a 2 pass call. First call with size = 0,\n< pEdidBuf = nullptr to get the size, then call with allocated buffer to\n< get the EDID data. READ operation is applicable for any normal, edid\n< locked or edid overridden display output device."]
-    CTL_EDID_MANAGEMENT_OPTYPE_READ_EDID = 1,
-    #[doc = "< To make an output always connected with OVERRIDE or MONITOR EDID\n< across reboots. When output isn't connected call with OVERRIDE EDID;\n< when connected, either set OVERRIDE and provide pEdidBuf or set\n< MONITOR and driver will use monitor's EDID. There is no change to EDID\n< stored in Monitor. Cannot be called when override is active. Any OS\n< EDID override will take precedence over IGCL override."]
-    CTL_EDID_MANAGEMENT_OPTYPE_LOCK_EDID = 2,
-    #[doc = "< To undo lock EDID operation, i.e. it makes output as detached in\n< response to unplug. This operation removes past supplied EDID; output\n< status is reported to OS as it is; output restores back to monitor's\n< EDID when it is connected"]
-    CTL_EDID_MANAGEMENT_OPTYPE_UNLOCK_EDID = 3,
-    #[doc = "< To replace an output's EDID with supplied one (pEdidBuf) only when\n< physical display is connected. There is no change to EDID stored in\n< Monitor. Cannot apply this operation on locked output. When no output\n< device attached, the supplied EDID will be persisted in driver for\n< future use. Any OS EDID override will take precedence over IGCL\n< override."]
-    CTL_EDID_MANAGEMENT_OPTYPE_OVERRIDE_EDID = 4,
-    #[doc = "< To undo override EDID operation, that is remove previously overridden\n< EDID on an output. Output restores back to monitor's EDID when it is\n< connected"]
-    CTL_EDID_MANAGEMENT_OPTYPE_UNDO_OVERRIDE_EDID = 5,
-    CTL_EDID_MANAGEMENT_OPTYPE_MAX = 6,
-}
+pub struct _ctl_edid_management_optype_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief EDID Management operation type"]
 pub use self::_ctl_edid_management_optype_t as ctl_edid_management_optype_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_edid_type_t {
+    #[doc = "< [in] Used to return currently active EDID in READ_EDID call."]
+    pub const CTL_EDID_TYPE_CURRENT: _ctl_edid_type_t = _ctl_edid_type_t(1);
+    #[doc = "< [in] Is it user supplied EDID. Used in LOCK_EDID call with Supplied\n< EDID or in READ_EDID to get Supplied EDID."]
+    pub const CTL_EDID_TYPE_OVERRIDE: _ctl_edid_type_t = _ctl_edid_type_t(2);
+    #[doc = "< [in] Is it Monitor's EDID. Used in LOCK_EDID and READ_EDID calls."]
+    pub const CTL_EDID_TYPE_MONITOR: _ctl_edid_type_t = _ctl_edid_type_t(3);
+    pub const CTL_EDID_TYPE_MAX: _ctl_edid_type_t = _ctl_edid_type_t(4);
+}
+#[repr(transparent)]
 #[doc = "\n @brief EDID type. Used in LOCK_EDID and READ_EDID calls."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_edid_type_t {
-    #[doc = "< [in] Used to return currently active EDID in READ_EDID call."]
-    CTL_EDID_TYPE_CURRENT = 1,
-    #[doc = "< [in] Is it user supplied EDID. Used in LOCK_EDID call with Supplied\n< EDID or in READ_EDID to get Supplied EDID."]
-    CTL_EDID_TYPE_OVERRIDE = 2,
-    #[doc = "< [in] Is it Monitor's EDID. Used in LOCK_EDID and READ_EDID calls."]
-    CTL_EDID_TYPE_MONITOR = 3,
-    CTL_EDID_TYPE_MAX = 4,
-}
+pub struct _ctl_edid_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief EDID type. Used in LOCK_EDID and READ_EDID calls."]
 pub use self::_ctl_edid_type_t as ctl_edid_type_t;
 #[doc = "\n @brief Edid management operation Out Flags"]
 pub type ctl_edid_management_out_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_edid_management_out_flag_t {
+impl _ctl_edid_management_out_flag_t {
     #[doc = "< [out] If OS was notified about a connection change. App will need to\n< wait for the OS action to complete."]
-    CTL_EDID_MANAGEMENT_OUT_FLAG_OS_CONN_NOTIFICATION = 1,
+    pub const CTL_EDID_MANAGEMENT_OUT_FLAG_OS_CONN_NOTIFICATION: _ctl_edid_management_out_flag_t =
+        _ctl_edid_management_out_flag_t(1);
     #[doc = "< [out] Is it previously supplied EDID, set for READ_EDID(CURRENT)."]
-    CTL_EDID_MANAGEMENT_OUT_FLAG_SUPPLIED_EDID = 2,
+    pub const CTL_EDID_MANAGEMENT_OUT_FLAG_SUPPLIED_EDID: _ctl_edid_management_out_flag_t =
+        _ctl_edid_management_out_flag_t(2);
     #[doc = "< [out] Is it Monitor's EDID, set for READ_EDID(CURRENT)."]
-    CTL_EDID_MANAGEMENT_OUT_FLAG_MONITOR_EDID = 4,
+    pub const CTL_EDID_MANAGEMENT_OUT_FLAG_MONITOR_EDID: _ctl_edid_management_out_flag_t =
+        _ctl_edid_management_out_flag_t(4);
     #[doc = "< [out] Is Monitor physically connected"]
-    CTL_EDID_MANAGEMENT_OUT_FLAG_DISPLAY_CONNECTED = 8,
-    CTL_EDID_MANAGEMENT_OUT_FLAG_MAX = -2147483648,
+    pub const CTL_EDID_MANAGEMENT_OUT_FLAG_DISPLAY_CONNECTED: _ctl_edid_management_out_flag_t =
+        _ctl_edid_management_out_flag_t(8);
+    pub const CTL_EDID_MANAGEMENT_OUT_FLAG_MAX: _ctl_edid_management_out_flag_t =
+        _ctl_edid_management_out_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_edid_management_out_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_edid_management_out_flag_t as ctl_edid_management_out_flag_t;
 #[doc = "\n @brief EDID management"]
 #[repr(C)]
@@ -3439,19 +3696,23 @@ impl Default for _ctl_edid_management_args_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_custom_mode_operation_types_t {
+    #[doc = "< Get details of all previous applied custom modes if any."]
+    pub const CTL_CUSTOM_MODE_OPERATION_TYPES_GET_CUSTOM_SOURCE_MODES:
+        _ctl_custom_mode_operation_types_t = _ctl_custom_mode_operation_types_t(0);
+    #[doc = "< Add a new mode. Allows only single mode adition at a time."]
+    pub const CTL_CUSTOM_MODE_OPERATION_TYPES_ADD_CUSTOM_SOURCE_MODE:
+        _ctl_custom_mode_operation_types_t = _ctl_custom_mode_operation_types_t(1);
+    #[doc = "< Remove previously added custom mode. Allows single or multiple mode\n< removal at a time."]
+    pub const CTL_CUSTOM_MODE_OPERATION_TYPES_REMOVE_CUSTOM_SOURCE_MODES:
+        _ctl_custom_mode_operation_types_t = _ctl_custom_mode_operation_types_t(2);
+    pub const CTL_CUSTOM_MODE_OPERATION_TYPES_MAX: _ctl_custom_mode_operation_types_t =
+        _ctl_custom_mode_operation_types_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Custom mode operation types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_custom_mode_operation_types_t {
-    #[doc = "< Get details of all previous applied custom modes if any."]
-    CTL_CUSTOM_MODE_OPERATION_TYPES_GET_CUSTOM_SOURCE_MODES = 0,
-    #[doc = "< Add a new mode. Allows only single mode adition at a time."]
-    CTL_CUSTOM_MODE_OPERATION_TYPES_ADD_CUSTOM_SOURCE_MODE = 1,
-    #[doc = "< Remove previously added custom mode. Allows single or multiple mode\n< removal at a time."]
-    CTL_CUSTOM_MODE_OPERATION_TYPES_REMOVE_CUSTOM_SOURCE_MODES = 2,
-    CTL_CUSTOM_MODE_OPERATION_TYPES_MAX = 3,
-}
+pub struct _ctl_custom_mode_operation_types_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Custom mode operation types"]
 pub use self::_ctl_custom_mode_operation_types_t as ctl_custom_mode_operation_types_t;
 #[doc = "\n @brief Get/Set Custom Mode"]
@@ -3487,21 +3748,26 @@ pub struct _ctl_custom_src_mode_t {
     #[doc = "< [in,out] CustomMode Source Y Size"]
     pub SourceY: u32,
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_combined_display_optype_t {
+    #[doc = "< To check whether given outputs can form a combined display, no changes\n< are applied"]
+    pub const CTL_COMBINED_DISPLAY_OPTYPE_IS_SUPPORTED_CONFIG: _ctl_combined_display_optype_t =
+        _ctl_combined_display_optype_t(1);
+    #[doc = "< To setup and enable a combined display"]
+    pub const CTL_COMBINED_DISPLAY_OPTYPE_ENABLE: _ctl_combined_display_optype_t =
+        _ctl_combined_display_optype_t(2);
+    #[doc = "< To disable combined display"]
+    pub const CTL_COMBINED_DISPLAY_OPTYPE_DISABLE: _ctl_combined_display_optype_t =
+        _ctl_combined_display_optype_t(3);
+    #[doc = "< To query combined display configuration"]
+    pub const CTL_COMBINED_DISPLAY_OPTYPE_QUERY_CONFIG: _ctl_combined_display_optype_t =
+        _ctl_combined_display_optype_t(4);
+    pub const CTL_COMBINED_DISPLAY_OPTYPE_MAX: _ctl_combined_display_optype_t =
+        _ctl_combined_display_optype_t(5);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Combined Display operation type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_combined_display_optype_t {
-    #[doc = "< To check whether given outputs can form a combined display, no changes\n< are applied"]
-    CTL_COMBINED_DISPLAY_OPTYPE_IS_SUPPORTED_CONFIG = 1,
-    #[doc = "< To setup and enable a combined display"]
-    CTL_COMBINED_DISPLAY_OPTYPE_ENABLE = 2,
-    #[doc = "< To disable combined display"]
-    CTL_COMBINED_DISPLAY_OPTYPE_DISABLE = 3,
-    #[doc = "< To query combined display configuration"]
-    CTL_COMBINED_DISPLAY_OPTYPE_QUERY_CONFIG = 4,
-    CTL_COMBINED_DISPLAY_OPTYPE_MAX = 5,
-}
+pub struct _ctl_combined_display_optype_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Combined Display operation type"]
 pub use self::_ctl_combined_display_optype_t as ctl_combined_display_optype_t;
 #[doc = "\n @brief Combined Display's child display target mode"]
@@ -3573,23 +3839,26 @@ impl Default for _ctl_combined_display_args_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_genlock_operation_t {
+    #[doc = "< Get details of GENLOCK support and timing information"]
+    pub const CTL_GENLOCK_OPERATION_GET_TIMING_DETAILS: _ctl_genlock_operation_t =
+        _ctl_genlock_operation_t(0);
+    #[doc = "< Driver to verify that the topology is Genlock capable"]
+    pub const CTL_GENLOCK_OPERATION_VALIDATE: _ctl_genlock_operation_t =
+        _ctl_genlock_operation_t(1);
+    #[doc = "< Enable GENLOCK"]
+    pub const CTL_GENLOCK_OPERATION_ENABLE: _ctl_genlock_operation_t = _ctl_genlock_operation_t(2);
+    #[doc = "< Disable GENLOCK"]
+    pub const CTL_GENLOCK_OPERATION_DISABLE: _ctl_genlock_operation_t = _ctl_genlock_operation_t(3);
+    #[doc = "< Get details of the current Genlock topology that is applied"]
+    pub const CTL_GENLOCK_OPERATION_GET_TOPOLOGY: _ctl_genlock_operation_t =
+        _ctl_genlock_operation_t(4);
+    pub const CTL_GENLOCK_OPERATION_MAX: _ctl_genlock_operation_t = _ctl_genlock_operation_t(5);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Display Genlock Operations"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_genlock_operation_t {
-    #[doc = "< Get details of GENLOCK support and timing information"]
-    CTL_GENLOCK_OPERATION_GET_TIMING_DETAILS = 0,
-    #[doc = "< Driver to verify that the topology is Genlock capable"]
-    CTL_GENLOCK_OPERATION_VALIDATE = 1,
-    #[doc = "< Enable GENLOCK"]
-    CTL_GENLOCK_OPERATION_ENABLE = 2,
-    #[doc = "< Disable GENLOCK"]
-    CTL_GENLOCK_OPERATION_DISABLE = 3,
-    #[doc = "< Get details of the current Genlock topology that is applied"]
-    CTL_GENLOCK_OPERATION_GET_TOPOLOGY = 4,
-    CTL_GENLOCK_OPERATION_MAX = 5,
-}
+pub struct _ctl_genlock_operation_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Display Genlock Operations"]
 pub use self::_ctl_genlock_operation_t as ctl_genlock_operation_t;
 #[doc = "\n @brief Display Genlock Info"]
@@ -3749,36 +4018,45 @@ impl Default for _ctl_dce_args_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_wire_format_color_model_t {
+    #[doc = "< Color model RGB"]
+    pub const CTL_WIRE_FORMAT_COLOR_MODEL_RGB: _ctl_wire_format_color_model_t =
+        _ctl_wire_format_color_model_t(0);
+    #[doc = "< Color model YCBCR 420"]
+    pub const CTL_WIRE_FORMAT_COLOR_MODEL_YCBCR_420: _ctl_wire_format_color_model_t =
+        _ctl_wire_format_color_model_t(1);
+    #[doc = "< Color model YCBCR 422"]
+    pub const CTL_WIRE_FORMAT_COLOR_MODEL_YCBCR_422: _ctl_wire_format_color_model_t =
+        _ctl_wire_format_color_model_t(2);
+    #[doc = "< Color model YCBCR 444"]
+    pub const CTL_WIRE_FORMAT_COLOR_MODEL_YCBCR_444: _ctl_wire_format_color_model_t =
+        _ctl_wire_format_color_model_t(3);
+    pub const CTL_WIRE_FORMAT_COLOR_MODEL_MAX: _ctl_wire_format_color_model_t =
+        _ctl_wire_format_color_model_t(4);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Color model"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_wire_format_color_model_t {
-    #[doc = "< Color model RGB"]
-    CTL_WIRE_FORMAT_COLOR_MODEL_RGB = 0,
-    #[doc = "< Color model YCBCR 420"]
-    CTL_WIRE_FORMAT_COLOR_MODEL_YCBCR_420 = 1,
-    #[doc = "< Color model YCBCR 422"]
-    CTL_WIRE_FORMAT_COLOR_MODEL_YCBCR_422 = 2,
-    #[doc = "< Color model YCBCR 444"]
-    CTL_WIRE_FORMAT_COLOR_MODEL_YCBCR_444 = 3,
-    CTL_WIRE_FORMAT_COLOR_MODEL_MAX = 4,
-}
+pub struct _ctl_wire_format_color_model_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Color model"]
 pub use self::_ctl_wire_format_color_model_t as ctl_wire_format_color_model_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_wire_format_operation_type_t {
+    #[doc = "< Get request"]
+    pub const CTL_WIRE_FORMAT_OPERATION_TYPE_GET: _ctl_wire_format_operation_type_t =
+        _ctl_wire_format_operation_type_t(0);
+    #[doc = "< Set request"]
+    pub const CTL_WIRE_FORMAT_OPERATION_TYPE_SET: _ctl_wire_format_operation_type_t =
+        _ctl_wire_format_operation_type_t(1);
+    #[doc = "< Restore to default values"]
+    pub const CTL_WIRE_FORMAT_OPERATION_TYPE_RESTORE_DEFAULT: _ctl_wire_format_operation_type_t =
+        _ctl_wire_format_operation_type_t(2);
+    pub const CTL_WIRE_FORMAT_OPERATION_TYPE_MAX: _ctl_wire_format_operation_type_t =
+        _ctl_wire_format_operation_type_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Operation type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_wire_format_operation_type_t {
-    #[doc = "< Get request"]
-    CTL_WIRE_FORMAT_OPERATION_TYPE_GET = 0,
-    #[doc = "< Set request"]
-    CTL_WIRE_FORMAT_OPERATION_TYPE_SET = 1,
-    #[doc = "< Restore to default values"]
-    CTL_WIRE_FORMAT_OPERATION_TYPE_RESTORE_DEFAULT = 2,
-    CTL_WIRE_FORMAT_OPERATION_TYPE_MAX = 3,
-}
+pub struct _ctl_wire_format_operation_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Operation type"]
 pub use self::_ctl_wire_format_operation_type_t as ctl_wire_format_operation_type_t;
 #[doc = "\n @brief Wire Format"]
@@ -3829,121 +4107,156 @@ impl Default for _ctl_get_set_wire_format_config_t {
 }
 #[doc = "\n @brief Various display settings"]
 pub type ctl_display_setting_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_flag_t {
+impl _ctl_display_setting_flag_t {
     #[doc = "< Low latency"]
-    CTL_DISPLAY_SETTING_FLAG_LOW_LATENCY = 1,
+    pub const CTL_DISPLAY_SETTING_FLAG_LOW_LATENCY: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(1);
     #[doc = "< Source tone mapping"]
-    CTL_DISPLAY_SETTING_FLAG_SOURCE_TM = 2,
+    pub const CTL_DISPLAY_SETTING_FLAG_SOURCE_TM: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(2);
     #[doc = "< Content type"]
-    CTL_DISPLAY_SETTING_FLAG_CONTENT_TYPE = 4,
+    pub const CTL_DISPLAY_SETTING_FLAG_CONTENT_TYPE: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(4);
     #[doc = "< Quantization range, full range or limited range"]
-    CTL_DISPLAY_SETTING_FLAG_QUANTIZATION_RANGE = 8,
+    pub const CTL_DISPLAY_SETTING_FLAG_QUANTIZATION_RANGE: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(8);
     #[doc = "< Picture aspect ratio"]
-    CTL_DISPLAY_SETTING_FLAG_PICTURE_AR = 16,
+    pub const CTL_DISPLAY_SETTING_FLAG_PICTURE_AR: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(16);
     #[doc = "< Audio settings"]
-    CTL_DISPLAY_SETTING_FLAG_AUDIO = 32,
-    CTL_DISPLAY_SETTING_FLAG_MAX = -2147483648,
+    pub const CTL_DISPLAY_SETTING_FLAG_AUDIO: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(32);
+    pub const CTL_DISPLAY_SETTING_FLAG_MAX: _ctl_display_setting_flag_t =
+        _ctl_display_setting_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_display_setting_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_display_setting_flag_t as ctl_display_setting_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_setting_low_latency_t {
+    #[doc = "< Default"]
+    pub const CTL_DISPLAY_SETTING_LOW_LATENCY_DEFAULT: _ctl_display_setting_low_latency_t =
+        _ctl_display_setting_low_latency_t(0);
+    #[doc = "< Disabled"]
+    pub const CTL_DISPLAY_SETTING_LOW_LATENCY_DISABLED: _ctl_display_setting_low_latency_t =
+        _ctl_display_setting_low_latency_t(1);
+    #[doc = "< Enabled"]
+    pub const CTL_DISPLAY_SETTING_LOW_LATENCY_ENABLED: _ctl_display_setting_low_latency_t =
+        _ctl_display_setting_low_latency_t(2);
+    pub const CTL_DISPLAY_SETTING_LOW_LATENCY_MAX: _ctl_display_setting_low_latency_t =
+        _ctl_display_setting_low_latency_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Low latency setting"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_low_latency_t {
-    #[doc = "< Default"]
-    CTL_DISPLAY_SETTING_LOW_LATENCY_DEFAULT = 0,
-    #[doc = "< Disabled"]
-    CTL_DISPLAY_SETTING_LOW_LATENCY_DISABLED = 1,
-    #[doc = "< Enabled"]
-    CTL_DISPLAY_SETTING_LOW_LATENCY_ENABLED = 2,
-    CTL_DISPLAY_SETTING_LOW_LATENCY_MAX = 3,
-}
+pub struct _ctl_display_setting_low_latency_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Low latency setting"]
 pub use self::_ctl_display_setting_low_latency_t as ctl_display_setting_low_latency_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_setting_sourcetm_t {
+    #[doc = "< Default"]
+    pub const CTL_DISPLAY_SETTING_SOURCETM_DEFAULT: _ctl_display_setting_sourcetm_t =
+        _ctl_display_setting_sourcetm_t(0);
+    #[doc = "< Disabled"]
+    pub const CTL_DISPLAY_SETTING_SOURCETM_DISABLED: _ctl_display_setting_sourcetm_t =
+        _ctl_display_setting_sourcetm_t(1);
+    #[doc = "< Enabled"]
+    pub const CTL_DISPLAY_SETTING_SOURCETM_ENABLED: _ctl_display_setting_sourcetm_t =
+        _ctl_display_setting_sourcetm_t(2);
+    pub const CTL_DISPLAY_SETTING_SOURCETM_MAX: _ctl_display_setting_sourcetm_t =
+        _ctl_display_setting_sourcetm_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Source tone mapping setting"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_sourcetm_t {
-    #[doc = "< Default"]
-    CTL_DISPLAY_SETTING_SOURCETM_DEFAULT = 0,
-    #[doc = "< Disabled"]
-    CTL_DISPLAY_SETTING_SOURCETM_DISABLED = 1,
-    #[doc = "< Enabled"]
-    CTL_DISPLAY_SETTING_SOURCETM_ENABLED = 2,
-    CTL_DISPLAY_SETTING_SOURCETM_MAX = 3,
-}
+pub struct _ctl_display_setting_sourcetm_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Source tone mapping setting"]
 pub use self::_ctl_display_setting_sourcetm_t as ctl_display_setting_sourcetm_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_setting_content_type_t {
+    #[doc = "< Default content type used by driver. Driver will use internal\n< techniques to determine content type and indicate to panel"]
+    pub const CTL_DISPLAY_SETTING_CONTENT_TYPE_DEFAULT: _ctl_display_setting_content_type_t =
+        _ctl_display_setting_content_type_t(0);
+    #[doc = "< Content type indication is disabled"]
+    pub const CTL_DISPLAY_SETTING_CONTENT_TYPE_DISABLED: _ctl_display_setting_content_type_t =
+        _ctl_display_setting_content_type_t(1);
+    #[doc = "< Typical desktop with a mix of text and graphics"]
+    pub const CTL_DISPLAY_SETTING_CONTENT_TYPE_DESKTOP: _ctl_display_setting_content_type_t =
+        _ctl_display_setting_content_type_t(2);
+    #[doc = "< Video or media content"]
+    pub const CTL_DISPLAY_SETTING_CONTENT_TYPE_MEDIA: _ctl_display_setting_content_type_t =
+        _ctl_display_setting_content_type_t(3);
+    #[doc = "< Gaming content"]
+    pub const CTL_DISPLAY_SETTING_CONTENT_TYPE_GAMING: _ctl_display_setting_content_type_t =
+        _ctl_display_setting_content_type_t(4);
+    pub const CTL_DISPLAY_SETTING_CONTENT_TYPE_MAX: _ctl_display_setting_content_type_t =
+        _ctl_display_setting_content_type_t(5);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Content type settings"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_content_type_t {
-    #[doc = "< Default content type used by driver. Driver will use internal\n< techniques to determine content type and indicate to panel"]
-    CTL_DISPLAY_SETTING_CONTENT_TYPE_DEFAULT = 0,
-    #[doc = "< Content type indication is disabled"]
-    CTL_DISPLAY_SETTING_CONTENT_TYPE_DISABLED = 1,
-    #[doc = "< Typical desktop with a mix of text and graphics"]
-    CTL_DISPLAY_SETTING_CONTENT_TYPE_DESKTOP = 2,
-    #[doc = "< Video or media content"]
-    CTL_DISPLAY_SETTING_CONTENT_TYPE_MEDIA = 3,
-    #[doc = "< Gaming content"]
-    CTL_DISPLAY_SETTING_CONTENT_TYPE_GAMING = 4,
-    CTL_DISPLAY_SETTING_CONTENT_TYPE_MAX = 5,
-}
+pub struct _ctl_display_setting_content_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Content type settings"]
 pub use self::_ctl_display_setting_content_type_t as ctl_display_setting_content_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_setting_quantization_range_t {
+    #[doc = "< Default based on video format"]
+    pub const CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_DEFAULT:
+        _ctl_display_setting_quantization_range_t = _ctl_display_setting_quantization_range_t(0);
+    #[doc = "< Limited range"]
+    pub const CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_LIMITED_RANGE:
+        _ctl_display_setting_quantization_range_t = _ctl_display_setting_quantization_range_t(1);
+    #[doc = "< Full range"]
+    pub const CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_FULL_RANGE:
+        _ctl_display_setting_quantization_range_t = _ctl_display_setting_quantization_range_t(2);
+    pub const CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_MAX:
+        _ctl_display_setting_quantization_range_t = _ctl_display_setting_quantization_range_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Quantization range"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_quantization_range_t {
-    #[doc = "< Default based on video format"]
-    CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_DEFAULT = 0,
-    #[doc = "< Limited range"]
-    CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_LIMITED_RANGE = 1,
-    #[doc = "< Full range"]
-    CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_FULL_RANGE = 2,
-    CTL_DISPLAY_SETTING_QUANTIZATION_RANGE_MAX = 3,
-}
+pub struct _ctl_display_setting_quantization_range_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Quantization range"]
 pub use self::_ctl_display_setting_quantization_range_t as ctl_display_setting_quantization_range_t;
 #[doc = "\n @brief Picture aspect ratio"]
 pub type ctl_display_setting_picture_ar_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_picture_ar_flag_t {
+impl _ctl_display_setting_picture_ar_flag_t {
     #[doc = "< Default picture aspect ratio"]
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_DEFAULT = 1,
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_DEFAULT: _ctl_display_setting_picture_ar_flag_t =
+        _ctl_display_setting_picture_ar_flag_t(1);
     #[doc = "< Picture aspect ratio indication is explicitly disabled"]
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_DISABLED = 2,
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_DISABLED: _ctl_display_setting_picture_ar_flag_t =
+        _ctl_display_setting_picture_ar_flag_t(2);
     #[doc = "< Aspect ratio of 4:3"]
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_4_3 = 4,
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_4_3: _ctl_display_setting_picture_ar_flag_t =
+        _ctl_display_setting_picture_ar_flag_t(4);
     #[doc = "< Aspect ratio of 16:9"]
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_16_9 = 8,
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_16_9: _ctl_display_setting_picture_ar_flag_t =
+        _ctl_display_setting_picture_ar_flag_t(8);
     #[doc = "< Aspect ratio of 64:27 or 21:9 anamorphic"]
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_64_27 = 16,
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_64_27: _ctl_display_setting_picture_ar_flag_t =
+        _ctl_display_setting_picture_ar_flag_t(16);
     #[doc = "< Aspect ratio of 256:135"]
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_256_135 = 32,
-    CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_MAX = -2147483648,
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_AR_256_135:
+        _ctl_display_setting_picture_ar_flag_t = _ctl_display_setting_picture_ar_flag_t(32);
+    pub const CTL_DISPLAY_SETTING_PICTURE_AR_FLAG_MAX: _ctl_display_setting_picture_ar_flag_t =
+        _ctl_display_setting_picture_ar_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_display_setting_picture_ar_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_display_setting_picture_ar_flag_t as ctl_display_setting_picture_ar_flag_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_display_setting_audio_t {
+    #[doc = "< Default audio settings, always enumerated and enabled if display\n< supports it"]
+    pub const CTL_DISPLAY_SETTING_AUDIO_DEFAULT: _ctl_display_setting_audio_t =
+        _ctl_display_setting_audio_t(0);
+    #[doc = "< Forcefully disable display audio end point enumeration to OS"]
+    pub const CTL_DISPLAY_SETTING_AUDIO_DISABLED: _ctl_display_setting_audio_t =
+        _ctl_display_setting_audio_t(1);
+    pub const CTL_DISPLAY_SETTING_AUDIO_MAX: _ctl_display_setting_audio_t =
+        _ctl_display_setting_audio_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Audio settings"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_display_setting_audio_t {
-    #[doc = "< Default audio settings, always enumerated and enabled if display\n< supports it"]
-    CTL_DISPLAY_SETTING_AUDIO_DEFAULT = 0,
-    #[doc = "< Forcefully disable display audio end point enumeration to OS"]
-    CTL_DISPLAY_SETTING_AUDIO_DISABLED = 1,
-    CTL_DISPLAY_SETTING_AUDIO_MAX = 2,
-}
+pub struct _ctl_display_setting_audio_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Audio settings"]
 pub use self::_ctl_display_setting_audio_t as ctl_display_setting_audio_t;
 #[doc = "\n @brief Get/Set end display settings"]
@@ -3988,19 +4301,19 @@ impl Default for _ctl_display_settings_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_engine_group_t {
+    #[doc = "< Access information about all engines combined."]
+    pub const CTL_ENGINE_GROUP_GT: _ctl_engine_group_t = _ctl_engine_group_t(0);
+    #[doc = "< Access information about all render and compute engines combined."]
+    pub const CTL_ENGINE_GROUP_RENDER: _ctl_engine_group_t = _ctl_engine_group_t(1);
+    #[doc = "< Access information about all media engines combined."]
+    pub const CTL_ENGINE_GROUP_MEDIA: _ctl_engine_group_t = _ctl_engine_group_t(2);
+    pub const CTL_ENGINE_GROUP_MAX: _ctl_engine_group_t = _ctl_engine_group_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Accelerator engine groups"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_engine_group_t {
-    #[doc = "< Access information about all engines combined."]
-    CTL_ENGINE_GROUP_GT = 0,
-    #[doc = "< Access information about all render and compute engines combined."]
-    CTL_ENGINE_GROUP_RENDER = 1,
-    #[doc = "< Access information about all media engines combined."]
-    CTL_ENGINE_GROUP_MEDIA = 2,
-    CTL_ENGINE_GROUP_MAX = 3,
-}
+pub struct _ctl_engine_group_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Accelerator engine groups"]
 pub use self::_ctl_engine_group_t as ctl_engine_group_t;
 #[doc = "\n @brief Engine group properties"]
@@ -4036,32 +4349,32 @@ pub struct _ctl_engine_stats_t {
     #[doc = "< [out] Monotonic timestamp counter in microseconds when activeTime\n< counter was sampled.\n< This timestamp should only be used to calculate delta time between\n< snapshots of this structure.\n< Never take the delta of this timestamp with the timestamp from a\n< different structure since they are not guaranteed to have the same base.\n< The absolute value of the timestamp is only valid during within the\n< application and may be different on the next execution."]
     pub timestamp: u64,
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_fan_speed_mode_t {
+    #[doc = "< The fan speed is operating using the hardware default settings"]
+    pub const CTL_FAN_SPEED_MODE_DEFAULT: _ctl_fan_speed_mode_t = _ctl_fan_speed_mode_t(0);
+    #[doc = "< The fan speed is currently set to a fixed value"]
+    pub const CTL_FAN_SPEED_MODE_FIXED: _ctl_fan_speed_mode_t = _ctl_fan_speed_mode_t(1);
+    #[doc = "< The fan speed is currently controlled dynamically by hardware based on\n< a temp/speed table"]
+    pub const CTL_FAN_SPEED_MODE_TABLE: _ctl_fan_speed_mode_t = _ctl_fan_speed_mode_t(2);
+    pub const CTL_FAN_SPEED_MODE_MAX: _ctl_fan_speed_mode_t = _ctl_fan_speed_mode_t(3);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Fan resource speed mode"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_fan_speed_mode_t {
-    #[doc = "< The fan speed is operating using the hardware default settings"]
-    CTL_FAN_SPEED_MODE_DEFAULT = 0,
-    #[doc = "< The fan speed is currently set to a fixed value"]
-    CTL_FAN_SPEED_MODE_FIXED = 1,
-    #[doc = "< The fan speed is currently controlled dynamically by hardware based on\n< a temp/speed table"]
-    CTL_FAN_SPEED_MODE_TABLE = 2,
-    CTL_FAN_SPEED_MODE_MAX = 3,
-}
+pub struct _ctl_fan_speed_mode_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Fan resource speed mode"]
 pub use self::_ctl_fan_speed_mode_t as ctl_fan_speed_mode_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_fan_speed_units_t {
+    #[doc = "< The fan speed is in units of revolutions per minute (rpm)"]
+    pub const CTL_FAN_SPEED_UNITS_RPM: _ctl_fan_speed_units_t = _ctl_fan_speed_units_t(0);
+    #[doc = "< The fan speed is a percentage of the maximum speed of the fan"]
+    pub const CTL_FAN_SPEED_UNITS_PERCENT: _ctl_fan_speed_units_t = _ctl_fan_speed_units_t(1);
+    pub const CTL_FAN_SPEED_UNITS_MAX: _ctl_fan_speed_units_t = _ctl_fan_speed_units_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Fan speed units"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_fan_speed_units_t {
-    #[doc = "< The fan speed is in units of revolutions per minute (rpm)"]
-    CTL_FAN_SPEED_UNITS_RPM = 0,
-    #[doc = "< The fan speed is a percentage of the maximum speed of the fan"]
-    CTL_FAN_SPEED_UNITS_PERCENT = 1,
-    CTL_FAN_SPEED_UNITS_MAX = 2,
-}
+pub struct _ctl_fan_speed_units_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Fan speed units"]
 pub use self::_ctl_fan_speed_units_t as ctl_fan_speed_units_t;
 #[doc = "\n @brief Fan speed"]
@@ -4173,17 +4486,17 @@ impl Default for _ctl_fan_config_t {
         }
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_freq_domain_t {
+    #[doc = "< GPU Core Domain."]
+    pub const CTL_FREQ_DOMAIN_GPU: _ctl_freq_domain_t = _ctl_freq_domain_t(0);
+    #[doc = "< Local Memory Domain."]
+    pub const CTL_FREQ_DOMAIN_MEMORY: _ctl_freq_domain_t = _ctl_freq_domain_t(1);
+    pub const CTL_FREQ_DOMAIN_MAX: _ctl_freq_domain_t = _ctl_freq_domain_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Frequency domains."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_freq_domain_t {
-    #[doc = "< GPU Core Domain."]
-    CTL_FREQ_DOMAIN_GPU = 0,
-    #[doc = "< Local Memory Domain."]
-    CTL_FREQ_DOMAIN_MEMORY = 1,
-    CTL_FREQ_DOMAIN_MAX = 2,
-}
+pub struct _ctl_freq_domain_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Frequency domains."]
 pub use self::_ctl_freq_domain_t as ctl_freq_domain_t;
 #[doc = "\n @brief Frequency properties"]
@@ -4227,26 +4540,34 @@ pub struct _ctl_freq_range_t {
 }
 #[doc = "\n @brief Frequency throttle reasons"]
 pub type ctl_freq_throttle_reason_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_freq_throttle_reason_flag_t {
+impl _ctl_freq_throttle_reason_flag_t {
     #[doc = "< frequency throttled due to average power excursion (PL1)"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_AVE_PWR_CAP = 1,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_AVE_PWR_CAP: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(1);
     #[doc = "< frequency throttled due to burst power excursion (PL2)"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_BURST_PWR_CAP = 2,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_BURST_PWR_CAP: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(2);
     #[doc = "< frequency throttled due to current excursion (PL4)"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_CURRENT_LIMIT = 4,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_CURRENT_LIMIT: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(4);
     #[doc = "< frequency throttled due to thermal excursion (T > TjMax)"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_THERMAL_LIMIT = 8,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_THERMAL_LIMIT: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(8);
     #[doc = "< frequency throttled due to power supply assertion"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_PSU_ALERT = 16,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_PSU_ALERT: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(16);
     #[doc = "< frequency throttled due to software supplied frequency range"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_SW_RANGE = 32,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_SW_RANGE: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(32);
     #[doc = "< frequency throttled due to a sub block that has a lower frequency\n< range when it receives clocks"]
-    CTL_FREQ_THROTTLE_REASON_FLAG_HW_RANGE = 64,
-    CTL_FREQ_THROTTLE_REASON_FLAG_MAX = -2147483648,
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_HW_RANGE: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(64);
+    pub const CTL_FREQ_THROTTLE_REASON_FLAG_MAX: _ctl_freq_throttle_reason_flag_t =
+        _ctl_freq_throttle_reason_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_freq_throttle_reason_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_freq_throttle_reason_flag_t as ctl_freq_throttle_reason_flag_t;
 #[doc = "\n @brief Frequency state"]
 #[repr(C)]
@@ -4282,47 +4603,66 @@ pub struct _ctl_freq_throttle_time_t {
     #[doc = "< [out] Microsecond timestamp when throttleTime was captured.\n< This timestamp should only be used to calculate delta time between\n< snapshots of this structure.\n< Never take the delta of this timestamp with the timestamp from a\n< different structure since they are not guaranteed to have the same base.\n< The absolute value of the timestamp is only valid during within the\n< application and may be different on the next execution."]
     pub timestamp: u64,
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_video_processing_feature_t {
+    #[doc = "< Film mode detection.  Contains CTL_PROPERTY_VALUE_TYPE_BOOL ValueType."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_FILM_MODE_DETECTION: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(0);
+    #[doc = "< Noise reduction.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM type field\n< using struct ::ctl_video_processing_noise_reduction_t."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_NOISE_REDUCTION: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(1);
+    #[doc = "< Sharpness.  Contains CTL_PROPERTY_VALUE_TYPE_UINT32 ValueType."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_SHARPNESS: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(2);
+    #[doc = "< Adaptive contrast enhancement.  Contains\n< CTL_PROPERTY_VALUE_TYPE_CUSTOM type field using struct\n< ::ctl_video_processing_adaptive_contrast_enhancement_t."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_ADAPTIVE_CONTRAST_ENHANCEMENT:
+        _ctl_video_processing_feature_t = _ctl_video_processing_feature_t(3);
+    #[doc = "< Super resolution.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM ValueType\n< using ::ctl_video_processing_super_resolution_t. By defaut, Super\n< resolution is not active, need application to activate it, please\n< contact Intel for super resolution activation."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_SUPER_RESOLUTION: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(4);
+    #[doc = "< Standard color correction.  Controls Hue, Saturation, Contrast,\n< Brightness.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM type field using\n< struct ::ctl_video_processing_standard_color_correction_t."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_STANDARD_COLOR_CORRECTION:
+        _ctl_video_processing_feature_t = _ctl_video_processing_feature_t(5);
+    #[doc = "< Total color correction.  Controls Red, Green, Blue, Yellow, Cyan,\n< Magenta.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM type field using\n< struct ::ctl_video_processing_total_color_correction_t."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_TOTAL_COLOR_CORRECTION: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(6);
+    #[doc = "< Skin tone enhancement.  Contains CTL_PROPERTY_VALUE_TYPE_UINT32\n< ValueType."]
+    pub const CTL_VIDEO_PROCESSING_FEATURE_SKIN_TONE_ENHANCEMENT: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(7);
+    pub const CTL_VIDEO_PROCESSING_FEATURE_MAX: _ctl_video_processing_feature_t =
+        _ctl_video_processing_feature_t(8);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Feature type"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_video_processing_feature_t {
-    #[doc = "< Film mode detection.  Contains CTL_PROPERTY_VALUE_TYPE_BOOL ValueType."]
-    CTL_VIDEO_PROCESSING_FEATURE_FILM_MODE_DETECTION = 0,
-    #[doc = "< Noise reduction.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM type field\n< using struct ::ctl_video_processing_noise_reduction_t."]
-    CTL_VIDEO_PROCESSING_FEATURE_NOISE_REDUCTION = 1,
-    #[doc = "< Sharpness.  Contains CTL_PROPERTY_VALUE_TYPE_UINT32 ValueType."]
-    CTL_VIDEO_PROCESSING_FEATURE_SHARPNESS = 2,
-    #[doc = "< Adaptive contrast enhancement.  Contains\n< CTL_PROPERTY_VALUE_TYPE_CUSTOM type field using struct\n< ::ctl_video_processing_adaptive_contrast_enhancement_t."]
-    CTL_VIDEO_PROCESSING_FEATURE_ADAPTIVE_CONTRAST_ENHANCEMENT = 3,
-    #[doc = "< Super resolution.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM ValueType\n< using ::ctl_video_processing_super_resolution_t. By defaut, Super\n< resolution is not active, need application to activate it, please\n< contact Intel for super resolution activation."]
-    CTL_VIDEO_PROCESSING_FEATURE_SUPER_RESOLUTION = 4,
-    #[doc = "< Standard color correction.  Controls Hue, Saturation, Contrast,\n< Brightness.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM type field using\n< struct ::ctl_video_processing_standard_color_correction_t."]
-    CTL_VIDEO_PROCESSING_FEATURE_STANDARD_COLOR_CORRECTION = 5,
-    #[doc = "< Total color correction.  Controls Red, Green, Blue, Yellow, Cyan,\n< Magenta.  Contains CTL_PROPERTY_VALUE_TYPE_CUSTOM type field using\n< struct ::ctl_video_processing_total_color_correction_t."]
-    CTL_VIDEO_PROCESSING_FEATURE_TOTAL_COLOR_CORRECTION = 6,
-    #[doc = "< Skin tone enhancement.  Contains CTL_PROPERTY_VALUE_TYPE_UINT32\n< ValueType."]
-    CTL_VIDEO_PROCESSING_FEATURE_SKIN_TONE_ENHANCEMENT = 7,
-    CTL_VIDEO_PROCESSING_FEATURE_MAX = 8,
-}
+pub struct _ctl_video_processing_feature_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Feature type"]
 pub use self::_ctl_video_processing_feature_t as ctl_video_processing_feature_t;
 #[doc = "\n @brief Super resolution values possible"]
 pub type ctl_video_processing_super_resolution_flags_t = u32;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_video_processing_super_resolution_flag_t {
+impl _ctl_video_processing_super_resolution_flag_t {
     #[doc = "< Disable"]
-    CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_DISABLE = 1,
+    pub const CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_DISABLE:
+        _ctl_video_processing_super_resolution_flag_t =
+        _ctl_video_processing_super_resolution_flag_t(1);
     #[doc = "< Enable with default super resolution mode"]
-    CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_ENABLE_DEFAULT_SCENARIO_MODE = 2,
+    pub const CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_ENABLE_DEFAULT_SCENARIO_MODE:
+        _ctl_video_processing_super_resolution_flag_t =
+        _ctl_video_processing_super_resolution_flag_t(2);
     #[doc = "< Super resolution mode targeted at video conference content"]
-    CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_ENABLE_CONFERENCE_SCENARIO_MODE = 4,
+    pub const CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_ENABLE_CONFERENCE_SCENARIO_MODE:
+        _ctl_video_processing_super_resolution_flag_t =
+        _ctl_video_processing_super_resolution_flag_t(4);
     #[doc = "< Super resolution mode targeted at camera capture content (e.g.\n< security camera)"]
-    CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_ENABLE_CAMERA_SCENARIO_MODE = 8,
-    CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_MAX = -2147483648,
+    pub const CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_ENABLE_CAMERA_SCENARIO_MODE:
+        _ctl_video_processing_super_resolution_flag_t =
+        _ctl_video_processing_super_resolution_flag_t(8);
+    pub const CTL_VIDEO_PROCESSING_SUPER_RESOLUTION_FLAG_MAX:
+        _ctl_video_processing_super_resolution_flag_t =
+        _ctl_video_processing_super_resolution_flag_t(-2147483648);
 }
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_video_processing_super_resolution_flag_t(pub ::std::os::raw::c_int);
 pub use self::_ctl_video_processing_super_resolution_flag_t as ctl_video_processing_super_resolution_flag_t;
 #[doc = "\n @brief Super Resolution feature details structure to be used with\n        SUPER_RESOLUTION"]
 #[repr(C)]
@@ -4620,58 +4960,58 @@ impl ::std::fmt::Debug for _ctl_video_processing_feature_getset_t {
         write ! (f , "_ctl_video_processing_feature_getset_t {{ FeatureType: {:?}, ApplicationName: {:?}, bSet: {:?}, ValueType: {:?}, Value: {:?}, pCustomValue: {:?}, ReservedFields: {:?} }}" , self . FeatureType , self . ApplicationName , self . bSet , self . ValueType , self . Value , self . pCustomValue , self . ReservedFields)
     }
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_mem_type_t {
+    #[doc = "< HBM memory"]
+    pub const CTL_MEM_TYPE_HBM: _ctl_mem_type_t = _ctl_mem_type_t(0);
+    #[doc = "< DDR memory"]
+    pub const CTL_MEM_TYPE_DDR: _ctl_mem_type_t = _ctl_mem_type_t(1);
+    #[doc = "< DDR3 memory"]
+    pub const CTL_MEM_TYPE_DDR3: _ctl_mem_type_t = _ctl_mem_type_t(2);
+    #[doc = "< DDR4 memory"]
+    pub const CTL_MEM_TYPE_DDR4: _ctl_mem_type_t = _ctl_mem_type_t(3);
+    #[doc = "< DDR5 memory"]
+    pub const CTL_MEM_TYPE_DDR5: _ctl_mem_type_t = _ctl_mem_type_t(4);
+    #[doc = "< LPDDR memory"]
+    pub const CTL_MEM_TYPE_LPDDR: _ctl_mem_type_t = _ctl_mem_type_t(5);
+    #[doc = "< LPDDR3 memory"]
+    pub const CTL_MEM_TYPE_LPDDR3: _ctl_mem_type_t = _ctl_mem_type_t(6);
+    #[doc = "< LPDDR4 memory"]
+    pub const CTL_MEM_TYPE_LPDDR4: _ctl_mem_type_t = _ctl_mem_type_t(7);
+    #[doc = "< LPDDR5 memory"]
+    pub const CTL_MEM_TYPE_LPDDR5: _ctl_mem_type_t = _ctl_mem_type_t(8);
+    #[doc = "< GDDR4 memory"]
+    pub const CTL_MEM_TYPE_GDDR4: _ctl_mem_type_t = _ctl_mem_type_t(9);
+    #[doc = "< GDDR5 memory"]
+    pub const CTL_MEM_TYPE_GDDR5: _ctl_mem_type_t = _ctl_mem_type_t(10);
+    #[doc = "< GDDR5X memory"]
+    pub const CTL_MEM_TYPE_GDDR5X: _ctl_mem_type_t = _ctl_mem_type_t(11);
+    #[doc = "< GDDR6 memory"]
+    pub const CTL_MEM_TYPE_GDDR6: _ctl_mem_type_t = _ctl_mem_type_t(12);
+    #[doc = "< GDDR6X memory"]
+    pub const CTL_MEM_TYPE_GDDR6X: _ctl_mem_type_t = _ctl_mem_type_t(13);
+    #[doc = "< GDDR7 memory"]
+    pub const CTL_MEM_TYPE_GDDR7: _ctl_mem_type_t = _ctl_mem_type_t(14);
+    #[doc = "< UNKNOWN memory"]
+    pub const CTL_MEM_TYPE_UNKNOWN: _ctl_mem_type_t = _ctl_mem_type_t(15);
+    pub const CTL_MEM_TYPE_MAX: _ctl_mem_type_t = _ctl_mem_type_t(16);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Memory module types"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_mem_type_t {
-    #[doc = "< HBM memory"]
-    CTL_MEM_TYPE_HBM = 0,
-    #[doc = "< DDR memory"]
-    CTL_MEM_TYPE_DDR = 1,
-    #[doc = "< DDR3 memory"]
-    CTL_MEM_TYPE_DDR3 = 2,
-    #[doc = "< DDR4 memory"]
-    CTL_MEM_TYPE_DDR4 = 3,
-    #[doc = "< DDR5 memory"]
-    CTL_MEM_TYPE_DDR5 = 4,
-    #[doc = "< LPDDR memory"]
-    CTL_MEM_TYPE_LPDDR = 5,
-    #[doc = "< LPDDR3 memory"]
-    CTL_MEM_TYPE_LPDDR3 = 6,
-    #[doc = "< LPDDR4 memory"]
-    CTL_MEM_TYPE_LPDDR4 = 7,
-    #[doc = "< LPDDR5 memory"]
-    CTL_MEM_TYPE_LPDDR5 = 8,
-    #[doc = "< GDDR4 memory"]
-    CTL_MEM_TYPE_GDDR4 = 9,
-    #[doc = "< GDDR5 memory"]
-    CTL_MEM_TYPE_GDDR5 = 10,
-    #[doc = "< GDDR5X memory"]
-    CTL_MEM_TYPE_GDDR5X = 11,
-    #[doc = "< GDDR6 memory"]
-    CTL_MEM_TYPE_GDDR6 = 12,
-    #[doc = "< GDDR6X memory"]
-    CTL_MEM_TYPE_GDDR6X = 13,
-    #[doc = "< GDDR7 memory"]
-    CTL_MEM_TYPE_GDDR7 = 14,
-    #[doc = "< UNKNOWN memory"]
-    CTL_MEM_TYPE_UNKNOWN = 15,
-    CTL_MEM_TYPE_MAX = 16,
-}
+pub struct _ctl_mem_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Memory module types"]
 pub use self::_ctl_mem_type_t as ctl_mem_type_t;
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_mem_loc_t {
+    #[doc = "< System memory"]
+    pub const CTL_MEM_LOC_SYSTEM: _ctl_mem_loc_t = _ctl_mem_loc_t(0);
+    #[doc = "< On board local device memory"]
+    pub const CTL_MEM_LOC_DEVICE: _ctl_mem_loc_t = _ctl_mem_loc_t(1);
+    pub const CTL_MEM_LOC_MAX: _ctl_mem_loc_t = _ctl_mem_loc_t(2);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Memory module location"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_mem_loc_t {
-    #[doc = "< System memory"]
-    CTL_MEM_LOC_SYSTEM = 0,
-    #[doc = "< On board local device memory"]
-    CTL_MEM_LOC_DEVICE = 1,
-    CTL_MEM_LOC_MAX = 2,
-}
+pub struct _ctl_mem_loc_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Memory module location"]
 pub use self::_ctl_mem_loc_t as ctl_mem_loc_t;
 #[doc = "\n @brief Memory properties"]
@@ -4840,21 +5180,21 @@ pub struct _ctl_oc_vf_pair_t {
     #[doc = "< [in,out] Frequency component of the pair in MHz."]
     pub Frequency: f64,
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_psu_type_t {
+    #[doc = "< Type of the PSU is unknown."]
+    pub const CTL_PSU_TYPE_PSU_NONE: _ctl_psu_type_t = _ctl_psu_type_t(0);
+    #[doc = "< Type of the PSU is PCIe"]
+    pub const CTL_PSU_TYPE_PSU_PCIE: _ctl_psu_type_t = _ctl_psu_type_t(1);
+    #[doc = "< Type of the PSU is 6 PIN"]
+    pub const CTL_PSU_TYPE_PSU_6PIN: _ctl_psu_type_t = _ctl_psu_type_t(2);
+    #[doc = "< Type of the PSU is 8 PIN"]
+    pub const CTL_PSU_TYPE_PSU_8PIN: _ctl_psu_type_t = _ctl_psu_type_t(3);
+    pub const CTL_PSU_TYPE_MAX: _ctl_psu_type_t = _ctl_psu_type_t(4);
+}
+#[repr(transparent)]
 #[doc = "\n @brief PSU Type."]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_psu_type_t {
-    #[doc = "< Type of the PSU is unknown."]
-    CTL_PSU_TYPE_PSU_NONE = 0,
-    #[doc = "< Type of the PSU is PCIe"]
-    CTL_PSU_TYPE_PSU_PCIE = 1,
-    #[doc = "< Type of the PSU is 6 PIN"]
-    CTL_PSU_TYPE_PSU_6PIN = 2,
-    #[doc = "< Type of the PSU is 8 PIN"]
-    CTL_PSU_TYPE_PSU_8PIN = 3,
-    CTL_PSU_TYPE_MAX = 4,
-}
+pub struct _ctl_psu_type_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief PSU Type."]
 pub use self::_ctl_psu_type_t as ctl_psu_type_t;
 #[doc = "\n @brief PSU Info"]
@@ -5112,25 +5452,25 @@ pub struct _ctl_energy_threshold_t {
     #[doc = "< [in,out] The host process ID that set the energy threshold. Will be\n< 0xFFFFFFFF if no threshold has been set."]
     pub processId: u32,
 }
-#[repr(i32)]
-#[non_exhaustive]
+impl _ctl_temp_sensors_t {
+    #[doc = "< The maximum temperature across all device sensors"]
+    pub const CTL_TEMP_SENSORS_GLOBAL: _ctl_temp_sensors_t = _ctl_temp_sensors_t(0);
+    #[doc = "< The maximum temperature across all sensors in the GPU"]
+    pub const CTL_TEMP_SENSORS_GPU: _ctl_temp_sensors_t = _ctl_temp_sensors_t(1);
+    #[doc = "< The maximum temperature across all sensors in the local memory"]
+    pub const CTL_TEMP_SENSORS_MEMORY: _ctl_temp_sensors_t = _ctl_temp_sensors_t(2);
+    #[doc = "< The minimum temperature across all device sensors"]
+    pub const CTL_TEMP_SENSORS_GLOBAL_MIN: _ctl_temp_sensors_t = _ctl_temp_sensors_t(3);
+    #[doc = "< The minimum temperature across all sensors in the GPU"]
+    pub const CTL_TEMP_SENSORS_GPU_MIN: _ctl_temp_sensors_t = _ctl_temp_sensors_t(4);
+    #[doc = "< The minimum temperature across all sensors in the local device memory"]
+    pub const CTL_TEMP_SENSORS_MEMORY_MIN: _ctl_temp_sensors_t = _ctl_temp_sensors_t(5);
+    pub const CTL_TEMP_SENSORS_MAX: _ctl_temp_sensors_t = _ctl_temp_sensors_t(6);
+}
+#[repr(transparent)]
 #[doc = "\n @brief Temperature sensors"]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _ctl_temp_sensors_t {
-    #[doc = "< The maximum temperature across all device sensors"]
-    CTL_TEMP_SENSORS_GLOBAL = 0,
-    #[doc = "< The maximum temperature across all sensors in the GPU"]
-    CTL_TEMP_SENSORS_GPU = 1,
-    #[doc = "< The maximum temperature across all sensors in the local memory"]
-    CTL_TEMP_SENSORS_MEMORY = 2,
-    #[doc = "< The minimum temperature across all device sensors"]
-    CTL_TEMP_SENSORS_GLOBAL_MIN = 3,
-    #[doc = "< The minimum temperature across all sensors in the GPU"]
-    CTL_TEMP_SENSORS_GPU_MIN = 4,
-    #[doc = "< The minimum temperature across all sensors in the local device memory"]
-    CTL_TEMP_SENSORS_MEMORY_MIN = 5,
-    CTL_TEMP_SENSORS_MAX = 6,
-}
+pub struct _ctl_temp_sensors_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Temperature sensors"]
 pub use self::_ctl_temp_sensors_t as ctl_temp_sensors_t;
 #[doc = "\n @brief Temperature sensor properties"]

@@ -289,9 +289,7 @@ impl fmt::Display for Error {
             ctl_result_t::CTL_RESULT_ERROR_DISPLAY_END => {
                 "Display error code end value, not to be used."
             }
-            ctl_result_t::CTL_RESULT_MAX => {
-                "Invalid error code: this enum entry is used to indicate the size of the enum."
-            },
+            ctl_result_t(x) => return write!(f, "Unrecognized code {x:#x}")
         })
     }
 }

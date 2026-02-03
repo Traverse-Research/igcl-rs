@@ -27,8 +27,9 @@ fn main() {
         .clang_arg("-std=c++11")
         .clang_arg("-Wno-pragma-once-outside-header")
         .allowlist_item("(ctl|CTL)\\w+")
-        .default_enum_style(bindgen::EnumVariation::Rust {
-            non_exhaustive: true,
+        .default_enum_style(bindgen::EnumVariation::NewType {
+            is_bitfield: false,
+            is_global: false,
         })
         .generate()
         .expect("failed to generate igcl bindings");
