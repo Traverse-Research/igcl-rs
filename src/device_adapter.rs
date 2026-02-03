@@ -1,16 +1,16 @@
 use std::{
     ffi::{CStr, OsStr},
-    os::raw::c_void,
+    mem::MaybeUninit,
     sync::Arc,
 };
 
 use crate::{
     error::{Error, Result},
     ffi::{
-        ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_device_adapter_handle_t,
-        ctl_device_adapter_properties_t, ctl_device_type_t, ctl_gaming_flip_mode_flag_t,
-        ctl_property_value_type_t, ControlLib, _ctl_result_t, ctl_endurance_gaming_t,
-        ctl_oc_telemetry_item_t, ctl_power_telemetry_t, ctl_result_t,
+        ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_data_type_t,
+        ctl_device_adapter_handle_t, ctl_device_adapter_properties_t, ctl_device_type_t,
+        ctl_endurance_gaming_t, ctl_gaming_flip_mode_flag_t, ctl_oc_telemetry_item_t,
+        ctl_power_telemetry_t, ctl_property_value_type_t, ctl_result_t, ctl_units_t, ControlLib,
     },
     memory::MemoryModule,
 };
@@ -113,15 +113,13 @@ impl DeviceAdapter {
     pub fn feature_endurance_gaming(
         &self,
         scope: DriverSettingScope<'_>,
-    ) -> Result<Box<ctl_endurance_gaming_t>> {
+    ) -> Result<ctl_endurance_gaming_t> {
         let mut result = ctl_result_t::CTL_RESULT_ERROR_UNKNOWN;
         let mut scope = Some(scope);
-        let mut settings: Box<ctl_endurance_gaming_t> = Box::new(unsafe { std::mem::zeroed() });
+        let mut settings = MaybeUninit::<ctl_endurance_gaming_t>::uninit();
 
         while let Some(driver_setting_scope) = scope.take() {
             let mut current_app = driver_setting_scope.name();
-            let reference = settings.as_mut();
-            let ptr = reference as *mut _ as *mut c_void;
 
             let mut feature = ctl_3d_feature_getset_t {
                 Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
@@ -132,8 +130,8 @@ impl DeviceAdapter {
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_CUSTOM,
                 Value: unsafe { std::mem::zeroed() },
-                CustomValueSize: std::mem::size_of::<ctl_endurance_gaming_t>() as i32,
-                pCustomValue: ptr,
+                CustomValueSize: std::mem::size_of_val(&settings) as i32,
+                pCustomValue: settings.as_mut_ptr().cast(),
             };
 
             result = unsafe {
@@ -146,8 +144,7 @@ impl DeviceAdapter {
             }
         }
 
-        Error::from_result(result)?;
-        Ok(settings)
+        Error::from_result_with_assume_init_on_success(result, settings)
     }
 
     /// Attempt to query the frame rate limit driver setting.
@@ -235,31 +232,7 @@ impl DeviceAdapter {
 
         Error::from_result(result)?;
 
-        // TODO: This is the wrong kind of enum
-        use ctl_gaming_flip_mode_flag_t::*;
-        let flip_mode = match flip_mode {
-            i if i == CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT as u32 => {
-                CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT
-            }
-            i if i == CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF as u32 => {
-                CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF
-            }
-            i if i == CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON as u32 => {
-                CTL_GAMING_FLIP_MODE_FLAG_VSYNC_ON
-            }
-            i if i == CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC as u32 => {
-                CTL_GAMING_FLIP_MODE_FLAG_SMOOTH_SYNC
-            }
-            i if i == CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME as u32 => {
-                CTL_GAMING_FLIP_MODE_FLAG_SPEED_FRAME
-            }
-            i if i == CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS as u32 => {
-                CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS
-            }
-            _ => return Err(Error(_ctl_result_t::CTL_RESULT_ERROR_UNKNOWN)),
-        };
-
-        Ok(flip_mode)
+        Ok(ctl_gaming_flip_mode_flag_t(flip_mode as i32))
     }
 
     #[doc(alias = "ctlEnumMemoryModules")]
@@ -370,62 +343,36 @@ impl From<ctl_oc_telemetry_item_t> for TelemetryItem {
     fn from(item: ctl_oc_telemetry_item_t) -> Self {
         TelemetryItem(if item.bSupported {
             let value = match item.type_ {
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT8 => {
-                    Value::I8(unsafe { item.value.data8 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT8 => {
-                    Value::U8(unsafe { item.value.datau8 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT16 => {
-                    Value::I16(unsafe { item.value.data16 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT16 => {
-                    Value::U16(unsafe { item.value.datau16 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT32 => {
-                    Value::I32(unsafe { item.value.data32 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT32 => {
-                    Value::U32(unsafe { item.value.datau32 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_INT64 => {
-                    Value::I64(unsafe { item.value.data64 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_UINT64 => {
-                    Value::U64(unsafe { item.value.datau64 })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_FLOAT => {
-                    Value::F32(unsafe { item.value.datafloat })
-                }
-                crate::ffi::ctl_data_type_t::CTL_DATA_TYPE_DOUBLE => {
+                ctl_data_type_t::CTL_DATA_TYPE_INT8 => Value::I8(unsafe { item.value.data8 }),
+                ctl_data_type_t::CTL_DATA_TYPE_UINT8 => Value::U8(unsafe { item.value.datau8 }),
+                ctl_data_type_t::CTL_DATA_TYPE_INT16 => Value::I16(unsafe { item.value.data16 }),
+                ctl_data_type_t::CTL_DATA_TYPE_UINT16 => Value::U16(unsafe { item.value.datau16 }),
+                ctl_data_type_t::CTL_DATA_TYPE_INT32 => Value::I32(unsafe { item.value.data32 }),
+                ctl_data_type_t::CTL_DATA_TYPE_UINT32 => Value::U32(unsafe { item.value.datau32 }),
+                ctl_data_type_t::CTL_DATA_TYPE_INT64 => Value::I64(unsafe { item.value.data64 }),
+                ctl_data_type_t::CTL_DATA_TYPE_UINT64 => Value::U64(unsafe { item.value.datau64 }),
+                ctl_data_type_t::CTL_DATA_TYPE_FLOAT => Value::F32(unsafe { item.value.datafloat }),
+                ctl_data_type_t::CTL_DATA_TYPE_DOUBLE => {
                     Value::F64(unsafe { item.value.datadouble })
                 }
                 _ => return TelemetryItem(None),
             };
 
             Some(match item.units {
-                crate::ffi::_ctl_units_t::CTL_UNITS_FREQUENCY_MHZ => Unit::FrequencyMhz(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_OPERATIONS_GTS => Unit::OperationsGts(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_OPERATIONS_MTS => Unit::OperationsMts(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_VOLTAGE_VOLTS => Unit::VoltageVolts(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_POWER_WATTS => Unit::PowerWatts(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_TEMPERATURE_CELSIUS => {
-                    Unit::TemperatureCelsius(value)
-                }
-                crate::ffi::_ctl_units_t::CTL_UNITS_ENERGY_JOULES => Unit::EnergyJoules(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_TIME_SECONDS => Unit::TimeSeconds(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_MEMORY_BYTES => Unit::MemoryBytes(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_ANGULAR_SPEED_RPM => {
-                    Unit::AngularSpeedRpm(value)
-                }
-                crate::ffi::_ctl_units_t::CTL_UNITS_POWER_MILLIWATTS => {
-                    Unit::PowerMilliwatts(value)
-                }
-                crate::ffi::_ctl_units_t::CTL_UNITS_PERCENT => Unit::Percent(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_MEM_SPEED_GBPS => Unit::MemSpeedGbps(value),
-                crate::ffi::_ctl_units_t::CTL_UNITS_VOLTAGE_MILLIVOLTS => {
-                    Unit::VoltageMillivolts(value)
-                }
+                ctl_units_t::CTL_UNITS_FREQUENCY_MHZ => Unit::FrequencyMhz(value),
+                ctl_units_t::CTL_UNITS_OPERATIONS_GTS => Unit::OperationsGts(value),
+                ctl_units_t::CTL_UNITS_OPERATIONS_MTS => Unit::OperationsMts(value),
+                ctl_units_t::CTL_UNITS_VOLTAGE_VOLTS => Unit::VoltageVolts(value),
+                ctl_units_t::CTL_UNITS_POWER_WATTS => Unit::PowerWatts(value),
+                ctl_units_t::CTL_UNITS_TEMPERATURE_CELSIUS => Unit::TemperatureCelsius(value),
+                ctl_units_t::CTL_UNITS_ENERGY_JOULES => Unit::EnergyJoules(value),
+                ctl_units_t::CTL_UNITS_TIME_SECONDS => Unit::TimeSeconds(value),
+                ctl_units_t::CTL_UNITS_MEMORY_BYTES => Unit::MemoryBytes(value),
+                ctl_units_t::CTL_UNITS_ANGULAR_SPEED_RPM => Unit::AngularSpeedRpm(value),
+                ctl_units_t::CTL_UNITS_POWER_MILLIWATTS => Unit::PowerMilliwatts(value),
+                ctl_units_t::CTL_UNITS_PERCENT => Unit::Percent(value),
+                ctl_units_t::CTL_UNITS_MEM_SPEED_GBPS => Unit::MemSpeedGbps(value),
+                ctl_units_t::CTL_UNITS_VOLTAGE_MILLIVOLTS => Unit::VoltageMillivolts(value),
                 _ => return TelemetryItem(None),
             })
         } else {
