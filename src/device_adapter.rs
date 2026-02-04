@@ -333,6 +333,7 @@ pub enum Unit {
     Percent(Value),
     MemSpeedGbps(Value),
     VoltageMillivolts(Value),
+    BandwidthMbps(Value),
 }
 
 #[doc(alias = "ctl_oc_telemetry_item_t")]
@@ -373,6 +374,7 @@ impl From<ctl_oc_telemetry_item_t> for TelemetryItem {
                 ctl_units_t::CTL_UNITS_PERCENT => Unit::Percent(value),
                 ctl_units_t::CTL_UNITS_MEM_SPEED_GBPS => Unit::MemSpeedGbps(value),
                 ctl_units_t::CTL_UNITS_VOLTAGE_MILLIVOLTS => Unit::VoltageMillivolts(value),
+                ctl_units_t::CTL_UNITS_BANDWIDTH_MBPS => Unit::BandwidthMbps(value),
                 _ => return TelemetryItem(None),
             })
         } else {

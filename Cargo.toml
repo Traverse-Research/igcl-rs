@@ -1,6 +1,6 @@
 [package]
 name = "igcl"
-version = "0.0.0+v202"
+version = "0.0.0+v268"
 authors = ["Traverse Research <support@traverseresearch.nl>"]
 edition = "2021"
 license = "MIT"

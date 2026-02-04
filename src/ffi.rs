@@ -3,13 +3,16 @@
 pub const CTL_IMPL_MAJOR_VERSION: u32 = 1;
 pub const CTL_IMPL_MINOR_VERSION: u32 = 1;
 pub const CTL_MAX_DEVICE_NAME_LEN: u32 = 100;
-pub const CTL_MAX_RESERVED_SIZE: u32 = 112;
+pub const CTL_MAX_RESERVED_SIZE: u32 = 108;
 pub const CTL_I2C_MAX_DATA_SIZE: u32 = 128;
 pub const CTL_AUX_MAX_DATA_SIZE: u32 = 132;
 pub const CTL_MAX_NUM_SAMPLES_PER_CHANNEL_1D_LUT: u32 = 8192;
 pub const CTL_MAX_DISPLAYS_FOR_MGPU_COLLAGE: u32 = 16;
 pub const CTL_MAX_WIREFORMAT_COLOR_MODELS_SUPPORTED: u32 = 4;
 pub const CTL_FAN_TEMP_SPEED_PAIR_COUNT: u32 = 32;
+pub const CTL_FIRMWARE_PROPERTY_STR_SIZE: u32 = 64;
+pub const CTL_MAX_FIRMWARE_PROPERTIES_RESERVED_SIZE: u32 = 16;
+pub const CTL_MAX_FIRMWARE_COMPONENT_PROPERTIES_RESERVED_SIZE: u32 = 20;
 pub const CTL_PSU_COUNT: u32 = 5;
 pub const CTL_FAN_COUNT: u32 = 5;
 #[doc = "\n @brief Supported initialization flags"]
@@ -17,6 +20,8 @@ pub type ctl_init_flags_t = u32;
 impl _ctl_init_flag_t {
     #[doc = "< Use Level0 or not. This is usually required for telemetry,\n< performance, frequency related APIs"]
     pub const CTL_INIT_FLAG_USE_LEVEL_ZERO: _ctl_init_flag_t = _ctl_init_flag_t(1);
+    #[doc = "< Enable IGSC(Intel Graphics System Firmware Update Library) full\n< functionality mode, which may include advanced graphics and compute\n< capabilities"]
+    pub const CTL_INIT_FLAG_IGSC_FUL: _ctl_init_flag_t = _ctl_init_flag_t(2);
     pub const CTL_INIT_FLAG_MAX: _ctl_init_flag_t = _ctl_init_flag_t(-2147483648);
 }
 #[repr(transparent)]
@@ -53,6 +58,13 @@ pub struct _ctl_freq_handle_t {
 }
 #[doc = "\n @brief Handle for a device frequency domain"]
 pub type ctl_freq_handle_t = *mut _ctl_freq_handle_t;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ctl_led_handle_t {
+    _unused: [u8; 0],
+}
+#[doc = "\n @brief Handle for a device led"]
+pub type ctl_led_handle_t = *mut _ctl_led_handle_t;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct _ctl_pwr_handle_t {
@@ -421,6 +433,10 @@ impl _ctl_result_t {
     pub const CTL_RESULT_ERROR_UNKNOWN: _ctl_result_t = _ctl_result_t(1073807359);
     #[doc = "< Operation failed, retry previous operation again"]
     pub const CTL_RESULT_ERROR_RETRY_OPERATION: _ctl_result_t = _ctl_result_t(1073807360);
+    #[doc = "< IGSC library loader not found"]
+    pub const CTL_RESULT_ERROR_IGSC_LOADER: _ctl_result_t = _ctl_result_t(1073807361);
+    #[doc = "< Unsupported application"]
+    pub const CTL_RESULT_ERROR_RESTRICTED_APPLICATION: _ctl_result_t = _ctl_result_t(1073807362);
     #[doc = "< \"Generic error code end value, not to be used\n< \""]
     pub const CTL_RESULT_ERROR_GENERIC_END: _ctl_result_t = _ctl_result_t(1073807359);
     #[doc = "< Core error code starting value, not to be used"]
@@ -452,6 +468,21 @@ impl _ctl_result_t {
     #[doc = "< The error indicates to switch to newer API version if applicable."]
     pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_DEPRECATED_API: _ctl_result_t =
         _ctl_result_t(1140850697);
+    #[doc = "< The error indicates that driver cannot get Led state if Led is i2c\n< supported"]
+    pub const CTL_RESULT_ERROR_CORE_LED_GET_STATE_NOT_SUPPORTED_FOR_I2C_LED: _ctl_result_t =
+        _ctl_result_t(1140850698);
+    #[doc = "< The error indicates that driver cannot set Led state if Led is i2c\n< supported"]
+    pub const CTL_RESULT_ERROR_CORE_LED_SET_STATE_NOT_SUPPORTED_FOR_I2C_LED: _ctl_result_t =
+        _ctl_result_t(1140850699);
+    #[doc = "< The error indicates that Set Led State request is called too\n< frequently too fast"]
+    pub const CTL_RESULT_ERROR_CORE_LED_TOO_FREQUENT_SET_REQUESTS: _ctl_result_t =
+        _ctl_result_t(1140850700);
+    #[doc = "< The VRAM Memory Speed exceeds the acceptable min/max."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_VRAM_MEMORY_SPEED_OUTSIDE_RANGE: _ctl_result_t =
+        _ctl_result_t(1140850701);
+    #[doc = "< Invalid Custom VF Curve applied using OverclockWriteCustomVFCurve.\n< Valid VF Curve contains VF Curve Points which are within min/max of\n< gpuVFCurveVoltageLimit, gpuVFCurveFrequencyLimit parameters in\n< ctl_oc_properties_t structure and VFCurve points with distinct volages\n< in ascending order, frequencies in ascending order."]
+    pub const CTL_RESULT_ERROR_CORE_OVERCLOCK_INVALID_CUSTOM_VF_CURVE: _ctl_result_t =
+        _ctl_result_t(1140850702);
     #[doc = "< \"Core error code end value, not to be used\n< \""]
     pub const CTL_RESULT_ERROR_CORE_END: _ctl_result_t = _ctl_result_t(71368703);
     #[doc = "< 3D error code starting value, not to be used"]
@@ -578,10 +609,12 @@ impl _ctl_units_t {
     pub const CTL_UNITS_POWER_MILLIWATTS: _ctl_units_t = _ctl_units_t(10);
     #[doc = "< Type is Percentage."]
     pub const CTL_UNITS_PERCENT: _ctl_units_t = _ctl_units_t(11);
-    #[doc = "< Type is Memory Speed in Gigabyte per Seconds (Gbps)"]
+    #[doc = "< Type is Memory Speed in Gigabytes per second (GBps)."]
     pub const CTL_UNITS_MEM_SPEED_GBPS: _ctl_units_t = _ctl_units_t(12);
     #[doc = "< Type is Voltage with units in milliVolts."]
     pub const CTL_UNITS_VOLTAGE_MILLIVOLTS: _ctl_units_t = _ctl_units_t(13);
+    #[doc = "< Type is Bandwidth in Megabytes per second (MBps)."]
+    pub const CTL_UNITS_BANDWIDTH_MBPS: _ctl_units_t = _ctl_units_t(14);
     #[doc = "< Type of units unknown."]
     pub const CTL_UNITS_UNKNOWN: _ctl_units_t = _ctl_units_t(1208025087);
     pub const CTL_UNITS_MAX: _ctl_units_t = _ctl_units_t(1208025088);
@@ -882,7 +915,7 @@ pub struct _ctl_device_adapter_properties_t {
     pub supported_subfunction_flags: ctl_supported_functions_flags_t,
     #[doc = "< [out] Driver version"]
     pub driver_version: u64,
-    #[doc = "< [out] Firmware version"]
+    #[doc = "< [out] Global Firmware version for discrete adapters. Not implemented"]
     pub firmware_version: ctl_firmware_version_t,
     #[doc = "< [out] PCI Vendor ID"]
     pub pci_vendor_id: u32,
@@ -900,7 +933,7 @@ pub struct _ctl_device_adapter_properties_t {
     pub name: [::std::os::raw::c_char; 100usize],
     #[doc = "< [out] Graphics Adapter Properties"]
     pub graphics_adapter_properties: ctl_adapter_properties_flags_t,
-    #[doc = "< [out] Clock frequency for this device. Supported only for Version > 0"]
+    #[doc = "< [out] This represents the average frequency an end user may see in the\n< typical gaming workload. Also referred as Graphics Clock. Supported\n< only for Version > 0"]
     pub Frequency: u32,
     #[doc = "< [out] PCI SubSys ID, Supported only for Version > 1"]
     pub pci_subsys_id: u16,
@@ -908,8 +941,10 @@ pub struct _ctl_device_adapter_properties_t {
     pub pci_subsys_vendor_id: u16,
     #[doc = "< [out] Pci Bus, Device, Function. Supported only for Version > 1"]
     pub adapter_bdf: ctl_adapter_bdf_t,
+    #[doc = "< [out] Number of Xe Cores. Supported only for Version > 2"]
+    pub num_xe_cores: u32,
     #[doc = "< [out] Reserved"]
-    pub reserved: [::std::os::raw::c_char; 112usize],
+    pub reserved: [::std::os::raw::c_char; 108usize],
 }
 impl Default for _ctl_device_adapter_properties_t {
     fn default() -> Self {
@@ -1148,8 +1183,6 @@ pub type ctl_lace_config_t = _ctl_lace_config_t;
 pub type ctl_sw_psr_settings_t = _ctl_sw_psr_settings_t;
 #[doc = "\n @brief Forward-declare ctl_intel_arc_sync_monitor_params_t"]
 pub type ctl_intel_arc_sync_monitor_params_t = _ctl_intel_arc_sync_monitor_params_t;
-#[doc = "\n @brief Forward-declare ctl_mux_properties_t"]
-pub type ctl_mux_properties_t = _ctl_mux_properties_t;
 #[doc = "\n @brief Forward-declare ctl_intel_arc_sync_profile_params_t"]
 pub type ctl_intel_arc_sync_profile_params_t = _ctl_intel_arc_sync_profile_params_t;
 #[doc = "\n @brief Forward-declare ctl_edid_management_args_t"]
@@ -1184,6 +1217,10 @@ pub type ctl_wire_format_t = _ctl_wire_format_t;
 pub type ctl_get_set_wire_format_config_t = _ctl_get_set_wire_format_config_t;
 #[doc = "\n @brief Forward-declare ctl_display_settings_t"]
 pub type ctl_display_settings_t = _ctl_display_settings_t;
+#[doc = "\n @brief Forward-declare ctl_ecc_properties_t"]
+pub type ctl_ecc_properties_t = _ctl_ecc_properties_t;
+#[doc = "\n @brief Forward-declare ctl_ecc_state_desc_t"]
+pub type ctl_ecc_state_desc_t = _ctl_ecc_state_desc_t;
 #[doc = "\n @brief Forward-declare ctl_engine_properties_t"]
 pub type ctl_engine_properties_t = _ctl_engine_properties_t;
 #[doc = "\n @brief Forward-declare ctl_engine_stats_t"]
@@ -1198,6 +1235,10 @@ pub type ctl_fan_speed_table_t = _ctl_fan_speed_table_t;
 pub type ctl_fan_properties_t = _ctl_fan_properties_t;
 #[doc = "\n @brief Forward-declare ctl_fan_config_t"]
 pub type ctl_fan_config_t = _ctl_fan_config_t;
+#[doc = "\n @brief Forward-declare ctl_firmware_properties_t"]
+pub type ctl_firmware_properties_t = _ctl_firmware_properties_t;
+#[doc = "\n @brief Forward-declare ctl_firmware_component_properties_t"]
+pub type ctl_firmware_component_properties_t = _ctl_firmware_component_properties_t;
 #[doc = "\n @brief Forward-declare ctl_freq_properties_t"]
 pub type ctl_freq_properties_t = _ctl_freq_properties_t;
 #[doc = "\n @brief Forward-declare ctl_freq_range_t"]
@@ -1206,6 +1247,12 @@ pub type ctl_freq_range_t = _ctl_freq_range_t;
 pub type ctl_freq_state_t = _ctl_freq_state_t;
 #[doc = "\n @brief Forward-declare ctl_freq_throttle_time_t"]
 pub type ctl_freq_throttle_time_t = _ctl_freq_throttle_time_t;
+#[doc = "\n @brief Forward-declare ctl_led_properties_t"]
+pub type ctl_led_properties_t = _ctl_led_properties_t;
+#[doc = "\n @brief Forward-declare ctl_led_color_t"]
+pub type ctl_led_color_t = _ctl_led_color_t;
+#[doc = "\n @brief Forward-declare ctl_led_state_t"]
+pub type ctl_led_state_t = _ctl_led_state_t;
 #[doc = "\n @brief Forward-declare ctl_video_processing_super_resolution_info_t"]
 pub type ctl_video_processing_super_resolution_info_t =
     _ctl_video_processing_super_resolution_info_t;
@@ -1257,6 +1304,8 @@ pub type ctl_oc_vf_pair_t = _ctl_oc_vf_pair_t;
 pub type ctl_psu_info_t = _ctl_psu_info_t;
 #[doc = "\n @brief Forward-declare ctl_power_telemetry_t"]
 pub type ctl_power_telemetry_t = _ctl_power_telemetry_t;
+#[doc = "\n @brief Forward-declare ctl_voltage_frequency_point_t"]
+pub type ctl_voltage_frequency_point_t = _ctl_voltage_frequency_point_t;
 #[doc = "\n @brief Forward-declare ctl_pci_address_t"]
 pub type ctl_pci_address_t = _ctl_pci_address_t;
 #[doc = "\n @brief Forward-declare ctl_pci_speed_t"]
@@ -1315,7 +1364,13 @@ impl _ctl_3d_feature_t {
     pub const CTL_3D_FEATURE_VRR_WINDOWED_BLT: _ctl_3d_feature_t = _ctl_3d_feature_t(14);
     #[doc = "< Set global settings or per application settings"]
     pub const CTL_3D_FEATURE_GLOBAL_OR_PER_APP: _ctl_3d_feature_t = _ctl_3d_feature_t(15);
-    pub const CTL_3D_FEATURE_MAX: _ctl_3d_feature_t = _ctl_3d_feature_t(16);
+    #[doc = "< Low latency mode. Contains generic enum type fields"]
+    pub const CTL_3D_FEATURE_LOW_LATENCY: _ctl_3d_feature_t = _ctl_3d_feature_t(16);
+    #[doc = "< Frame Generation"]
+    pub const CTL_3D_FEATURE_FRAME_GENERATION: _ctl_3d_feature_t = _ctl_3d_feature_t(17);
+    #[doc = "< Download prebuilt shaders. Contains generic bool type fields"]
+    pub const CTL_3D_FEATURE_PREBUILT_SHADER_DOWNLOAD: _ctl_3d_feature_t = _ctl_3d_feature_t(18);
+    pub const CTL_3D_FEATURE_MAX: _ctl_3d_feature_t = _ctl_3d_feature_t(19);
 }
 #[repr(transparent)]
 #[doc = "\n @brief Feature type"]
@@ -1326,18 +1381,21 @@ pub use self::_ctl_3d_feature_t as ctl_3d_feature_t;
 #[doc = "\n @brief 3D feature misc flags"]
 pub type ctl_3d_feature_misc_flags_t = u32;
 impl _ctl_3d_feature_misc_flag_t {
+    #[doc = "< Feature supported on DX9"]
+    pub const CTL_3D_FEATURE_MISC_FLAG_DX9: _ctl_3d_feature_misc_flag_t =
+        _ctl_3d_feature_misc_flag_t(1);
     #[doc = "< Feature supported on DX11"]
     pub const CTL_3D_FEATURE_MISC_FLAG_DX11: _ctl_3d_feature_misc_flag_t =
-        _ctl_3d_feature_misc_flag_t(1);
+        _ctl_3d_feature_misc_flag_t(2);
     #[doc = "< Feature supported on DX12"]
     pub const CTL_3D_FEATURE_MISC_FLAG_DX12: _ctl_3d_feature_misc_flag_t =
-        _ctl_3d_feature_misc_flag_t(2);
+        _ctl_3d_feature_misc_flag_t(4);
     #[doc = "< Feature supported on VULKAN"]
     pub const CTL_3D_FEATURE_MISC_FLAG_VULKAN: _ctl_3d_feature_misc_flag_t =
-        _ctl_3d_feature_misc_flag_t(4);
+        _ctl_3d_feature_misc_flag_t(8);
     #[doc = "< User can change feature live without restarting the game"]
     pub const CTL_3D_FEATURE_MISC_FLAG_LIVE_CHANGE: _ctl_3d_feature_misc_flag_t =
-        _ctl_3d_feature_misc_flag_t(8);
+        _ctl_3d_feature_misc_flag_t(16);
     pub const CTL_3D_FEATURE_MISC_FLAG_MAX: _ctl_3d_feature_misc_flag_t =
         _ctl_3d_feature_misc_flag_t(-2147483648);
 }
@@ -1449,6 +1507,25 @@ impl _ctl_3d_endurance_gaming_mode_t {
 pub struct _ctl_3d_endurance_gaming_mode_t(pub ::std::os::raw::c_int);
 #[doc = "\n @brief Endurance Gaming modes possible"]
 pub use self::_ctl_3d_endurance_gaming_mode_t as ctl_3d_endurance_gaming_mode_t;
+impl _ctl_3d_low_latency_types_t {
+    #[doc = "< Low latency mode disable"]
+    pub const CTL_3D_LOW_LATENCY_TYPES_TURN_OFF: _ctl_3d_low_latency_types_t =
+        _ctl_3d_low_latency_types_t(0);
+    #[doc = "< Low latency mode enable"]
+    pub const CTL_3D_LOW_LATENCY_TYPES_TURN_ON: _ctl_3d_low_latency_types_t =
+        _ctl_3d_low_latency_types_t(1);
+    #[doc = "< Low latency mode enable with boost"]
+    pub const CTL_3D_LOW_LATENCY_TYPES_TURN_ON_BOOST_MODE_ON: _ctl_3d_low_latency_types_t =
+        _ctl_3d_low_latency_types_t(2);
+    pub const CTL_3D_LOW_LATENCY_TYPES_MAX: _ctl_3d_low_latency_types_t =
+        _ctl_3d_low_latency_types_t(3);
+}
+#[repr(transparent)]
+#[doc = "\n @brief Low latency mode values possible"]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_3d_low_latency_types_t(pub ::std::os::raw::c_int);
+#[doc = "\n @brief Low latency mode values possible"]
+pub use self::_ctl_3d_low_latency_types_t as ctl_3d_low_latency_types_t;
 impl _ctl_3d_cmaa_types_t {
     #[doc = "< Turn off"]
     pub const CTL_3D_CMAA_TYPES_TURN_OFF: _ctl_3d_cmaa_types_t = _ctl_3d_cmaa_types_t(0);
@@ -1523,7 +1600,7 @@ impl _ctl_gaming_flip_mode_flag_t {
     #[doc = "< Application Default"]
     pub const CTL_GAMING_FLIP_MODE_FLAG_APPLICATION_DEFAULT: _ctl_gaming_flip_mode_flag_t =
         _ctl_gaming_flip_mode_flag_t(1);
-    #[doc = "< Convert all sync flips to async on the next possible scanline."]
+    #[doc = "< Convert all sync flips to async on the next possible scanline for\n< Intel Verified application profile."]
     pub const CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF: _ctl_gaming_flip_mode_flag_t =
         _ctl_gaming_flip_mode_flag_t(2);
     #[doc = "< Convert all async flips to sync flips."]
@@ -1538,6 +1615,9 @@ impl _ctl_gaming_flip_mode_flag_t {
     #[doc = "< Limit the game FPS to panel RR"]
     pub const CTL_GAMING_FLIP_MODE_FLAG_CAPPED_FPS: _ctl_gaming_flip_mode_flag_t =
         _ctl_gaming_flip_mode_flag_t(32);
+    #[doc = "< Convert all sync flips to async on the next possible scanline without\n< application filtering."]
+    pub const CTL_GAMING_FLIP_MODE_FLAG_VSYNC_OFF_IGNORE_ALLOW_LIST: _ctl_gaming_flip_mode_flag_t =
+        _ctl_gaming_flip_mode_flag_t(64);
     pub const CTL_GAMING_FLIP_MODE_FLAG_MAX: _ctl_gaming_flip_mode_flag_t =
         _ctl_gaming_flip_mode_flag_t(-2147483648);
 }
@@ -2388,6 +2468,14 @@ impl _ctl_i2c_flag_t {
     pub const CTL_I2C_FLAG_SPEED_FAST: _ctl_i2c_flag_t = _ctl_i2c_flag_t(32);
     #[doc = "< Uses Slower access using SW bit bashing method. If no Speed Flag is\n< set, defaults to Best Option possible."]
     pub const CTL_I2C_FLAG_SPEED_BIT_BASH: _ctl_i2c_flag_t = _ctl_i2c_flag_t(64);
+    #[doc = "< If set, overrides the driver I2C flags with those provided by IGCL"]
+    pub const CTL_I2C_FLAG_DRIVER_OVERRIDE: _ctl_i2c_flag_t = _ctl_i2c_flag_t(128);
+    #[doc = "< I2C Start driver override flag"]
+    pub const CTL_I2C_FLAG_START: _ctl_i2c_flag_t = _ctl_i2c_flag_t(256);
+    #[doc = "< I2C Stop driver override flags"]
+    pub const CTL_I2C_FLAG_STOP: _ctl_i2c_flag_t = _ctl_i2c_flag_t(512);
+    #[doc = "< I2C Restart driver override flag"]
+    pub const CTL_I2C_FLAG_RESTART: _ctl_i2c_flag_t = _ctl_i2c_flag_t(1024);
     pub const CTL_I2C_FLAG_MAX: _ctl_i2c_flag_t = _ctl_i2c_flag_t(-2147483648);
 }
 #[repr(transparent)]
@@ -3511,39 +3599,6 @@ pub struct _ctl_intel_arc_sync_monitor_params_t {
     #[doc = "< [out] Max frame time decrease in micro seconds from DID2.1 Adaptive\n< Sync block"]
     pub MaxFrameTimeDecreaseInUs: u32,
 }
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _ctl_mux_output_handle_t {
-    _unused: [u8; 0],
-}
-#[doc = "\n @brief Handle of a MUX output instance"]
-pub type ctl_mux_output_handle_t = *mut _ctl_mux_output_handle_t;
-#[doc = "\n @brief Display MUX device properties"]
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _ctl_mux_properties_t {
-    #[doc = "< [in] size of this structure"]
-    pub Size: u32,
-    #[doc = "< [in] version of this structure"]
-    pub Version: u8,
-    #[doc = "< [out] MUX ID of this MUX device enumerated"]
-    pub MuxId: u8,
-    #[doc = "< [in,out] Pointer to the number of display output instances this MUX\n< object can drive. If count is zero, then the api will update the value\n< with the total\n< number of outputs available. If count is non-zero, then the api will\n< only retrieve the number of outputs.\n< If count is larger than the number of display outputs MUX can drive,\n< then the api will update the value with the correct number of display\n< outputs MUX can driver."]
-    pub Count: u32,
-    #[doc = "< [in,out][range(0, *pCount)] Array of display output instance handles\n< this MUX device can drive"]
-    pub phDisplayOutputs: *mut ctl_display_output_handle_t,
-    #[doc = "< [out] [range(0, (Count-1))] This is the index into the\n< phDisplayOutputs list to the display output which currently owns the\n< MUX output. This doesn't mean display is active"]
-    pub IndexOfDisplayOutputOwningMux: u8,
-}
-impl Default for _ctl_mux_properties_t {
-    fn default() -> Self {
-        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
-        unsafe {
-            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
-            s.assume_init()
-        }
-    }
-}
 impl _ctl_intel_arc_sync_profile_t {
     #[doc = "< Invalid profile"]
     pub const CTL_INTEL_ARC_SYNC_PROFILE_INVALID: _ctl_intel_arc_sync_profile_t =
@@ -4301,6 +4356,56 @@ impl Default for _ctl_display_settings_t {
         }
     }
 }
+#[doc = "\n @brief ECC properties."]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct _ctl_ecc_properties_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [out] Indicates if ECC support is available."]
+    pub isSupported: bool,
+    #[doc = "< [out] Indicates if software can control the ECC assuming the user has\n< permissions."]
+    pub canControl: bool,
+}
+impl _ctl_ecc_state_t {
+    #[doc = "< ECC Default State"]
+    pub const CTL_ECC_STATE_ECC_DEFAULT_STATE: _ctl_ecc_state_t = _ctl_ecc_state_t(0);
+    #[doc = "< ECC Enabled State"]
+    pub const CTL_ECC_STATE_ECC_ENABLED_STATE: _ctl_ecc_state_t = _ctl_ecc_state_t(1);
+    #[doc = "< ECC Disabled State"]
+    pub const CTL_ECC_STATE_ECC_DISABLED_STATE: _ctl_ecc_state_t = _ctl_ecc_state_t(2);
+    pub const CTL_ECC_STATE_MAX: _ctl_ecc_state_t = _ctl_ecc_state_t(3);
+}
+#[repr(transparent)]
+#[doc = "\n @brief ECC state."]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_ecc_state_t(pub ::std::os::raw::c_int);
+#[doc = "\n @brief ECC state."]
+pub use self::_ctl_ecc_state_t as ctl_ecc_state_t;
+#[doc = "\n @brief ECC state descriptor. If the currentEccState is not equal to\n        pendingEccState, then system reboot is needed for the pendingEccState\n        to be applied."]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ctl_ecc_state_desc_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [in,out] Indicates the ECC state.\n< A valid input can be one of the ::ctl_ecc_state_t enum values.\n< A valid output will be either CTL_ECC_STATE_ECC_ENABLED_STATE or CTL_ECC_STATE_ECC_DISABLED_STATE."]
+    pub currentEccState: ctl_ecc_state_t,
+    #[doc = "< [out] Indicates the pending ECC state from ctlEccSetState() call. A\n< valid output will be either CTL_ECC_STATE_ECC_ENABLED_STATE or\n< CTL_ECC_STATE_ECC_DISABLED_STATE."]
+    pub pendingEccState: ctl_ecc_state_t,
+}
+impl Default for _ctl_ecc_state_desc_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
 impl _ctl_engine_group_t {
     #[doc = "< Access information about all engines combined."]
     pub const CTL_ENGINE_GROUP_GT: _ctl_engine_group_t = _ctl_engine_group_t(0);
@@ -4486,12 +4591,87 @@ impl Default for _ctl_fan_config_t {
         }
     }
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ctl_firmware_component_handle_t {
+    _unused: [u8; 0],
+}
+#[doc = "\n @brief Handle for a device firmware component"]
+pub type ctl_firmware_component_handle_t = *mut _ctl_firmware_component_handle_t;
+#[doc = "\n @brief [out] Firmware configuration flags"]
+pub type ctl_firmware_config_flags_t = u32;
+impl _ctl_firmware_config_flag_t {
+    #[doc = "< [out] Is the device firmware capable of downgrading to lower PCIE link\n< speed from higher PCIE link speeds automatically on incompatible hosts."]
+    pub const CTL_FIRMWARE_CONFIG_FLAG_IS_DEVICE_LINK_SPEED_DOWNGRADE_CAPABLE:
+        _ctl_firmware_config_flag_t = _ctl_firmware_config_flag_t(1);
+    #[doc = "< [out] This bit indicates if the discrete GPU host was capable of\n< running at higher PCIE link speeds but the card firmware failed to\n< train PCIE link at higher speeds\n< due to non-compliant hosts. So device firmware did a fall back to\n< lower link speeds."]
+    pub const CTL_FIRMWARE_CONFIG_FLAG_IS_DEVICE_LINK_SPEED_DOWNGRADE_ACTIVE:
+        _ctl_firmware_config_flag_t = _ctl_firmware_config_flag_t(2);
+    pub const CTL_FIRMWARE_CONFIG_FLAG_MAX: _ctl_firmware_config_flag_t =
+        _ctl_firmware_config_flag_t(-2147483648);
+}
+#[repr(transparent)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_firmware_config_flag_t(pub ::std::os::raw::c_int);
+pub use self::_ctl_firmware_config_flag_t as ctl_firmware_config_flag_t;
+#[doc = "\n @brief Base firmware properties"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ctl_firmware_properties_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [out] NULL terminated string value for the name of the firmware\n< component. 'unknown' will be returned if this property cannot be\n< determined."]
+    pub name: [::std::os::raw::c_char; 64usize],
+    #[doc = "< [out] NULL terminated string value for the device version of the\n< firmware component. 'unknown' will be returned if this property cannot\n< be determined."]
+    pub version: [::std::os::raw::c_char; 64usize],
+    #[doc = "< [out] This bit indicates various firmware supported configurations and\n< capabilities."]
+    pub FirmwareConfig: ctl_firmware_config_flags_t,
+    #[doc = "< [out] Reserved"]
+    pub reserved: [::std::os::raw::c_char; 16usize],
+}
+impl Default for _ctl_firmware_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+#[doc = "\n @brief Individual firmware component properties"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _ctl_firmware_component_properties_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [out] NULL terminated string value for the name of the firmware\n< component. 'unknown' will be returned if this property cannot be\n< determined."]
+    pub name: [::std::os::raw::c_char; 64usize],
+    #[doc = "< [out] NULL terminated string value for the device version of the\n< firmware component. 'unknown' will be returned if this property cannot\n< be determined."]
+    pub version: [::std::os::raw::c_char; 64usize],
+    #[doc = "< [out] Reserved"]
+    pub reserved: [::std::os::raw::c_char; 20usize],
+}
+impl Default for _ctl_firmware_component_properties_t {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
 impl _ctl_freq_domain_t {
     #[doc = "< GPU Core Domain."]
     pub const CTL_FREQ_DOMAIN_GPU: _ctl_freq_domain_t = _ctl_freq_domain_t(0);
     #[doc = "< Local Memory Domain."]
     pub const CTL_FREQ_DOMAIN_MEMORY: _ctl_freq_domain_t = _ctl_freq_domain_t(1);
-    pub const CTL_FREQ_DOMAIN_MAX: _ctl_freq_domain_t = _ctl_freq_domain_t(2);
+    #[doc = "< Media Domain"]
+    pub const CTL_FREQ_DOMAIN_MEDIA: _ctl_freq_domain_t = _ctl_freq_domain_t(2);
+    pub const CTL_FREQ_DOMAIN_MAX: _ctl_freq_domain_t = _ctl_freq_domain_t(3);
 }
 #[repr(transparent)]
 #[doc = "\n @brief Frequency domains."]
@@ -4533,9 +4713,9 @@ pub struct _ctl_freq_range_t {
     pub Size: u32,
     #[doc = "< [in] version of this structure"]
     pub Version: u8,
-    #[doc = "< [in,out] The min frequency in MHz below which hardware frequency\n< management will not request frequencies. On input, setting to 0 will\n< permit the frequency to go down to the hardware minimum. On output, a\n< negative value indicates that no external minimum frequency limit is\n< in effect."]
+    #[doc = "< [in,out] The min frequency in MHz below which hardware frequency\n< management will not request frequencies. On input, setting to 0 will\n< permit the frequency to go down to the hardware minimum while setting\n< to -1 will return the min frequency limit to the factory value (can be\n< larger than the hardware min). On output, a negative value indicates\n< that no external minimum frequency limit is in effect."]
     pub min: f64,
-    #[doc = "< [in,out] The max frequency in MHz above which hardware frequency\n< management will not request frequencies. On input, setting to 0 or a\n< very big number will permit the frequency to go all the way up to the\n< hardware maximum. On output, a negative number indicates that no\n< external maximum frequency limit is in effect."]
+    #[doc = "< [in,out] The max frequency in MHz above which hardware frequency\n< management will not request frequencies. On input, setting to 0 or a\n< very big number will permit the frequency to go all the way up to the\n< hardware maximum while setting to -1 will return the max frequency to\n< the factory value (which can be less than the hardware max). On\n< output, a negative number indicates that no external maximum frequency\n< limit is in effect."]
     pub max: f64,
 }
 #[doc = "\n @brief Frequency throttle reasons"]
@@ -4602,6 +4782,53 @@ pub struct _ctl_freq_throttle_time_t {
     pub throttleTime: u64,
     #[doc = "< [out] Microsecond timestamp when throttleTime was captured.\n< This timestamp should only be used to calculate delta time between\n< snapshots of this structure.\n< Never take the delta of this timestamp with the timestamp from a\n< different structure since they are not guaranteed to have the same base.\n< The absolute value of the timestamp is only valid during within the\n< application and may be different on the next execution."]
     pub timestamp: u64,
+}
+#[doc = "\n @brief Led properties"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct _ctl_led_properties_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [out] Indicates if software can control the Led assuming the user has\n< permissions."]
+    pub canControl: bool,
+    #[doc = "< [out] Indicates support for control via I2C interface."]
+    pub isI2C: bool,
+    #[doc = "< [out] Returns a valid value if canControl is true and isI2C is false.\n< Indicates if the Led is PWM capable. If isPWM is false, only turn Led\n< on/off is supported."]
+    pub isPWM: bool,
+    #[doc = "< [out] Returns a valid value if canControl is true and isI2C is false.\n< Indicates if the Led is RGB capable."]
+    pub haveRGB: bool,
+}
+#[doc = "\n @brief Led color"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct _ctl_led_color_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [in,out][range(0.0, 1.0)] The Led red value. On output, a value less\n< than 0.0 indicates that the color is not known."]
+    pub red: f64,
+    #[doc = "< [in,out][range(0.0, 1.0)] The Led green value. On output, a value less\n< than 0.0 indicates that the color is not known."]
+    pub green: f64,
+    #[doc = "< [in,out][range(0.0, 1.0)] The Led blue value. On output, a value less\n< than 0.0 indicates that the color is not known."]
+    pub blue: f64,
+}
+#[doc = "\n @brief Led state"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct _ctl_led_state_t {
+    #[doc = "< [in] size of this structure"]
+    pub Size: u32,
+    #[doc = "< [in] version of this structure"]
+    pub Version: u8,
+    #[doc = "< [in,out] Indicates if the Led is on or off."]
+    pub isOn: bool,
+    #[doc = "< [in,out] Led On/Off Ratio, PWM range(0.0, 1.0). A value greater than\n< 1.0 is capped at 1.0."]
+    pub pwm: f64,
+    #[doc = "< [in,out] Color of the Led."]
+    pub color: ctl_led_color_t,
 }
 impl _ctl_video_processing_feature_t {
     #[doc = "< Film mode detection.  Contains CTL_PROPERTY_VALUE_TYPE_BOOL ValueType."]
@@ -5145,18 +5372,24 @@ pub struct _ctl_oc_properties_t {
     pub Version: u8,
     #[doc = "< [out] Indicates if the adapter supports overclocking."]
     pub bSupported: bool,
-    #[doc = "< [out] related to function ::ctlOverclockGpuFrequencyOffsetSet"]
+    #[doc = "< [out] related to function ::ctlOverclockGpuFrequencyOffsetSetV2"]
     pub gpuFrequencyOffset: ctl_oc_control_info_t,
-    #[doc = "< [out] related to function ::ctlOverclockGpuVoltageOffsetSet"]
+    #[doc = "< [out] related to function ::ctlOverclockGpuMaxVoltageOffsetSetV2"]
     pub gpuVoltageOffset: ctl_oc_control_info_t,
     #[doc = "< [out] Property Field Deprecated / No Longer Supported"]
     pub vramFrequencyOffset: ctl_oc_control_info_t,
     #[doc = "< [out] Property Field Deprecated / No Longer Supported"]
     pub vramVoltageOffset: ctl_oc_control_info_t,
-    #[doc = "< [out] related to function ::ctlOverclockPowerLimitSet"]
+    #[doc = "< [out] related to function ::ctlOverclockPowerLimitSetV2"]
     pub powerLimit: ctl_oc_control_info_t,
-    #[doc = "< [out] related to function ::ctlOverclockTemperatureLimitSet"]
+    #[doc = "< [out] related to function ::ctlOverclockTemperatureLimitSetV2"]
     pub temperatureLimit: ctl_oc_control_info_t,
+    #[doc = "< [out] related to function ::ctlOverclockVramMemSpeedLimitSetV2\n< Supported only for Version > 0"]
+    pub vramMemSpeedLimit: ctl_oc_control_info_t,
+    #[doc = "< [out] related to function ::ctlOverclockWriteCustomVFCurve Supported\n< only for Version > 0"]
+    pub gpuVFCurveVoltageLimit: ctl_oc_control_info_t,
+    #[doc = "< [out] related to function ::ctlOverclockWriteCustomVFCurve Supported\n< only for Version > 0"]
+    pub gpuVFCurveFrequencyLimit: ctl_oc_control_info_t,
 }
 impl Default for _ctl_oc_properties_t {
     fn default() -> Self {
@@ -5248,13 +5481,13 @@ pub struct _ctl_power_telemetry_t {
     pub renderComputeActivityCounter: ctl_oc_telemetry_item_t,
     #[doc = "< [out] Snapshot of the monotonic media activity counter. It measures\n< the time in seconds (accurate down to 1 millisecond) that any media\n< engine is busy. By taking the delta between two snapshots and dividing\n< by the delta time in seconds, an application can compute the average\n< percentage utilization of all media blocks in the GPU."]
     pub mediaActivityCounter: ctl_oc_telemetry_item_t,
-    #[doc = "< [out] Instantaneous indication that the desired GPU frequency is being\n< throttled because the GPU chip is exceeding the maximum power limits.\n< Increasing the power limits using ::ctlOverclockPowerLimitSet() is one\n< way to remove this limitation."]
+    #[doc = "< [out] Instantaneous indication that the desired GPU frequency is being\n< throttled because the GPU chip is exceeding the maximum power limits.\n< Increasing the power limits using ::ctlOverclockPowerLimitSetV2() is\n< one way to remove this limitation."]
     pub gpuPowerLimited: bool,
-    #[doc = "< [out] Instantaneous indication that the desired GPU frequency is being\n< throttled because the GPU chip is exceeding the temperature limits.\n< Increasing the temperature limits using\n< ::ctlOverclockTemperatureLimitSet() is one way to reduce this\n< limitation. Improving the cooling solution is another way."]
+    #[doc = "< [out] Instantaneous indication that the desired GPU frequency is being\n< throttled because the GPU chip is exceeding the temperature limits.\n< Increasing the temperature limits using\n< ::ctlOverclockTemperatureLimitSetV2() is one way to reduce this\n< limitation. Improving the cooling solution is another way."]
     pub gpuTemperatureLimited: bool,
     #[doc = "< [out] Instantaneous indication that the desired GPU frequency is being\n< throttled because the GPU chip has exceeded the power supply current\n< limits. A better power supply is required to reduce this limitation."]
     pub gpuCurrentLimited: bool,
-    #[doc = "< [out] Instantaneous indication that the GPU frequency cannot be\n< increased because the voltage limits have been reached. Increase the\n< voltage offset using ::ctlOverclockGpuVoltageOffsetSet() is one way to\n< reduce this limitation."]
+    #[doc = "< [out] Instantaneous indication that the GPU frequency cannot be\n< increased because the voltage limits have been reached. Increase the\n< voltage offset using ::ctlOverclockGpuMaxVoltageOffsetSetV2() is one\n< way to reduce this limitation."]
     pub gpuVoltageLimited: bool,
     #[doc = "< [out] Instantaneous indication that due to lower GPU utilization, the\n< hardware has lowered the GPU frequency."]
     pub gpuUtilizationLimited: bool,
@@ -5270,17 +5503,17 @@ pub struct _ctl_power_telemetry_t {
     pub vramReadBandwidthCounter: ctl_oc_telemetry_item_t,
     #[doc = "< [out] Instantaneous snapshot of the monotonic counter that measures\n< the write traffic to the memory modules. By taking the delta between\n< two snapshots and dividing by the delta time in seconds, an\n< application can compute the average write bandwidth."]
     pub vramWriteBandwidthCounter: ctl_oc_telemetry_item_t,
-    #[doc = "< [out] Instantaneous snapshot of the GPU chip temperature, read from\n< the sensor reporting the highest value."]
+    #[doc = "< [out] Instantaneous snapshot of the memory modules temperature, read\n< from the sensor reporting the highest value."]
     pub vramCurrentTemperature: ctl_oc_telemetry_item_t,
-    #[doc = "< [out] Instantaneous indication that the memory frequency is being\n< throttled because the memory modules are exceeding the maximum power\n< limits."]
+    #[doc = "< [out] Deprecated / Not-supported, will always returns false"]
     pub vramPowerLimited: bool,
-    #[doc = "< [out] Instantaneous indication that the memory frequency is being\n< throttled because the memory modules are exceeding the temperature\n< limits."]
+    #[doc = "< [out] Deprecated / Not-supported, will always returns false"]
     pub vramTemperatureLimited: bool,
-    #[doc = "< [out] Instantaneous indication that the memory frequency is being\n< throttled because the memory modules have exceeded the power supply\n< current limits."]
+    #[doc = "< [out] Deprecated / Not-supported, will always returns false"]
     pub vramCurrentLimited: bool,
-    #[doc = "< [out] Instantaneous indication that the memory frequency cannot be\n< increased because the voltage limits have been reached."]
+    #[doc = "< [out] Deprecated / Not-supported, will always returns false"]
     pub vramVoltageLimited: bool,
-    #[doc = "< [out] Instantaneous indication that due to lower memory traffic, the\n< hardware has lowered the memory frequency."]
+    #[doc = "< [out] Deprecated / Not-supported, will always returns false"]
     pub vramUtilizationLimited: bool,
     #[doc = "< [out] Total Card Energy Counter."]
     pub totalCardEnergyCounter: ctl_oc_telemetry_item_t,
@@ -5288,6 +5521,24 @@ pub struct _ctl_power_telemetry_t {
     pub psu: [ctl_psu_info_t; 5usize],
     #[doc = "< [out] Fan speed."]
     pub fanSpeed: [ctl_oc_telemetry_item_t; 5usize],
+    #[doc = "< [out] GPU VR temperature. Supported for Version > 0."]
+    pub gpuVrTemp: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] VRAM VR temperature. Supported for Version > 0."]
+    pub vramVrTemp: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] SA VR temperature. Supported for Version > 0."]
+    pub saVrTemp: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] Effective frequency of the GPU. Supported for Version > 0."]
+    pub gpuEffectiveClock: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] OverVoltage as a percent between 0 and 100. Positive values\n< represent fraction of the maximum over-voltage increment being\n< currently applied. Zero indicates operation at or below default\n< maximum frequency.  Supported for Version > 0."]
+    pub gpuOverVoltagePercent: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] GPUPower expressed as a percent representing the fraction of the\n< default maximum power being drawn currently. Values greater than 100\n< indicate power draw beyond default limits. Values above OC Power limit\n< imply throttling due to power. Supported for Version > 0."]
+    pub gpuPowerPercent: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] GPUTemperature expressed as a percent of the thermal margin.\n< Values of 100 or greater indicate thermal throttling and 0 indicates\n< device at 0 degree Celcius. Supported for Version > 0."]
+    pub gpuTemperaturePercent: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] VRAM Read Bandwidth. Supported for Version > 0."]
+    pub vramReadBandwidth: ctl_oc_telemetry_item_t,
+    #[doc = "< [out] VRAM Write Bandwidth. Supported for Version > 0."]
+    pub vramWriteBandwidth: ctl_oc_telemetry_item_t,
 }
 impl Default for _ctl_power_telemetry_t {
     fn default() -> Self {
@@ -5300,8 +5551,45 @@ impl Default for _ctl_power_telemetry_t {
 }
 impl ::std::fmt::Debug for _ctl_power_telemetry_t {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        write ! (f , "_ctl_power_telemetry_t {{ timeStamp: {:?}, gpuEnergyCounter: {:?}, gpuVoltage: {:?}, gpuCurrentClockFrequency: {:?}, gpuCurrentTemperature: {:?}, globalActivityCounter: {:?}, renderComputeActivityCounter: {:?}, mediaActivityCounter: {:?}, gpuPowerLimited: {:?}, gpuTemperatureLimited: {:?}, gpuCurrentLimited: {:?}, gpuVoltageLimited: {:?}, gpuUtilizationLimited: {:?}, vramEnergyCounter: {:?}, vramVoltage: {:?}, vramCurrentClockFrequency: {:?}, vramCurrentEffectiveFrequency: {:?}, vramReadBandwidthCounter: {:?}, vramWriteBandwidthCounter: {:?}, vramCurrentTemperature: {:?}, vramPowerLimited: {:?}, vramTemperatureLimited: {:?}, vramCurrentLimited: {:?}, vramVoltageLimited: {:?}, vramUtilizationLimited: {:?}, totalCardEnergyCounter: {:?}, psu: {:?}, fanSpeed: {:?} }}" , self . timeStamp , self . gpuEnergyCounter , self . gpuVoltage , self . gpuCurrentClockFrequency , self . gpuCurrentTemperature , self . globalActivityCounter , self . renderComputeActivityCounter , self . mediaActivityCounter , self . gpuPowerLimited , self . gpuTemperatureLimited , self . gpuCurrentLimited , self . gpuVoltageLimited , self . gpuUtilizationLimited , self . vramEnergyCounter , self . vramVoltage , self . vramCurrentClockFrequency , self . vramCurrentEffectiveFrequency , self . vramReadBandwidthCounter , self . vramWriteBandwidthCounter , self . vramCurrentTemperature , self . vramPowerLimited , self . vramTemperatureLimited , self . vramCurrentLimited , self . vramVoltageLimited , self . vramUtilizationLimited , self . totalCardEnergyCounter , self . psu , self . fanSpeed)
+        write ! (f , "_ctl_power_telemetry_t {{ timeStamp: {:?}, gpuEnergyCounter: {:?}, gpuVoltage: {:?}, gpuCurrentClockFrequency: {:?}, gpuCurrentTemperature: {:?}, globalActivityCounter: {:?}, renderComputeActivityCounter: {:?}, mediaActivityCounter: {:?}, gpuPowerLimited: {:?}, gpuTemperatureLimited: {:?}, gpuCurrentLimited: {:?}, gpuVoltageLimited: {:?}, gpuUtilizationLimited: {:?}, vramEnergyCounter: {:?}, vramVoltage: {:?}, vramCurrentClockFrequency: {:?}, vramCurrentEffectiveFrequency: {:?}, vramReadBandwidthCounter: {:?}, vramWriteBandwidthCounter: {:?}, vramCurrentTemperature: {:?}, vramPowerLimited: {:?}, vramTemperatureLimited: {:?}, vramCurrentLimited: {:?}, vramVoltageLimited: {:?}, vramUtilizationLimited: {:?}, totalCardEnergyCounter: {:?}, psu: {:?}, fanSpeed: {:?}, gpuVrTemp: {:?}, vramVrTemp: {:?}, saVrTemp: {:?}, gpuEffectiveClock: {:?}, gpuOverVoltagePercent: {:?}, gpuPowerPercent: {:?}, gpuTemperaturePercent: {:?}, vramReadBandwidth: {:?}, vramWriteBandwidth: {:?} }}" , self . timeStamp , self . gpuEnergyCounter , self . gpuVoltage , self . gpuCurrentClockFrequency , self . gpuCurrentTemperature , self . globalActivityCounter , self . renderComputeActivityCounter , self . mediaActivityCounter , self . gpuPowerLimited , self . gpuTemperatureLimited , self . gpuCurrentLimited , self . gpuVoltageLimited , self . gpuUtilizationLimited , self . vramEnergyCounter , self . vramVoltage , self . vramCurrentClockFrequency , self . vramCurrentEffectiveFrequency , self . vramReadBandwidthCounter , self . vramWriteBandwidthCounter , self . vramCurrentTemperature , self . vramPowerLimited , self . vramTemperatureLimited , self . vramCurrentLimited , self . vramVoltageLimited , self . vramUtilizationLimited , self . totalCardEnergyCounter , self . psu , self . fanSpeed , self . gpuVrTemp , self . vramVrTemp , self . saVrTemp , self . gpuEffectiveClock , self . gpuOverVoltagePercent , self . gpuPowerPercent , self . gpuTemperaturePercent , self . vramReadBandwidth , self . vramWriteBandwidth)
     }
+}
+impl _ctl_vf_curve_details_t {
+    #[doc = "< Read minimum num of VF points for simplified VF curve view"]
+    pub const CTL_VF_CURVE_DETAILS_SIMPLIFIED: _ctl_vf_curve_details_t = _ctl_vf_curve_details_t(0);
+    #[doc = "< Read medium num of VF points for more points than simplified view"]
+    pub const CTL_VF_CURVE_DETAILS_MEDIUM: _ctl_vf_curve_details_t = _ctl_vf_curve_details_t(1);
+    #[doc = "< Read Maximum num of VF points for detailed VF curve View"]
+    pub const CTL_VF_CURVE_DETAILS_ELABORATE: _ctl_vf_curve_details_t = _ctl_vf_curve_details_t(2);
+    pub const CTL_VF_CURVE_DETAILS_MAX: _ctl_vf_curve_details_t = _ctl_vf_curve_details_t(3);
+}
+#[repr(transparent)]
+#[doc = "\n @brief VF Curve Detail"]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_vf_curve_details_t(pub ::std::os::raw::c_int);
+#[doc = "\n @brief VF Curve Detail"]
+pub use self::_ctl_vf_curve_details_t as ctl_vf_curve_details_t;
+impl _ctl_vf_curve_type_t {
+    #[doc = "< Read default VF curve"]
+    pub const CTL_VF_CURVE_TYPE_STOCK: _ctl_vf_curve_type_t = _ctl_vf_curve_type_t(0);
+    #[doc = "< Read Live VF Curve"]
+    pub const CTL_VF_CURVE_TYPE_LIVE: _ctl_vf_curve_type_t = _ctl_vf_curve_type_t(1);
+    pub const CTL_VF_CURVE_TYPE_MAX: _ctl_vf_curve_type_t = _ctl_vf_curve_type_t(2);
+}
+#[repr(transparent)]
+#[doc = "\n @brief VF Curve type"]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub struct _ctl_vf_curve_type_t(pub ::std::os::raw::c_int);
+#[doc = "\n @brief VF Curve type"]
+pub use self::_ctl_vf_curve_type_t as ctl_vf_curve_type_t;
+#[doc = "\n @brief Overclock Voltage Frequency Point"]
+#[repr(C)]
+#[derive(Debug, Default, Copy, Clone)]
+pub struct _ctl_voltage_frequency_point_t {
+    #[doc = "< [in][out] in milliVolts"]
+    pub Voltage: u32,
+    #[doc = "< [in][out] in MHz"]
+    pub Frequency: u32,
 }
 #[doc = "\n @brief PCI address"]
 #[repr(C)]
@@ -5754,28 +6042,6 @@ pub type ctl_pfnGetIntelArcSyncInfoForMonitor_t = ::std::option::Option<
         arg2: *mut ctl_intel_arc_sync_monitor_params_t,
     ) -> ctl_result_t,
 >;
-#[doc = "\n @brief Function-pointer for ctlEnumerateMuxDevices"]
-pub type ctl_pfnEnumerateMuxDevices_t = ::std::option::Option<
-    unsafe extern "C" fn(
-        arg1: ctl_api_handle_t,
-        arg2: *mut u32,
-        arg3: *mut ctl_mux_output_handle_t,
-    ) -> ctl_result_t,
->;
-#[doc = "\n @brief Function-pointer for ctlGetMuxProperties"]
-pub type ctl_pfnGetMuxProperties_t = ::std::option::Option<
-    unsafe extern "C" fn(
-        arg1: ctl_mux_output_handle_t,
-        arg2: *mut ctl_mux_properties_t,
-    ) -> ctl_result_t,
->;
-#[doc = "\n @brief Function-pointer for ctlSwitchMux"]
-pub type ctl_pfnSwitchMux_t = ::std::option::Option<
-    unsafe extern "C" fn(
-        arg1: ctl_mux_output_handle_t,
-        arg2: ctl_display_output_handle_t,
-    ) -> ctl_result_t,
->;
 #[doc = "\n @brief Function-pointer for ctlGetIntelArcSyncProfile"]
 pub type ctl_pfnGetIntelArcSyncProfile_t = ::std::option::Option<
     unsafe extern "C" fn(
@@ -5865,6 +6131,27 @@ pub type ctl_pfnGetSetDisplaySettings_t = ::std::option::Option<
         arg2: *mut ctl_display_settings_t,
     ) -> ctl_result_t,
 >;
+#[doc = "\n @brief Function-pointer for ctlEccGetProperties"]
+pub type ctl_pfnEccGetProperties_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: *mut ctl_ecc_properties_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlEccGetState"]
+pub type ctl_pfnEccGetState_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: *mut ctl_ecc_state_desc_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlEccSetState"]
+pub type ctl_pfnEccSetState_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: *mut ctl_ecc_state_desc_t,
+    ) -> ctl_result_t,
+>;
 #[doc = "\n @brief Function-pointer for ctlEnumEngineGroups"]
 pub type ctl_pfnEnumEngineGroups_t = ::std::option::Option<
     unsafe extern "C" fn(
@@ -5922,6 +6209,32 @@ pub type ctl_pfnFanGetState_t = ::std::option::Option<
         arg3: *mut i32,
     ) -> ctl_result_t,
 >;
+#[doc = "\n @brief Function-pointer for ctlGetFirmwareProperties"]
+pub type ctl_pfnGetFirmwareProperties_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: *mut ctl_firmware_properties_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlEnumerateFirmwareComponents"]
+pub type ctl_pfnEnumerateFirmwareComponents_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: *mut u32,
+        arg3: *mut ctl_firmware_component_handle_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlGetFirmwareComponentProperties"]
+pub type ctl_pfnGetFirmwareComponentProperties_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_firmware_component_handle_t,
+        arg2: *mut ctl_firmware_component_properties_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlAllowPCIeLinkSpeedUpdate"]
+pub type ctl_pfnAllowPCIeLinkSpeedUpdate_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: bool) -> ctl_result_t,
+>;
 #[doc = "\n @brief Function-pointer for ctlEnumFrequencyDomains"]
 pub type ctl_pfnEnumFrequencyDomains_t = ::std::option::Option<
     unsafe extern "C" fn(
@@ -5955,6 +6268,30 @@ pub type ctl_pfnFrequencyGetThrottleTime_t = ::std::option::Option<
     unsafe extern "C" fn(
         arg1: ctl_freq_handle_t,
         arg2: *mut ctl_freq_throttle_time_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlEnumLeds"]
+pub type ctl_pfnEnumLeds_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: *mut u32,
+        arg3: *mut ctl_led_handle_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlLedGetProperties"]
+pub type ctl_pfnLedGetProperties_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_led_handle_t, arg2: *mut ctl_led_properties_t) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlLedGetState"]
+pub type ctl_pfnLedGetState_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_led_handle_t, arg2: *mut ctl_led_state_t) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlLedSetState"]
+pub type ctl_pfnLedSetState_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_led_handle_t,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: u32,
     ) -> ctl_result_t,
 >;
 #[doc = "\n @brief Function-pointer for ctlGetSupportedVideoProcessingCapabilities"]
@@ -6070,6 +6407,64 @@ pub type ctl_pfnPowerTelemetryGet_t = ::std::option::Option<
 #[doc = "\n @brief Function-pointer for ctlOverclockResetToDefault"]
 pub type ctl_pfnOverclockResetToDefault_t =
     ::std::option::Option<unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t) -> ctl_result_t>;
+#[doc = "\n @brief Function-pointer for ctlOverclockGpuFrequencyOffsetGetV2"]
+pub type ctl_pfnOverclockGpuFrequencyOffsetGetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: *mut f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockGpuFrequencyOffsetSetV2"]
+pub type ctl_pfnOverclockGpuFrequencyOffsetSetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockGpuMaxVoltageOffsetGetV2"]
+pub type ctl_pfnOverclockGpuMaxVoltageOffsetGetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: *mut f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockGpuMaxVoltageOffsetSetV2"]
+pub type ctl_pfnOverclockGpuMaxVoltageOffsetSetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockVramMemSpeedLimitGetV2"]
+pub type ctl_pfnOverclockVramMemSpeedLimitGetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: *mut f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockVramMemSpeedLimitSetV2"]
+pub type ctl_pfnOverclockVramMemSpeedLimitSetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockPowerLimitGetV2"]
+pub type ctl_pfnOverclockPowerLimitGetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: *mut f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockPowerLimitSetV2"]
+pub type ctl_pfnOverclockPowerLimitSetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockTemperatureLimitGetV2"]
+pub type ctl_pfnOverclockTemperatureLimitGetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: *mut f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockTemperatureLimitSetV2"]
+pub type ctl_pfnOverclockTemperatureLimitSetV2_t = ::std::option::Option<
+    unsafe extern "C" fn(arg1: ctl_device_adapter_handle_t, arg2: f64) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockReadVFCurve"]
+pub type ctl_pfnOverclockReadVFCurve_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: ctl_vf_curve_type_t,
+        arg3: ctl_vf_curve_details_t,
+        arg4: *mut u32,
+        arg5: *mut ctl_voltage_frequency_point_t,
+    ) -> ctl_result_t,
+>;
+#[doc = "\n @brief Function-pointer for ctlOverclockWriteCustomVFCurve"]
+pub type ctl_pfnOverclockWriteCustomVFCurve_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ctl_device_adapter_handle_t,
+        arg2: u32,
+        arg3: *mut ctl_voltage_frequency_point_t,
+    ) -> ctl_result_t,
+>;
 #[doc = "\n @brief Function-pointer for ctlPciGetProperties"]
 pub type ctl_pfnPciGetProperties_t = ::std::option::Option<
     unsafe extern "C" fn(
@@ -6393,28 +6788,6 @@ pub struct ControlLib {
         ) -> ctl_result_t,
         ::libloading::Error,
     >,
-    pub ctlEnumerateMuxDevices: Result<
-        unsafe extern "C" fn(
-            hAPIHandle: ctl_api_handle_t,
-            pCount: *mut u32,
-            phMuxDevices: *mut ctl_mux_output_handle_t,
-        ) -> ctl_result_t,
-        ::libloading::Error,
-    >,
-    pub ctlGetMuxProperties: Result<
-        unsafe extern "C" fn(
-            hMuxDevice: ctl_mux_output_handle_t,
-            pMuxProperties: *mut ctl_mux_properties_t,
-        ) -> ctl_result_t,
-        ::libloading::Error,
-    >,
-    pub ctlSwitchMux: Result<
-        unsafe extern "C" fn(
-            hMuxDevice: ctl_mux_output_handle_t,
-            hInactiveDisplayOutput: ctl_display_output_handle_t,
-        ) -> ctl_result_t,
-        ::libloading::Error,
-    >,
     pub ctlGetIntelArcSyncProfile: Result<
         unsafe extern "C" fn(
             hDisplayOutput: ctl_display_output_handle_t,
@@ -6505,6 +6878,27 @@ pub struct ControlLib {
         ) -> ctl_result_t,
         ::libloading::Error,
     >,
+    pub ctlEccGetProperties: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pProperties: *mut ctl_ecc_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEccGetState: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pState: *mut ctl_ecc_state_desc_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEccSetState: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pState: *mut ctl_ecc_state_desc_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
     pub ctlEnumEngineGroups: Result<
         unsafe extern "C" fn(
             hDAhandle: ctl_device_adapter_handle_t,
@@ -6570,6 +6964,35 @@ pub struct ControlLib {
         ) -> ctl_result_t,
         ::libloading::Error,
     >,
+    pub ctlGetFirmwareProperties: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pProperties: *mut ctl_firmware_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumerateFirmwareComponents: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phFirmware: *mut ctl_firmware_component_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlGetFirmwareComponentProperties: Result<
+        unsafe extern "C" fn(
+            hFirmware: ctl_firmware_component_handle_t,
+            pProperties: *mut ctl_firmware_component_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlAllowPCIeLinkSpeedUpdate: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            AllowPCIeLinkSpeedUpdate: bool,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
     pub ctlEnumFrequencyDomains: Result<
         unsafe extern "C" fn(
             hDAhandle: ctl_device_adapter_handle_t,
@@ -6618,6 +7041,33 @@ pub struct ControlLib {
         unsafe extern "C" fn(
             hFrequency: ctl_freq_handle_t,
             pThrottleTime: *mut ctl_freq_throttle_time_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlEnumLeds: Result<
+        unsafe extern "C" fn(
+            hDAhandle: ctl_device_adapter_handle_t,
+            pCount: *mut u32,
+            phLed: *mut ctl_led_handle_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlLedGetProperties: Result<
+        unsafe extern "C" fn(
+            hLed: ctl_led_handle_t,
+            pProperties: *mut ctl_led_properties_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlLedGetState: Result<
+        unsafe extern "C" fn(hLed: ctl_led_handle_t, pState: *mut ctl_led_state_t) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlLedSetState: Result<
+        unsafe extern "C" fn(
+            hLed: ctl_led_handle_t,
+            pBuffer: *mut ::std::os::raw::c_void,
+            bufferSize: u32,
         ) -> ctl_result_t,
         ::libloading::Error,
     >,
@@ -6784,6 +7234,94 @@ pub struct ControlLib {
         unsafe extern "C" fn(hDeviceHandle: ctl_device_adapter_handle_t) -> ctl_result_t,
         ::libloading::Error,
     >,
+    pub ctlOverclockGpuFrequencyOffsetGetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcFrequencyOffset: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuFrequencyOffsetSetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            ocFrequencyOffset: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuMaxVoltageOffsetGetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcMaxVoltageOffset: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockGpuMaxVoltageOffsetSetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            ocMaxVoltageOffset: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockVramMemSpeedLimitGetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pOcVramMemSpeedLimit: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockVramMemSpeedLimitSetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            ocVramMemSpeedLimit: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockPowerLimitGetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pSustainedPowerLimit: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockPowerLimitSetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            sustainedPowerLimit: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockTemperatureLimitGetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            pTemperatureLimit: *mut f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockTemperatureLimitSetV2: Result<
+        unsafe extern "C" fn(
+            hDeviceHandle: ctl_device_adapter_handle_t,
+            temperatureLimit: f64,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockReadVFCurve: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            VFCurveType: ctl_vf_curve_type_t,
+            VFCurveDetail: ctl_vf_curve_details_t,
+            pNumPoints: *mut u32,
+            pVFCurveTable: *mut ctl_voltage_frequency_point_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
+    pub ctlOverclockWriteCustomVFCurve: Result<
+        unsafe extern "C" fn(
+            hDeviceAdapter: ctl_device_adapter_handle_t,
+            NumPoints: u32,
+            pCustomVFCurveTable: *mut ctl_voltage_frequency_point_t,
+        ) -> ctl_result_t,
+        ::libloading::Error,
+    >,
     pub ctlPciGetProperties: Result<
         unsafe extern "C" fn(
             hDAhandle: ctl_device_adapter_handle_t,
@@ -6930,9 +7468,6 @@ impl ControlLib {
         let ctlGetIntelArcSyncInfoForMonitor = __library
             .get(b"ctlGetIntelArcSyncInfoForMonitor\0")
             .map(|sym| *sym);
-        let ctlEnumerateMuxDevices = __library.get(b"ctlEnumerateMuxDevices\0").map(|sym| *sym);
-        let ctlGetMuxProperties = __library.get(b"ctlGetMuxProperties\0").map(|sym| *sym);
-        let ctlSwitchMux = __library.get(b"ctlSwitchMux\0").map(|sym| *sym);
         let ctlGetIntelArcSyncProfile = __library
             .get(b"ctlGetIntelArcSyncProfile\0")
             .map(|sym| *sym);
@@ -6954,6 +7489,9 @@ impl ControlLib {
             .map(|sym| *sym);
         let ctlGetSetWireFormat = __library.get(b"ctlGetSetWireFormat\0").map(|sym| *sym);
         let ctlGetSetDisplaySettings = __library.get(b"ctlGetSetDisplaySettings\0").map(|sym| *sym);
+        let ctlEccGetProperties = __library.get(b"ctlEccGetProperties\0").map(|sym| *sym);
+        let ctlEccGetState = __library.get(b"ctlEccGetState\0").map(|sym| *sym);
+        let ctlEccSetState = __library.get(b"ctlEccSetState\0").map(|sym| *sym);
         let ctlEnumEngineGroups = __library.get(b"ctlEnumEngineGroups\0").map(|sym| *sym);
         let ctlEngineGetProperties = __library.get(b"ctlEngineGetProperties\0").map(|sym| *sym);
         let ctlEngineGetActivity = __library.get(b"ctlEngineGetActivity\0").map(|sym| *sym);
@@ -6964,6 +7502,16 @@ impl ControlLib {
         let ctlFanSetFixedSpeedMode = __library.get(b"ctlFanSetFixedSpeedMode\0").map(|sym| *sym);
         let ctlFanSetSpeedTableMode = __library.get(b"ctlFanSetSpeedTableMode\0").map(|sym| *sym);
         let ctlFanGetState = __library.get(b"ctlFanGetState\0").map(|sym| *sym);
+        let ctlGetFirmwareProperties = __library.get(b"ctlGetFirmwareProperties\0").map(|sym| *sym);
+        let ctlEnumerateFirmwareComponents = __library
+            .get(b"ctlEnumerateFirmwareComponents\0")
+            .map(|sym| *sym);
+        let ctlGetFirmwareComponentProperties = __library
+            .get(b"ctlGetFirmwareComponentProperties\0")
+            .map(|sym| *sym);
+        let ctlAllowPCIeLinkSpeedUpdate = __library
+            .get(b"ctlAllowPCIeLinkSpeedUpdate\0")
+            .map(|sym| *sym);
         let ctlEnumFrequencyDomains = __library.get(b"ctlEnumFrequencyDomains\0").map(|sym| *sym);
         let ctlFrequencyGetProperties = __library
             .get(b"ctlFrequencyGetProperties\0")
@@ -6977,6 +7525,10 @@ impl ControlLib {
         let ctlFrequencyGetThrottleTime = __library
             .get(b"ctlFrequencyGetThrottleTime\0")
             .map(|sym| *sym);
+        let ctlEnumLeds = __library.get(b"ctlEnumLeds\0").map(|sym| *sym);
+        let ctlLedGetProperties = __library.get(b"ctlLedGetProperties\0").map(|sym| *sym);
+        let ctlLedGetState = __library.get(b"ctlLedGetState\0").map(|sym| *sym);
+        let ctlLedSetState = __library.get(b"ctlLedSetState\0").map(|sym| *sym);
         let ctlGetSupportedVideoProcessingCapabilities = __library
             .get(b"ctlGetSupportedVideoProcessingCapabilities\0")
             .map(|sym| *sym);
@@ -7033,6 +7585,40 @@ impl ControlLib {
         let ctlOverclockResetToDefault = __library
             .get(b"ctlOverclockResetToDefault\0")
             .map(|sym| *sym);
+        let ctlOverclockGpuFrequencyOffsetGetV2 = __library
+            .get(b"ctlOverclockGpuFrequencyOffsetGetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockGpuFrequencyOffsetSetV2 = __library
+            .get(b"ctlOverclockGpuFrequencyOffsetSetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockGpuMaxVoltageOffsetGetV2 = __library
+            .get(b"ctlOverclockGpuMaxVoltageOffsetGetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockGpuMaxVoltageOffsetSetV2 = __library
+            .get(b"ctlOverclockGpuMaxVoltageOffsetSetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockVramMemSpeedLimitGetV2 = __library
+            .get(b"ctlOverclockVramMemSpeedLimitGetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockVramMemSpeedLimitSetV2 = __library
+            .get(b"ctlOverclockVramMemSpeedLimitSetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockPowerLimitGetV2 = __library
+            .get(b"ctlOverclockPowerLimitGetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockPowerLimitSetV2 = __library
+            .get(b"ctlOverclockPowerLimitSetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockTemperatureLimitGetV2 = __library
+            .get(b"ctlOverclockTemperatureLimitGetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockTemperatureLimitSetV2 = __library
+            .get(b"ctlOverclockTemperatureLimitSetV2\0")
+            .map(|sym| *sym);
+        let ctlOverclockReadVFCurve = __library.get(b"ctlOverclockReadVFCurve\0").map(|sym| *sym);
+        let ctlOverclockWriteCustomVFCurve = __library
+            .get(b"ctlOverclockWriteCustomVFCurve\0")
+            .map(|sym| *sym);
         let ctlPciGetProperties = __library.get(b"ctlPciGetProperties\0").map(|sym| *sym);
         let ctlPciGetState = __library.get(b"ctlPciGetState\0").map(|sym| *sym);
         let ctlEnumPowerDomains = __library.get(b"ctlEnumPowerDomains\0").map(|sym| *sym);
@@ -7087,9 +7673,6 @@ impl ControlLib {
             ctlSetLACEConfig,
             ctlSoftwarePSR,
             ctlGetIntelArcSyncInfoForMonitor,
-            ctlEnumerateMuxDevices,
-            ctlGetMuxProperties,
-            ctlSwitchMux,
             ctlGetIntelArcSyncProfile,
             ctlSetIntelArcSyncProfile,
             ctlEdidManagement,
@@ -7103,6 +7686,9 @@ impl ControlLib {
             ctlGetSetDynamicContrastEnhancement,
             ctlGetSetWireFormat,
             ctlGetSetDisplaySettings,
+            ctlEccGetProperties,
+            ctlEccGetState,
+            ctlEccSetState,
             ctlEnumEngineGroups,
             ctlEngineGetProperties,
             ctlEngineGetActivity,
@@ -7113,6 +7699,10 @@ impl ControlLib {
             ctlFanSetFixedSpeedMode,
             ctlFanSetSpeedTableMode,
             ctlFanGetState,
+            ctlGetFirmwareProperties,
+            ctlEnumerateFirmwareComponents,
+            ctlGetFirmwareComponentProperties,
+            ctlAllowPCIeLinkSpeedUpdate,
             ctlEnumFrequencyDomains,
             ctlFrequencyGetProperties,
             ctlFrequencyGetAvailableClocks,
@@ -7120,6 +7710,10 @@ impl ControlLib {
             ctlFrequencySetRange,
             ctlFrequencyGetState,
             ctlFrequencyGetThrottleTime,
+            ctlEnumLeds,
+            ctlLedGetProperties,
+            ctlLedGetState,
+            ctlLedSetState,
             ctlGetSupportedVideoProcessingCapabilities,
             ctlGetSetVideoProcessingFeature,
             ctlEnumMemoryModules,
@@ -7144,6 +7738,18 @@ impl ControlLib {
             ctlOverclockTemperatureLimitSet,
             ctlPowerTelemetryGet,
             ctlOverclockResetToDefault,
+            ctlOverclockGpuFrequencyOffsetGetV2,
+            ctlOverclockGpuFrequencyOffsetSetV2,
+            ctlOverclockGpuMaxVoltageOffsetGetV2,
+            ctlOverclockGpuMaxVoltageOffsetSetV2,
+            ctlOverclockVramMemSpeedLimitGetV2,
+            ctlOverclockVramMemSpeedLimitSetV2,
+            ctlOverclockPowerLimitGetV2,
+            ctlOverclockPowerLimitSetV2,
+            ctlOverclockTemperatureLimitGetV2,
+            ctlOverclockTemperatureLimitSetV2,
+            ctlOverclockReadVFCurve,
+            ctlOverclockWriteCustomVFCurve,
             ctlPciGetProperties,
             ctlPciGetState,
             ctlEnumPowerDomains,
@@ -7352,7 +7958,7 @@ impl ControlLib {
             .as_ref()
             .expect("Expected function, got error."))(hDisplayOutput, pSharpnessSettings)
     }
-    #[doc = "\n @brief I2C Access\n\n @details\n     - Interface to access I2C using display handle as identifier.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pI2cAccessArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"Invalid I2C data size\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\""]
+    #[doc = "\n @brief I2C Access\n\n @details\n     - Interface to access I2C using display handle as identifier.  I2C\n       driver override flags are supported only for HDMI displays.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pI2cAccessArgs`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_OPERATION_TYPE - \"Invalid operation type\"\n     - ::CTL_RESULT_ERROR_INVALID_SIZE - \"Invalid I2C data size\"\n     - ::CTL_RESULT_ERROR_INSUFFICIENT_PERMISSIONS - \"Insufficient permissions\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_POINTER - \"Invalid null pointer\"\n     - ::CTL_RESULT_ERROR_NULL_OS_DISPLAY_OUTPUT_HANDLE - \"Null OS display output handle\"\n     - ::CTL_RESULT_ERROR_NULL_OS_INTERFACE - \"Null OS interface\"\n     - ::CTL_RESULT_ERROR_NULL_OS_ADAPATER_HANDLE - \"Null OS adapter handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"Kernal mode driver call failure\""]
     pub unsafe fn ctlI2CAccess(
         &self,
         hDisplayOutput: ctl_display_output_handle_t,
@@ -7580,40 +8186,6 @@ impl ControlLib {
             hDisplayOutput, pIntelArcSyncMonitorParams
         )
     }
-    #[doc = "\n @brief Enumerate Display MUX Devices on this system across adapters\n\n @details\n     - The application enumerates all MUX devices in the system\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hAPIHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`\n         + `nullptr == phMuxDevices`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
-    pub unsafe fn ctlEnumerateMuxDevices(
-        &self,
-        hAPIHandle: ctl_api_handle_t,
-        pCount: *mut u32,
-        phMuxDevices: *mut ctl_mux_output_handle_t,
-    ) -> ctl_result_t {
-        (self
-            .ctlEnumerateMuxDevices
-            .as_ref()
-            .expect("Expected function, got error."))(hAPIHandle, pCount, phMuxDevices)
-    }
-    #[doc = "\n @brief Get Display Mux properties\n\n @details\n     - Get the propeties of the Mux device\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMuxDevice`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pMuxProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
-    pub unsafe fn ctlGetMuxProperties(
-        &self,
-        hMuxDevice: ctl_mux_output_handle_t,
-        pMuxProperties: *mut ctl_mux_properties_t,
-    ) -> ctl_result_t {
-        (self
-            .ctlGetMuxProperties
-            .as_ref()
-            .expect("Expected function, got error."))(hMuxDevice, pMuxProperties)
-    }
-    #[doc = "\n @brief Switch Mux output\n\n @details\n     - Switches the MUX output\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hMuxDevice`\n         + `nullptr == hInactiveDisplayOutput`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
-    pub unsafe fn ctlSwitchMux(
-        &self,
-        hMuxDevice: ctl_mux_output_handle_t,
-        hInactiveDisplayOutput: ctl_display_output_handle_t,
-    ) -> ctl_result_t {
-        (self
-            .ctlSwitchMux
-            .as_ref()
-            .expect("Expected function, got error."))(hMuxDevice, hInactiveDisplayOutput)
-    }
     #[doc = "\n @brief Get Intel Arc Sync profile\n\n @details\n     - Returns Intel Arc Sync profile for selected monitor\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDisplayOutput`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pIntelArcSyncProfileParams`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetIntelArcSyncProfile(
         &self,
@@ -7769,6 +8341,39 @@ impl ControlLib {
             .as_ref()
             .expect("Expected function, got error."))(hDisplayOutput, pDisplaySettings)
     }
+    #[doc = "\n @brief Get ECC properties.\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
+    pub unsafe fn ctlEccGetProperties(
+        &self,
+        hDAhandle: ctl_device_adapter_handle_t,
+        pProperties: *mut ctl_ecc_properties_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlEccGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pProperties)
+    }
+    #[doc = "\n @brief Get ECC state.\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pState`\n     - CTL_RESULT_ERROR_INVALID_ENUMERATION\n         + `::CTL_ECC_STATE_ECC_DISABLED_STATE < pState->currentEccState`\n         + `::CTL_ECC_STATE_ECC_DISABLED_STATE < pState->pendingEccState`"]
+    pub unsafe fn ctlEccGetState(
+        &self,
+        hDAhandle: ctl_device_adapter_handle_t,
+        pState: *mut ctl_ecc_state_desc_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlEccGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pState)
+    }
+    #[doc = "\n @brief Set ECC state. Setting CTL_ECC_STATE_ECC_DEFAULT_STATE will reset the\n        ECC state to the factory settings.\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pState`\n     - CTL_RESULT_ERROR_INVALID_ENUMERATION\n         + `::CTL_ECC_STATE_ECC_DISABLED_STATE < pState->currentEccState`\n         + `::CTL_ECC_STATE_ECC_DISABLED_STATE < pState->pendingEccState`"]
+    pub unsafe fn ctlEccSetState(
+        &self,
+        hDAhandle: ctl_device_adapter_handle_t,
+        pState: *mut ctl_ecc_state_desc_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlEccSetState
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pState)
+    }
     #[doc = "\n @brief Get handle of engine groups\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumEngineGroups(
         &self,
@@ -7878,6 +8483,53 @@ impl ControlLib {
             .as_ref()
             .expect("Expected function, got error."))(hFan, units, pSpeed)
     }
+    #[doc = "\n @brief Get base firmware properties\n\n @details\n     - The application gets properties of base firmware\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
+    pub unsafe fn ctlGetFirmwareProperties(
+        &self,
+        hDeviceAdapter: ctl_device_adapter_handle_t,
+        pProperties: *mut ctl_firmware_properties_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlGetFirmwareProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, pProperties)
+    }
+    #[doc = "\n @brief Get handle of various firmware components\n\n @details\n     - The application enumerates all firmware components on an Intel\n       Discrete Graphics device.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_HANDLE - \"Invalid handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"KMD call failed\""]
+    pub unsafe fn ctlEnumerateFirmwareComponents(
+        &self,
+        hDeviceAdapter: ctl_device_adapter_handle_t,
+        pCount: *mut u32,
+        phFirmware: *mut ctl_firmware_component_handle_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlEnumerateFirmwareComponents
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceAdapter, pCount, phFirmware)
+    }
+    #[doc = "\n @brief Get firmware component properties\n\n @details\n     - The application gets properties of individual firmware components\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hFirmware`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_HANDLE - \"Invalid handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"KMD call failed\""]
+    pub unsafe fn ctlGetFirmwareComponentProperties(
+        &self,
+        hFirmware: ctl_firmware_component_handle_t,
+        pProperties: *mut ctl_firmware_component_properties_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlGetFirmwareComponentProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hFirmware, pProperties)
+    }
+    #[doc = "\n @brief Allows/Blocks discrete graphics device firmware's capability to train\n        PCI-E link at higher speeds on compatible compatible hosts\n\n @details\n     - This API allows caller to allow/block a compatible discrete graphics\n       card's firmware train PCIE links at higher speeds on compatible hosts.\n     - System needs to be powered off and restarted for the new state to take\n       affect. The new state will not be applied on only a warm reboot of the\n       system.\n     - This is a reserved capability. By default, this capability will not be\n       enabled, need application to activate it, please contact Intel for\n       activation.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\"\n     - ::CTL_RESULT_ERROR_INVALID_NULL_HANDLE - \"Invalid handle\"\n     - ::CTL_RESULT_ERROR_KMD_CALL - \"KMD call failed\""]
+    pub unsafe fn ctlAllowPCIeLinkSpeedUpdate(
+        &self,
+        hDeviceAdapter: ctl_device_adapter_handle_t,
+        AllowPCIeLinkSpeedUpdate: bool,
+    ) -> ctl_result_t {
+        (self
+            .ctlAllowPCIeLinkSpeedUpdate
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDeviceAdapter, AllowPCIeLinkSpeedUpdate
+        )
+    }
     #[doc = "\n @brief Get handle of frequency domains\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
     pub unsafe fn ctlEnumFrequencyDomains(
         &self,
@@ -7956,6 +8608,52 @@ impl ControlLib {
             .ctlFrequencyGetThrottleTime
             .as_ref()
             .expect("Expected function, got error."))(hFrequency, pThrottleTime)
+    }
+    #[doc = "\n @brief Get handle of Leds\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCount`"]
+    pub unsafe fn ctlEnumLeds(
+        &self,
+        hDAhandle: ctl_device_adapter_handle_t,
+        pCount: *mut u32,
+        phLed: *mut ctl_led_handle_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlEnumLeds
+            .as_ref()
+            .expect("Expected function, got error."))(hDAhandle, pCount, phLed)
+    }
+    #[doc = "\n @brief Get Led properties\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hLed`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
+    pub unsafe fn ctlLedGetProperties(
+        &self,
+        hLed: ctl_led_handle_t,
+        pProperties: *mut ctl_led_properties_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlLedGetProperties
+            .as_ref()
+            .expect("Expected function, got error."))(hLed, pProperties)
+    }
+    #[doc = "\n @brief Get Led state\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hLed`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pState`"]
+    pub unsafe fn ctlLedGetState(
+        &self,
+        hLed: ctl_led_handle_t,
+        pState: *mut ctl_led_state_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlLedGetState
+            .as_ref()
+            .expect("Expected function, got error."))(hLed, pState)
+    }
+    #[doc = "\n @brief Set Led state\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n     - This API is rate-limited by 500 milliseconds, If this API is called\n       too frequently ::CTL_ERROR_CORE_LED_TOO_FREQUENT_SET_REQUESTS error\n       will be returned\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hLed`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pBuffer`"]
+    pub unsafe fn ctlLedSetState(
+        &self,
+        hLed: ctl_led_handle_t,
+        pBuffer: *mut ::std::os::raw::c_void,
+        bufferSize: u32,
+    ) -> ctl_result_t {
+        (self
+            .ctlLedSetState
+            .as_ref()
+            .expect("Expected function, got error."))(hLed, pBuffer, bufferSize)
     }
     #[doc = "\n @brief Get Video Processing capabilities\n\n @details\n     - The application gets Video Processing properties\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pFeatureCaps`\n     - ::CTL_RESULT_ERROR_UNSUPPORTED_VERSION - \"Unsupported version\""]
     pub unsafe fn ctlGetSupportedVideoProcessingCapabilities(
@@ -8219,6 +8917,152 @@ impl ControlLib {
             .ctlOverclockResetToDefault
             .as_ref()
             .expect("Expected function, got error."))(hDeviceHandle)
+    }
+    #[doc = "\n @brief Get the Current Overclock GPU Frequency Offset\n\n @details\n     - Determine the current frequency offset in effect (refer to\n       ::ctlOverclockGpuFrequencyOffsetSetV2() for details).\n     - The unit of the value returned is given in\n       ::ctl_oc_properties_t::gpuFrequencyOffset::units returned from\n       ::ctlOverclockGetProperties()\n     - The unit of the value returned can be different for different\n       generation of graphics product\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcFrequencyOffset`"]
+    pub unsafe fn ctlOverclockGpuFrequencyOffsetGetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        pOcFrequencyOffset: *mut f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockGpuFrequencyOffsetGetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcFrequencyOffset)
+    }
+    #[doc = "\n @brief Set the Overclock Frequency Offset for the GPU\n\n @details\n     - The purpose of this function is to increase/decrease the frequency\n       offset at which typical workloads will run within the same thermal\n       budget.\n     - The frequency offset is expressed in units given in\n       ::ctl_oc_properties_t::gpuFrequencyOffset::units returned from\n       ::ctlOverclockGetProperties()\n     - The actual operating frequency for each workload is not guaranteed to\n       change exactly by the specified offset.\n     - For positive frequency offsets, the factory maximum frequency may\n       increase by up to the specified amount.\n     - Specifying large values for the frequency offset can lead to\n       instability. It is recommended that changes are made in small\n       increments and stability/performance measured running intense GPU\n       workloads before increasing further.\n     - This setting is not persistent through system reboots or driver\n       resets/hangs. It is up to the overclock application to reapply the\n       settings in those cases.\n     - This setting can cause system/device instability. It is up to the\n       overclock application to detect if the system has rebooted\n       unexpectedly or the device was restarted. When this occurs, the\n       application should not reapply the overclock settings automatically\n       but instead return to previously known good settings or notify the\n       user that the settings are not being applied.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
+    pub unsafe fn ctlOverclockGpuFrequencyOffsetSetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        ocFrequencyOffset: f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockGpuFrequencyOffsetSetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, ocFrequencyOffset)
+    }
+    #[doc = "\n @brief Get the Current Overclock Voltage Offset for the GPU\n\n @details\n     - Determine the current maximum voltage offset in effect on the hardware\n       (refer to ::ctlOverclockGpuMaxVoltageOffsetSetV2 for details).\n     - The unit of the value returned is given in\n       ::ctl_oc_properties_t::gpuVoltageOffset::units returned from\n       ::ctlOverclockGetProperties()\n     - The unit of the value returned can be different for different\n       generation of graphics product\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcMaxVoltageOffset`"]
+    pub unsafe fn ctlOverclockGpuMaxVoltageOffsetGetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        pOcMaxVoltageOffset: *mut f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockGpuMaxVoltageOffsetGetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcMaxVoltageOffset)
+    }
+    #[doc = "\n @brief Set the Overclock Voltage Offset for the GPU\n\n @details\n     - The purpose of this function is to attempt to run the GPU up to higher\n       voltages beyond the part warrantee limits. This can permit running at\n       even higher frequencies than can be obtained using the frequency\n       offset setting, but at the risk of reducing the lifetime of the part.\n     - The voltage offset is expressed in units given in\n       ::ctl_oc_properties_t::gpuVoltageOffset::units returned from\n       ::ctlOverclockGetProperties()\n     - The overclock waiver must be set before calling this function\n       otherwise error will be returned.\n     - There is no guarantee that a workload can operate at the higher\n       frequencies permitted by this setting. Significantly more heat will be\n       generated at these high frequencies/voltages which will necessitate a\n       good cooling solution.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
+    pub unsafe fn ctlOverclockGpuMaxVoltageOffsetSetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        ocMaxVoltageOffset: f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockGpuMaxVoltageOffsetSetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, ocMaxVoltageOffset)
+    }
+    #[doc = "\n @brief Get the current Overclock Vram Memory Speed\n\n @details\n     - The purpose of this function is to return the current VRAM Memory\n       Speed\n     - The unit of the value returned is given in\n       ::ctl_oc_properties_t::vramMemSpeedLimit::units returned from\n       ::ctlOverclockGetProperties()\n     - The unit of the value returned can be different for different\n       generation of graphics product\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pOcVramMemSpeedLimit`"]
+    pub unsafe fn ctlOverclockVramMemSpeedLimitGetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        pOcVramMemSpeedLimit: *mut f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockVramMemSpeedLimitGetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pOcVramMemSpeedLimit)
+    }
+    #[doc = "\n @brief Set the desired Overclock Vram Memory Speed\n\n @details\n     - The purpose of this function is to increase/decrease the Speed of\n       VRAM.\n     - The Memory Speed is expressed in units given in\n       ::ctl_oc_properties_t::vramMemSpeedLimit::units returned from\n       ::ctlOverclockGetProperties() with a minimum step size given by\n       ::ctlOverclockGetProperties().\n     - The actual Memory Speed for each workload is not guaranteed to change\n       exactly by the specified offset.\n     - This setting is not persistent through system reboots or driver\n       resets/hangs. It is up to the overclock application to reapply the\n       settings in those cases.\n     - This setting can cause system/device instability. It is up to the\n       overclock application to detect if the system has rebooted\n       unexpectedly or the device was restarted. When this occurs, the\n       application should not reapply the overclock settings automatically\n       but instead return to previously known good settings or notify the\n       user that the settings are not being applied.\n     - If the memory controller doesn't support changes to memory speed on\n       the fly, one of the following return codes will be given:\n     - CTL_RESULT_ERROR_RESET_DEVICE_REQUIRED: The requested memory overclock\n       will be applied when the device is reset or the system is rebooted. In\n       this case, the overclock software should check if the overclock\n       request was applied after the reset/reboot. If it was and when the\n       overclock application shuts down gracefully and if the overclock\n       application wants the setting to be persistent, the application should\n       request the same overclock settings again so that they will be applied\n       on the next reset/reboot. If this is not done, then every time the\n       device is reset and overclock is requested, the device needs to be\n       reset a second time.\n     - CTL_RESULT_ERROR_FULL_REBOOT_REQUIRED: The requested memory overclock\n       will be applied when the system is rebooted. In this case, the\n       overclock software should check if the overclock request was applied\n       after the reboot. If it was and when the overclock application shuts\n       down gracefully and if the overclock application wants the setting to\n       be persistent, the application should request the same overclock\n       settings again so that they will be applied on the next reset/reboot.\n       If this is not done and the overclock setting is requested after the\n       reboot has occurred, a second reboot will be required.\n     - CTL_RESULT_ERROR_UNSUPPORTED_FEATURE: The Memory Speed Get / Set\n       Feature is currently not available or Unsupported in current platform\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
+    pub unsafe fn ctlOverclockVramMemSpeedLimitSetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        ocVramMemSpeedLimit: f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockVramMemSpeedLimitSetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, ocVramMemSpeedLimit)
+    }
+    #[doc = "\n @brief Get the Current Sustained power limit\n\n @details\n     - The purpose of this function is to read the current sustained power\n       limit.\n     - The unit of the value returned is given in\n       ::ctl_oc_properties_t::powerLimit::units returned from\n       ::ctlOverclockGetProperties()\n     - The unit of the value returned can be different for different\n       generation of graphics product\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pSustainedPowerLimit`"]
+    pub unsafe fn ctlOverclockPowerLimitGetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        pSustainedPowerLimit: *mut f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockPowerLimitGetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pSustainedPowerLimit)
+    }
+    #[doc = "\n @brief Set the Sustained power limit\n\n @details\n     - The purpose of this function is to set the maximum sustained power\n       limit. If the average GPU power averaged over a few seconds exceeds\n       this value, the frequency of the GPU will be throttled.\n     - Set a value of 0 to disable this power limit. In this case, the GPU\n       frequency will not throttle due to average power but may hit other\n       limits.\n     - The unit of the PowerLimit to be set is given in\n       ::ctl_oc_properties_t::powerLimit::units returned from\n       ::ctlOverclockGetProperties()\n     - The unit of the value returned can be different for different\n       generation of graphics product\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
+    pub unsafe fn ctlOverclockPowerLimitSetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        sustainedPowerLimit: f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockPowerLimitSetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, sustainedPowerLimit)
+    }
+    #[doc = "\n @brief Get the current temperature limit\n\n @details\n     - The purpose of this function is to read the current thermal limit used\n       for Overclocking\n     - The unit of the value returned is given in\n       ::ctl_oc_properties_t::temperatureLimit::units returned from\n       ::ctlOverclockGetProperties()\n     - The unit of the value returned can be different for different\n       generation of graphics product\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pTemperatureLimit`"]
+    pub unsafe fn ctlOverclockTemperatureLimitGetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        pTemperatureLimit: *mut f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockTemperatureLimitGetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, pTemperatureLimit)
+    }
+    #[doc = "\n @brief Set the temperature limit\n\n @details\n     - The purpose of this function is to change the maximum thermal limit.\n       When the GPU temperature exceeds this value, the GPU frequency will be\n       throttled.\n     - The unit of the value to be set is given in\n       ::ctl_oc_properties_t::temperatureLimit::units returned from\n       ::ctlOverclockGetProperties()\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceHandle`"]
+    pub unsafe fn ctlOverclockTemperatureLimitSetV2(
+        &self,
+        hDeviceHandle: ctl_device_adapter_handle_t,
+        temperatureLimit: f64,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockTemperatureLimitSetV2
+            .as_ref()
+            .expect("Expected function, got error."))(hDeviceHandle, temperatureLimit)
+    }
+    #[doc = "\n @brief Read VF Curve\n\n @details\n     - Read the Voltage-Frequency Curve\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_ENUMERATION\n         + `::CTL_VF_CURVE_TYPE_LIVE < VFCurveType`\n         + `::CTL_VF_CURVE_DETAILS_ELABORATE < VFCurveDetail`\n     - CTL_RESULT_ERROR_UNKNOWN - \"Unknown Error\""]
+    pub unsafe fn ctlOverclockReadVFCurve(
+        &self,
+        hDeviceAdapter: ctl_device_adapter_handle_t,
+        VFCurveType: ctl_vf_curve_type_t,
+        VFCurveDetail: ctl_vf_curve_details_t,
+        pNumPoints: *mut u32,
+        pVFCurveTable: *mut ctl_voltage_frequency_point_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockReadVFCurve
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDeviceAdapter,
+            VFCurveType,
+            VFCurveDetail,
+            pNumPoints,
+            pVFCurveTable,
+        )
+    }
+    #[doc = "\n @brief Write Custom VF curve\n\n @details\n     - Modify the Voltage-Frequency Curve used by GPU\n     - Valid Voltage-Frequency Curve shall have Voltage and Frequency Points\n       in increasing order\n     - Recommended to create Custom V-F Curve from reading Current V-F Curve\n       using ::ctlOverclockReadVFCurve (Read-Modify-Write)\n     - If Custom V-F curve write request is Successful, the Applied VF Curve\n       might be slightly different than what is originally requested,\n       recommended to update the UI by reading the V-F curve again using\n       ctlOverclockReadVFCurve (with ctl_vf_curve_type_t::LIVE as input)\n     - The overclock waiver must be set before calling this function\n       otherwise error will be returned.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDeviceAdapter`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pCustomVFCurveTable`\n     - CTL_RESULT_ERROR_UNKNOWN - \"Unknown Error\""]
+    pub unsafe fn ctlOverclockWriteCustomVFCurve(
+        &self,
+        hDeviceAdapter: ctl_device_adapter_handle_t,
+        NumPoints: u32,
+        pCustomVFCurveTable: *mut ctl_voltage_frequency_point_t,
+    ) -> ctl_result_t {
+        (self
+            .ctlOverclockWriteCustomVFCurve
+            .as_ref()
+            .expect("Expected function, got error."))(
+            hDeviceAdapter,
+            NumPoints,
+            pCustomVFCurveTable,
+        )
     }
     #[doc = "\n @brief Get PCI properties - address, max speed\n\n @details\n     - The application may call this function from simultaneous threads.\n     - The implementation of this function should be lock-free.\n\n @returns\n     - CTL_RESULT_SUCCESS\n     - CTL_RESULT_ERROR_UNINITIALIZED\n     - CTL_RESULT_ERROR_DEVICE_LOST\n     - CTL_RESULT_ERROR_INVALID_NULL_HANDLE\n         + `nullptr == hDAhandle`\n     - CTL_RESULT_ERROR_INVALID_NULL_POINTER\n         + `nullptr == pProperties`"]
     pub unsafe fn ctlPciGetProperties(
