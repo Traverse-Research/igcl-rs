@@ -1,5 +1,6 @@
 use std::{
-    ffi::{CStr, OsStr},
+    borrow::Cow,
+    ffi::{c_char, CStr},
     mem::MaybeUninit,
     sync::Arc,
 };
@@ -28,16 +29,14 @@ pub enum DriverSettingScope<'a> {
 }
 
 impl DriverSettingScope<'_> {
-    pub fn name(&self) -> String {
+    pub fn name(&self) -> Cow<'_, str> {
         match self {
-            Self::Global => String::default(),
-            Self::CurrentProcess => std::env::current_exe().map_or("".to_string(), |path| {
-                path.file_name()
-                    .unwrap_or(OsStr::new(""))
-                    .to_string_lossy()
-                    .to_string()
-            }),
-            Self::Process { process_name } => process_name.to_string(),
+            Self::Global => Default::default(),
+            Self::CurrentProcess => std::env::current_exe()
+                .ok()
+                .and_then(|p| Some(Cow::Owned(p.file_name()?.to_string_lossy().to_string())))
+                .unwrap_or_default(),
+            Self::Process { process_name } => Cow::Borrowed(process_name),
         }
     }
 
@@ -47,6 +46,20 @@ impl DriverSettingScope<'_> {
             Self::Global => None,
             _ => Some(Self::Global),
         }
+    }
+}
+
+// Despite passing a string length of `0` newer Intel drivers
+// starting at at least version `32.0.101.8531` require the string
+// *pointer* to be NULL rather than the dangling always-non-NULL
+// pointer Rust uses, or SEGFAULT otherwise.
+fn string_ptr_or_null(s: &str) -> *mut c_char {
+    if s.is_empty() {
+        std::ptr::null_mut()
+    } else {
+        // IGCL API projection is wrong, they take mutable pointers
+        // to strings (likely forgot a `const`)
+        s.as_ptr().cast::<c_char>().cast_mut()
     }
 }
 
@@ -119,13 +132,13 @@ impl DeviceAdapter {
         let mut settings = MaybeUninit::<ctl_endurance_gaming_t>::uninit();
 
         while let Some(driver_setting_scope) = scope.take() {
-            let mut current_app = driver_setting_scope.name();
+            let current_app = driver_setting_scope.name();
 
             let mut feature = ctl_3d_feature_getset_t {
                 Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_ENDURANCE_GAMING,
-                ApplicationName: current_app.as_mut_ptr() as *mut _,
+                ApplicationName: string_ptr_or_null(&current_app),
                 ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_CUSTOM,
@@ -159,13 +172,13 @@ impl DeviceAdapter {
         let mut frame_rate_limit = 0i32;
 
         while let Some(driver_setting_scope) = scope.take() {
-            let mut current_app = driver_setting_scope.name();
+            let current_app = driver_setting_scope.name();
 
             let mut feature = ctl_3d_feature_getset_t {
                 Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_FRAME_LIMIT,
-                ApplicationName: current_app.as_mut_ptr() as *mut _,
+                ApplicationName: string_ptr_or_null(&current_app),
                 ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_INT32,
@@ -203,13 +216,13 @@ impl DeviceAdapter {
         let mut flip_mode = 0;
 
         while let Some(driver_setting_scope) = scope.take() {
-            let mut current_app = driver_setting_scope.name();
+            let current_app = driver_setting_scope.name();
 
             let mut feature = ctl_3d_feature_getset_t {
                 Size: std::mem::size_of::<ctl_3d_feature_getset_t>() as u32,
                 Version: 0,
                 FeatureType: ctl_3d_feature_t::CTL_3D_FEATURE_GAMING_FLIP_MODES,
-                ApplicationName: current_app.as_mut_ptr() as *mut _,
+                ApplicationName: string_ptr_or_null(&current_app),
                 ApplicationNameLength: current_app.len() as i8,
                 bSet: false,
                 ValueType: ctl_property_value_type_t::CTL_PROPERTY_VALUE_TYPE_ENUM,
