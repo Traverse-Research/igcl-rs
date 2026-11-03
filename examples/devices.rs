@@ -26,6 +26,32 @@ fn main() -> Result<()> {
             "\tFlip mode: {:?}",
             d.feature_flip_mode(DriverSettingScope::CurrentProcess)
         );
+
+        for o in d.enumerate_display_outputs()? {
+            let p = o.properties()?;
+            println!("\tDisplay output:");
+            #[cfg(windows)]
+            println!("\t\tTarget ID: {}", p.windows_display_encoder_id());
+            println!("\t\tActive: {}", p.is_active());
+            println!("\t\tAttached: {}", p.is_attached());
+            println!("\t\tRefresh rate: {} Hz", p.refresh_rate());
+            println!(
+                "\t\tAdaptive Sync supported: {}",
+                p.is_adaptive_sync_supported()
+            );
+            println!(
+                "\t\tAdaptive Sync enabled: {}",
+                p.is_adaptive_sync_enabled()
+            );
+            println!(
+                "\t\tIntel Arc Sync monitor: {:?}",
+                o.intel_arc_sync_monitor_params()
+            );
+            println!(
+                "\t\tIntel Arc Sync profile: {:?}",
+                o.intel_arc_sync_profile()
+            );
+        }
     }
 
     Ok(())

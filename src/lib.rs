@@ -18,6 +18,7 @@ use crate::{
 pub mod ffi;
 
 pub mod device_adapter;
+pub mod display_output;
 pub mod error;
 pub mod memory;
 

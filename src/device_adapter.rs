@@ -6,6 +6,7 @@ use std::{
 };
 
 use crate::{
+    display_output::DisplayOutput,
     error::{Error, Result},
     ffi::{
         ctl_3d_feature_getset_t, ctl_3d_feature_t, ctl_adapter_bdf_t, ctl_data_type_t,
@@ -275,6 +276,38 @@ impl DeviceAdapter {
             .into_iter()
             .map(|handle| MemoryModule {
                 memory_module_handle: handle,
+                control_lib: self.control_lib.clone(),
+            })
+            .collect())
+    }
+
+    #[doc(alias = "ctlEnumerateDisplayOutputs")]
+    pub fn enumerate_display_outputs(&self) -> Result<Vec<DisplayOutput>> {
+        let mut num_display_outputs = 0u32;
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumerateDisplayOutputs(
+                self.device_adapter_handle,
+                &mut num_display_outputs,
+                std::ptr::null_mut(),
+            )
+        })?;
+
+        let mut display_outputs = Vec::with_capacity(num_display_outputs as usize);
+
+        Error::from_result(unsafe {
+            self.control_lib.ctlEnumerateDisplayOutputs(
+                self.device_adapter_handle,
+                &mut num_display_outputs,
+                display_outputs.as_mut_ptr(),
+            )
+        })?;
+
+        unsafe { display_outputs.set_len(num_display_outputs as usize) };
+
+        Ok(display_outputs
+            .into_iter()
+            .map(|handle| DisplayOutput {
+                display_output_handle: handle,
                 control_lib: self.control_lib.clone(),
             })
             .collect())
